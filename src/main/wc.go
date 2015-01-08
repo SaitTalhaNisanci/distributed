@@ -20,7 +20,7 @@ func Map(value string) *list.List {
 func Reduce(key string, values *list.List) string {
 	// Note:
 	// The key argument holds the key common too all values in the values argument
-	// The values argument is a list of mapreduce.KeyValue structs with the given key.
+	// The values argument is a list of value strings with the given key.
 	// You need to:
 	// (1) Reduce the all of the values in the values list
 	// (2) Return the reduced/summed up values as a string
