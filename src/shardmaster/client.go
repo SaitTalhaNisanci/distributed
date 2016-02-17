@@ -109,7 +109,7 @@ func (ck *Clerk) Move(shard int, gid int64) {
 			args := &MoveArgs{}
 			args.Shard = shard
 			args.GID = gid
-			var reply LeaveReply
+			var reply MoveReply
 			ok := call(srv, "ShardMaster.Move", args, &reply)
 			if ok {
 				return
