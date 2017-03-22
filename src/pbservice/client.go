@@ -4,14 +4,20 @@ import "viewservice"
 import "net/rpc"
 import "fmt"
 
-// You'll probably need to uncomment these:
-// import "time"
-// import "crypto/rand"
-// import "math/big"
+import "crypto/rand"
+import "math/big"
 
 type Clerk struct {
 	vs *viewservice.Clerk
 	// Your declarations here
+}
+
+// this may come in handy.
+func nrand() int64 {
+	max := big.NewInt(int64(1) << 62)
+	bigx, _ := rand.Int(rand.Reader, max)
+	x := bigx.Int64()
+	return x
 }
 
 func MakeClerk(vshost string, me string) *Clerk {
@@ -32,8 +38,9 @@ func MakeClerk(vshost string, me string) *Clerk {
 // if call() was not able to contact the server. in particular,
 // the reply's contents are only valid if call() returned true.
 //
-// you should assume that call() will time out and return an
-// error after a while if it doesn't get a reply from the server.
+// you should assume that call() will return an
+// error after a while if the server is dead.
+// don't provide your own time-out mechanism.
 //
 // please use call() to send all RPCs, in client.go and server.go.
 // please don't change this function.
@@ -70,19 +77,25 @@ func (ck *Clerk) Get(key string) string {
 }
 
 //
+// send a Put or Append RPC
+//
+func (ck *Clerk) PutAppend(key string, value string, op string) {
+
+	// Your code here.
+}
+
+//
 // tell the primary to update key's value.
 // must keep trying until it succeeds.
 //
-func (ck *Clerk) PutExt(key string, value string, dohash bool) string {
-
-	// Your code here.
-	return "???"
-}
-
 func (ck *Clerk) Put(key string, value string) {
-	ck.PutExt(key, value, false)
+	ck.PutAppend(key, value, "Put")
 }
-func (ck *Clerk) PutHash(key string, value string) string {
-	v := ck.PutExt(key, value, true)
-	return v
+
+//
+// tell the primary to append to key's value.
+// must keep trying until it succeeds.
+//
+func (ck *Clerk) Append(key string, value string) {
+	ck.PutAppend(key, value, "Append")
 }

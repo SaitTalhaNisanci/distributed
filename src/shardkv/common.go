@@ -1,7 +1,5 @@
 package shardkv
 
-import "hash/fnv"
-
 //
 // Sharded key/value server.
 // Lots of replica groups, each running op-at-a-time paxos.
@@ -19,19 +17,18 @@ const (
 
 type Err string
 
-type PutArgs struct {
-	Key    string
-	Value  string
-	DoHash bool // For PutHash
+type PutAppendArgs struct {
+	Key   string
+	Value string
+	Op    string // "Put" or "Append"
 	// You'll have to add definitions here.
 	// Field names must start with capital letters,
 	// otherwise RPC will break.
 
 }
 
-type PutReply struct {
-	Err           Err
-	PreviousValue string // For PutHash
+type PutAppendReply struct {
+	Err Err
 }
 
 type GetArgs struct {
@@ -42,10 +39,4 @@ type GetArgs struct {
 type GetReply struct {
 	Err   Err
 	Value string
-}
-
-func hash(s string) uint32 {
-	h := fnv.New32a()
-	h.Write([]byte(s))
-	return h.Sum32()
 }

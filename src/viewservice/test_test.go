@@ -115,7 +115,9 @@ func Test1(t *testing.T) {
 	fmt.Printf("  ... Passed\n")
 
 	// start ck3, kill the primary (ck2), the previous backup (ck1)
-	// should become the server, and ck3 the backup
+	// should become the server, and ck3 the backup.
+	// this should happen in a single view change, without
+	// any period in which there's no backup.
 	fmt.Printf("Test: Idle third server becomes backup if primary fails ...\n")
 
 	{
@@ -157,6 +159,8 @@ func Test1(t *testing.T) {
 	}
 	fmt.Printf("  ... Passed\n")
 
+	fmt.Printf("Test: Dead backup is removed from view ...\n")
+
 	// set up a view with just 3 as primary,
 	// to prepare for the next test.
 	{
@@ -170,6 +174,7 @@ func Test1(t *testing.T) {
 			t.Fatalf("wrong primary or backup")
 		}
 	}
+	fmt.Printf("  ... Passed\n")
 
 	// does viewserver wait for ack of previous view before
 	// starting the next one?

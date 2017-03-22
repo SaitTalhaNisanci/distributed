@@ -14,7 +14,7 @@ package paxos
 //
 // px = paxos.Make(peers []string, me string)
 // px.Start(seq int, v interface{}) -- start agreement on new instance
-// px.Status(seq int) (decided bool, v interface{}) -- get info about an instance
+// px.Status(seq int) (Fate, v interface{}) -- get info about an instance
 // px.Done(seq int) -- ok to forget all instances <= seq
 // px.Max() int -- highest instance seq known, or -1
 // px.Min() int -- instances before this seq have been forgotten
@@ -23,18 +23,32 @@ package paxos
 import "net"
 import "net/rpc"
 import "log"
+
 import "os"
 import "syscall"
 import "sync"
+import "sync/atomic"
 import "fmt"
 import "math/rand"
+
+// px.Status() return values, indicating
+// whether an agreement has been decided,
+// or Paxos has not yet reached agreement,
+// or it was agreed but forgotten (i.e. < Min()).
+type Fate int
+
+const (
+	Decided   Fate = iota + 1
+	Pending        // not yet decided.
+	Forgotten      // decided but forgotten.
+)
 
 type Paxos struct {
 	mu         sync.Mutex
 	l          net.Listener
-	dead       bool
-	unreliable bool
-	rpcCount   int
+	dead       int32 // for testing
+	unreliable int32 // for testing
+	rpcCount   int32 // for testing
 	peers      []string
 	me         int // index into peers[]
 
@@ -148,21 +162,41 @@ func (px *Paxos) Min() int {
 // should just inspect the local peer state;
 // it should not contact other Paxos peers.
 //
-func (px *Paxos) Status(seq int) (bool, interface{}) {
+func (px *Paxos) Status(seq int) (Fate, interface{}) {
 	// Your code here.
-	return false, nil
+	return Pending, nil
 }
 
 //
 // tell the peer to shut itself down.
 // for testing.
-// please do not change this function.
+// please do not change these two functions.
 //
 func (px *Paxos) Kill() {
-	px.dead = true
+	atomic.StoreInt32(&px.dead, 1)
 	if px.l != nil {
 		px.l.Close()
 	}
+}
+
+//
+// has this peer been asked to shut down?
+//
+func (px *Paxos) isdead() bool {
+	return atomic.LoadInt32(&px.dead) != 0
+}
+
+// please do not change these two functions.
+func (px *Paxos) setunreliable(what bool) {
+	if what {
+		atomic.StoreInt32(&px.unreliable, 1)
+	} else {
+		atomic.StoreInt32(&px.unreliable, 0)
+	}
+}
+
+func (px *Paxos) isunreliable() bool {
+	return atomic.LoadInt32(&px.unreliable) != 0
 }
 
 //
@@ -198,13 +232,13 @@ func Make(peers []string, me int, rpcs *rpc.Server) *Paxos {
 
 		// create a thread to accept RPC connections
 		go func() {
-			for px.dead == false {
+			for px.isdead() == false {
 				conn, err := px.l.Accept()
-				if err == nil && px.dead == false {
-					if px.unreliable && (rand.Int63()%1000) < 100 {
+				if err == nil && px.isdead() == false {
+					if px.isunreliable() && (rand.Int63()%1000) < 100 {
 						// discard the request.
 						conn.Close()
-					} else if px.unreliable && (rand.Int63()%1000) < 200 {
+					} else if px.isunreliable() && (rand.Int63()%1000) < 200 {
 						// process the request but force discard of reply.
 						c1 := conn.(*net.UnixConn)
 						f, _ := c1.File()
@@ -212,16 +246,16 @@ func Make(peers []string, me int, rpcs *rpc.Server) *Paxos {
 						if err != nil {
 							fmt.Printf("shutdown: %v\n", err)
 						}
-						px.rpcCount++
+						atomic.AddInt32(&px.rpcCount, 1)
 						go rpcs.ServeConn(conn)
 					} else {
-						px.rpcCount++
+						atomic.AddInt32(&px.rpcCount, 1)
 						go rpcs.ServeConn(conn)
 					}
 				} else if err == nil {
 					conn.Close()
 				}
-				if err != nil && px.dead == false {
+				if err != nil && px.isdead() == false {
 					fmt.Printf("Paxos(%v) accept: %v\n", me, err.Error())
 				}
 			}

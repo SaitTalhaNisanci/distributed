@@ -4,8 +4,10 @@ import "net"
 import "fmt"
 import "net/rpc"
 import "log"
+
 import "paxos"
 import "sync"
+import "sync/atomic"
 import "os"
 import "syscall"
 import "encoding/gob"
@@ -15,8 +17,8 @@ type ShardMaster struct {
 	mu         sync.Mutex
 	l          net.Listener
 	me         int
-	dead       bool // for testing
-	unreliable bool // for testing
+	dead       int32 // for testing
+	unreliable int32 // for testing
 	px         *paxos.Paxos
 
 	configs []Config // indexed by config num
@@ -50,11 +52,29 @@ func (sm *ShardMaster) Query(args *QueryArgs, reply *QueryReply) error {
 	return nil
 }
 
-// please don't change this function.
+// please don't change these two functions.
 func (sm *ShardMaster) Kill() {
-	sm.dead = true
+	atomic.StoreInt32(&sm.dead, 1)
 	sm.l.Close()
 	sm.px.Kill()
+}
+
+// call this to find out if the server is dead.
+func (sm *ShardMaster) isdead() bool {
+	return atomic.LoadInt32(&sm.dead) != 0
+}
+
+// please do not change these two functions.
+func (sm *ShardMaster) setunreliable(what bool) {
+	if what {
+		atomic.StoreInt32(&sm.unreliable, 1)
+	} else {
+		atomic.StoreInt32(&sm.unreliable, 0)
+	}
+}
+
+func (sm *ShardMaster) isunreliable() bool {
+	return atomic.LoadInt32(&sm.unreliable) != 0
 }
 
 //
@@ -64,8 +84,6 @@ func (sm *ShardMaster) Kill() {
 // me is the index of the current server in servers[].
 //
 func StartServer(servers []string, me int) *ShardMaster {
-	gob.Register(Op{})
-
 	sm := new(ShardMaster)
 	sm.me = me
 
@@ -73,8 +91,9 @@ func StartServer(servers []string, me int) *ShardMaster {
 	sm.configs[0].Groups = map[int64][]string{}
 
 	rpcs := rpc.NewServer()
-	rpcs.Register(sm)
 
+	gob.Register(Op{})
+	rpcs.Register(sm)
 	sm.px = paxos.Make(servers, me, rpcs)
 
 	os.Remove(servers[me])
@@ -88,13 +107,13 @@ func StartServer(servers []string, me int) *ShardMaster {
 	// or do anything to subvert it.
 
 	go func() {
-		for sm.dead == false {
+		for sm.isdead() == false {
 			conn, err := sm.l.Accept()
-			if err == nil && sm.dead == false {
-				if sm.unreliable && (rand.Int63()%1000) < 100 {
+			if err == nil && sm.isdead() == false {
+				if sm.isunreliable() && (rand.Int63()%1000) < 100 {
 					// discard the request.
 					conn.Close()
-				} else if sm.unreliable && (rand.Int63()%1000) < 200 {
+				} else if sm.isunreliable() && (rand.Int63()%1000) < 200 {
 					// process the request but force discard of reply.
 					c1 := conn.(*net.UnixConn)
 					f, _ := c1.File()
@@ -109,7 +128,7 @@ func StartServer(servers []string, me int) *ShardMaster {
 			} else if err == nil {
 				conn.Close()
 			}
-			if err != nil && sm.dead == false {
+			if err != nil && sm.isdead() == false {
 				fmt.Printf("ShardMaster(%v) accept: %v\n", me, err.Error())
 				sm.Kill()
 			}

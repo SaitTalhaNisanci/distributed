@@ -6,6 +6,7 @@ import "net/rpc"
 import "log"
 import "paxos"
 import "sync"
+import "sync/atomic"
 import "os"
 import "syscall"
 import "encoding/gob"
@@ -30,8 +31,8 @@ type KVPaxos struct {
 	mu         sync.Mutex
 	l          net.Listener
 	me         int
-	dead       bool // for testing
-	unreliable bool // for testing
+	dead       int32 // for testing
+	unreliable int32 // for testing
 	px         *paxos.Paxos
 
 	// Your definitions here.
@@ -42,19 +43,37 @@ func (kv *KVPaxos) Get(args *GetArgs, reply *GetReply) error {
 	return nil
 }
 
-func (kv *KVPaxos) Put(args *PutArgs, reply *PutReply) error {
+func (kv *KVPaxos) PutAppend(args *PutAppendArgs, reply *PutAppendReply) error {
 	// Your code here.
 
 	return nil
 }
 
 // tell the server to shut itself down.
-// please do not change this function.
+// please do not change these two functions.
 func (kv *KVPaxos) kill() {
 	DPrintf("Kill(%d): die\n", kv.me)
-	kv.dead = true
+	atomic.StoreInt32(&kv.dead, 1)
 	kv.l.Close()
 	kv.px.Kill()
+}
+
+// call this to find out if the server is dead.
+func (kv *KVPaxos) isdead() bool {
+	return atomic.LoadInt32(&kv.dead) != 0
+}
+
+// please do not change these two functions.
+func (kv *KVPaxos) setunreliable(what bool) {
+	if what {
+		atomic.StoreInt32(&kv.unreliable, 1)
+	} else {
+		atomic.StoreInt32(&kv.unreliable, 0)
+	}
+}
+
+func (kv *KVPaxos) isunreliable() bool {
+	return atomic.LoadInt32(&kv.unreliable) != 0
 }
 
 //
@@ -89,13 +108,13 @@ func StartServer(servers []string, me int) *KVPaxos {
 	// or do anything to subvert it.
 
 	go func() {
-		for kv.dead == false {
+		for kv.isdead() == false {
 			conn, err := kv.l.Accept()
-			if err == nil && kv.dead == false {
-				if kv.unreliable && (rand.Int63()%1000) < 100 {
+			if err == nil && kv.isdead() == false {
+				if kv.isunreliable() && (rand.Int63()%1000) < 100 {
 					// discard the request.
 					conn.Close()
-				} else if kv.unreliable && (rand.Int63()%1000) < 200 {
+				} else if kv.isunreliable() && (rand.Int63()%1000) < 200 {
 					// process the request but force discard of reply.
 					c1 := conn.(*net.UnixConn)
 					f, _ := c1.File()
@@ -110,7 +129,7 @@ func StartServer(servers []string, me int) *KVPaxos {
 			} else if err == nil {
 				conn.Close()
 			}
-			if err != nil && kv.dead == false {
+			if err != nil && kv.isdead() == false {
 				fmt.Printf("KVPaxos(%v) accept: %v\n", me, err.Error())
 				kv.kill()
 			}

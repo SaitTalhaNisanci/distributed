@@ -5,12 +5,21 @@ import "net/rpc"
 import "time"
 import "sync"
 import "fmt"
+import "crypto/rand"
+import "math/big"
 
 type Clerk struct {
 	mu     sync.Mutex // one RPC at a time
 	sm     *shardmaster.Clerk
 	config shardmaster.Config
 	// You'll have to modify Clerk.
+}
+
+func nrand() int64 {
+	max := big.NewInt(int64(1) << 62)
+	bigx, _ := rand.Int(rand.Reader, max)
+	x := bigx.Int64()
+	return x
 }
 
 func MakeClerk(shardmasters []string) *Clerk {
@@ -30,8 +39,9 @@ func MakeClerk(shardmasters []string) *Clerk {
 // if call() was not able to contact the server. in particular,
 // the reply's contents are only valid if call() returned true.
 //
-// you should assume that call() will time out and return an
-// error after a while if it doesn't get a reply from the server.
+// you should assume that call() will return an
+// error after a while if the server is dead.
+// don't provide your own time-out mechanism.
 //
 // please use call() to send all RPCs, in client.go and server.go.
 // please don't change this function.
@@ -106,14 +116,14 @@ func (ck *Clerk) Get(key string) string {
 		// ask master for a new configuration.
 		ck.config = ck.sm.Query(-1)
 	}
-	return ""
 }
 
-func (ck *Clerk) PutExt(key string, value string, dohash bool) string {
+// send a Put or Append request.
+func (ck *Clerk) PutAppend(key string, value string, op string) {
 	ck.mu.Lock()
 	defer ck.mu.Unlock()
 
-	// You'll have to modify Put().
+	// You'll have to modify PutAppend().
 
 	for {
 		shard := key2shard(key)
@@ -125,14 +135,14 @@ func (ck *Clerk) PutExt(key string, value string, dohash bool) string {
 		if ok {
 			// try each server in the shard's replication group.
 			for _, srv := range servers {
-				args := &PutArgs{}
+				args := &PutAppendArgs{}
 				args.Key = key
 				args.Value = value
-				args.DoHash = dohash
-				var reply PutReply
-				ok := call(srv, "ShardKV.Put", args, &reply)
+				args.Op = op
+				var reply PutAppendReply
+				ok := call(srv, "ShardKV.PutAppend", args, &reply)
 				if ok && reply.Err == OK {
-					return reply.PreviousValue
+					return
 				}
 				if ok && (reply.Err == ErrWrongGroup) {
 					break
@@ -148,9 +158,8 @@ func (ck *Clerk) PutExt(key string, value string, dohash bool) string {
 }
 
 func (ck *Clerk) Put(key string, value string) {
-	ck.PutExt(key, value, false)
+	ck.PutAppend(key, value, "Put")
 }
-func (ck *Clerk) PutHash(key string, value string) string {
-	v := ck.PutExt(key, value, true)
-	return v
+func (ck *Clerk) Append(key string, value string) {
+	ck.PutAppend(key, value, "Append")
 }

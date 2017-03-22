@@ -7,6 +7,16 @@ import "os"
 import "time"
 import "fmt"
 import "math/rand"
+import crand "crypto/rand"
+import "encoding/base64"
+import "sync/atomic"
+
+func randstring(n int) string {
+	b := make([]byte, 2*n)
+	crand.Read(b)
+	s := base64.URLEncoding.EncodeToString(b)
+	return s[0:n]
+}
 
 func port(tag string, host int) string {
 	s := "/var/tmp/824-"
@@ -25,7 +35,7 @@ func ndecided(t *testing.T, pxa []*Paxos, seq int) int {
 	for i := 0; i < len(pxa); i++ {
 		if pxa[i] != nil {
 			decided, v1 := pxa[i].Status(seq)
-			if decided {
+			if decided == Decided {
 				if count > 0 && v != v1 {
 					t.Fatalf("decided values do not match; seq=%v i=%v v=%v v1=%v",
 						seq, i, v, v1)
@@ -299,13 +309,12 @@ func TestManyForget(t *testing.T) {
 	}
 	for i := 0; i < npaxos; i++ {
 		pxa[i] = Make(pxh, i, nil)
-		pxa[i].unreliable = true
+		pxa[i].setunreliable(true)
 	}
 
 	fmt.Printf("Test: Lots of forgetting ...\n")
 
 	const maxseq = 20
-	done := false
 
 	go func() {
 		na := rand.Perm(maxseq)
@@ -318,13 +327,19 @@ func TestManyForget(t *testing.T) {
 		}
 	}()
 
+	done := make(chan bool)
 	go func() {
-		for done == false {
+		for {
+			select {
+			case <-done:
+				return
+			default:
+			}
 			seq := (rand.Int() % maxseq)
 			i := (rand.Int() % npaxos)
 			if seq >= pxa[i].Min() {
 				decided, _ := pxa[i].Status(seq)
-				if decided {
+				if decided == Decided {
 					pxa[i].Done(seq)
 				}
 			}
@@ -333,9 +348,9 @@ func TestManyForget(t *testing.T) {
 	}()
 
 	time.Sleep(5 * time.Second)
-	done = true
+	done <- true
 	for i := 0; i < npaxos; i++ {
-		pxa[i].unreliable = false
+		pxa[i].setunreliable(false)
 	}
 	time.Sleep(2 * time.Second)
 
@@ -414,6 +429,74 @@ func TestForgetMem(t *testing.T) {
 		t.Fatalf("memory use did not shrink enough")
 	}
 
+	again := make([]string, 10)
+	for seq := 0; seq < npaxos && seq < 10; seq++ {
+		again[seq] = randstring(20)
+		for i := 0; i < npaxos; i++ {
+			fate, _ := pxa[i].Status(seq)
+			if fate != Forgotten {
+				t.Fatalf("seq %d < Min() %d but not Forgotten", seq, pxa[i].Min())
+			}
+			pxa[i].Start(seq, again[seq])
+		}
+	}
+	time.Sleep(1 * time.Second)
+	for seq := 0; seq < npaxos && seq < 10; seq++ {
+		for i := 0; i < npaxos; i++ {
+			fate, v := pxa[i].Status(seq)
+			if fate != Forgotten || v == again[seq] {
+				t.Fatalf("seq %d < Min() %d but not Forgotten", seq, pxa[i].Min())
+			}
+		}
+	}
+
+	fmt.Printf("  ... Passed\n")
+}
+
+//
+// does Max() work after Done()s?
+//
+func TestDoneMax(t *testing.T) {
+	runtime.GOMAXPROCS(4)
+
+	fmt.Printf("Test: Paxos Max() after Done()s ...\n")
+
+	const npaxos = 3
+	var pxa []*Paxos = make([]*Paxos, npaxos)
+	var pxh []string = make([]string, npaxos)
+	defer cleanup(pxa)
+
+	for i := 0; i < npaxos; i++ {
+		pxh[i] = port("donemax", i)
+	}
+	for i := 0; i < npaxos; i++ {
+		pxa[i] = Make(pxh, i, nil)
+	}
+
+	pxa[0].Start(0, "x")
+	waitn(t, pxa, 0, npaxos)
+
+	for i := 1; i <= 10; i++ {
+		pxa[0].Start(i, "y")
+		waitn(t, pxa, i, npaxos)
+	}
+
+	for i := 0; i < npaxos; i++ {
+		pxa[i].Done(10)
+	}
+
+	// Propagate messages so everyone knows about Done(10)
+	for i := 0; i < npaxos; i++ {
+		pxa[i].Start(10, "z")
+	}
+	time.Sleep(2 * time.Second)
+	for i := 0; i < npaxos; i++ {
+		mx := pxa[i].Max()
+		if mx != 10 {
+			t.Fatalf("Max() did not return correct result %d after calling Done(); returned %d", 10, mx)
+		}
+	}
+
 	fmt.Printf("  ... Passed\n")
 }
 
@@ -444,16 +527,16 @@ func TestRPCCount(t *testing.T) {
 
 	time.Sleep(2 * time.Second)
 
-	total1 := 0
+	total1 := int32(0)
 	for j := 0; j < npaxos; j++ {
-		total1 += pxa[j].rpcCount
+		total1 += atomic.LoadInt32(&pxa[j].rpcCount)
 	}
 
 	// per agreement:
 	// 3 prepares
 	// 3 accepts
 	// 3 decides
-	expected1 := ninst1 * npaxos * npaxos
+	expected1 := int32(ninst1 * npaxos * npaxos)
 	if total1 > expected1 {
 		t.Fatalf("too many RPCs for serial Start()s; %v instances, got %v, expected %v",
 			ninst1, total1, expected1)
@@ -470,9 +553,9 @@ func TestRPCCount(t *testing.T) {
 
 	time.Sleep(2 * time.Second)
 
-	total2 := 0
+	total2 := int32(0)
 	for j := 0; j < npaxos; j++ {
-		total2 += pxa[j].rpcCount
+		total2 += atomic.LoadInt32(&pxa[j].rpcCount)
 	}
 	total2 -= total1
 
@@ -480,7 +563,7 @@ func TestRPCCount(t *testing.T) {
 	// Proposer 1: 3 prep, 3 acc, 3 decides.
 	// Proposer 2: 3 prep, 3 acc, 3 prep, 3 acc, 3 decides.
 	// Proposer 3: 3 prep, 3 acc, 3 prep, 3 acc, 3 prep, 3 acc, 3 decides.
-	expected2 := ninst2 * npaxos * 15
+	expected2 := int32(ninst2 * npaxos * 15)
 	if total2 > expected2 {
 		t.Fatalf("too many RPCs for concurrent Start()s; %v instances, got %v, expected %v",
 			ninst2, total2, expected2)
@@ -594,7 +677,7 @@ func TestManyUnreliable(t *testing.T) {
 	}
 	for i := 0; i < npaxos; i++ {
 		pxa[i] = Make(pxh, i, nil)
-		pxa[i].unreliable = true
+		pxa[i].setunreliable(true)
 		pxa[i].Start(0, 0)
 	}
 
@@ -742,7 +825,7 @@ func TestPartition(t *testing.T) {
 		seq++
 
 		for i := 0; i < npaxos; i++ {
-			pxa[i].unreliable = true
+			pxa[i].setunreliable(true)
 		}
 
 		part(t, tag, npaxos, []int{0, 1, 2}, []int{3, 4}, []int{})
@@ -757,7 +840,7 @@ func TestPartition(t *testing.T) {
 		part(t, tag, npaxos, []int{0, 1}, []int{2, 3, 4}, []int{})
 
 		for i := 0; i < npaxos; i++ {
-			pxa[i].unreliable = false
+			pxa[i].setunreliable(false)
 		}
 
 		waitn(t, pxa, seq, 5)
@@ -787,17 +870,17 @@ func TestLots(t *testing.T) {
 			}
 		}
 		pxa[i] = Make(pxh, i, nil)
-		pxa[i].unreliable = true
+		pxa[i].setunreliable(true)
 	}
 	defer part(t, tag, npaxos, []int{}, []int{}, []int{})
 
-	done := false
+	done := int32(0)
 
 	// re-partition periodically
 	ch1 := make(chan bool)
 	go func() {
 		defer func() { ch1 <- true }()
-		for done == false {
+		for atomic.LoadInt32(&done) == 0 {
 			var a [npaxos]int
 			for i := 0; i < npaxos; i++ {
 				a[i] = (rand.Int() % 3)
@@ -816,25 +899,26 @@ func TestLots(t *testing.T) {
 		}
 	}()
 
-	seq := 0
+	seq := int32(0)
 
 	// periodically start a new instance
 	ch2 := make(chan bool)
 	go func() {
 		defer func() { ch2 <- true }()
-		for done == false {
+		for atomic.LoadInt32(&done) == 0 {
 			// how many instances are in progress?
 			nd := 0
-			for i := 0; i < seq; i++ {
+			sq := int(atomic.LoadInt32(&seq))
+			for i := 0; i < sq; i++ {
 				if ndecided(t, pxa, i) == npaxos {
 					nd++
 				}
 			}
-			if seq-nd < 10 {
+			if sq-nd < 10 {
 				for i := 0; i < npaxos; i++ {
-					pxa[i].Start(seq, rand.Int()%10)
+					pxa[i].Start(sq, rand.Int()%10)
 				}
-				seq++
+				atomic.AddInt32(&seq, 1)
 			}
 			time.Sleep(time.Duration(rand.Int63()%300) * time.Millisecond)
 		}
@@ -844,8 +928,8 @@ func TestLots(t *testing.T) {
 	ch3 := make(chan bool)
 	go func() {
 		defer func() { ch3 <- true }()
-		for done == false {
-			for i := 0; i < seq; i++ {
+		for atomic.LoadInt32(&done) == 0 {
+			for i := 0; i < int(atomic.LoadInt32(&seq)); i++ {
 				ndecided(t, pxa, i)
 			}
 			time.Sleep(time.Duration(rand.Int63()%300) * time.Millisecond)
@@ -853,19 +937,19 @@ func TestLots(t *testing.T) {
 	}()
 
 	time.Sleep(20 * time.Second)
-	done = true
+	atomic.StoreInt32(&done, 1)
 	<-ch1
 	<-ch2
 	<-ch3
 
 	// repair, then check that all instances decided.
 	for i := 0; i < npaxos; i++ {
-		pxa[i].unreliable = false
+		pxa[i].setunreliable(false)
 	}
 	part(t, tag, npaxos, []int{0, 1, 2, 3, 4}, []int{}, []int{})
 	time.Sleep(5 * time.Second)
 
-	for i := 0; i < seq; i++ {
+	for i := 0; i < int(atomic.LoadInt32(&seq)); i++ {
 		waitmajority(t, pxa, i)
 	}
 

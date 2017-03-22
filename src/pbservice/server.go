@@ -6,61 +6,76 @@ import "net/rpc"
 import "log"
 import "time"
 import "viewservice"
+import "sync"
+import "sync/atomic"
 import "os"
 import "syscall"
 import "math/rand"
-import "sync"
-
-//import "strconv"
-
-// Debugging
-const Debug = 0
-
-func DPrintf(format string, a ...interface{}) (n int, err error) {
-	if Debug > 0 {
-		n, err = fmt.Printf(format, a...)
-	}
-	return
-}
 
 type PBServer struct {
+	mu         sync.Mutex
 	l          net.Listener
-	dead       bool // for testing
-	unreliable bool // for testing
+	dead       int32 // for testing
+	unreliable int32 // for testing
 	me         string
 	vs         *viewservice.Clerk
-	done       sync.WaitGroup
-	finish     chan interface{}
 	// Your declarations here.
 }
 
-func (pb *PBServer) Put(args *PutArgs, reply *PutReply) error {
-	// Your code here.
-	return nil
-}
-
 func (pb *PBServer) Get(args *GetArgs, reply *GetReply) error {
+
 	// Your code here.
+
 	return nil
 }
 
+func (pb *PBServer) PutAppend(args *PutAppendArgs, reply *PutAppendReply) error {
+
+	// Your code here.
+
+	return nil
+}
+
+//
 // ping the viewserver periodically.
+// if view changed:
+//   transition to new view.
+//   manage transfer of state from primary to new backup.
+//
 func (pb *PBServer) tick() {
+
 	// Your code here.
 }
 
 // tell the server to shut itself down.
-// please do not change this function.
+// please do not change these two functions.
 func (pb *PBServer) kill() {
-	pb.dead = true
+	atomic.StoreInt32(&pb.dead, 1)
 	pb.l.Close()
+}
+
+// call this to find out if the server is dead.
+func (pb *PBServer) isdead() bool {
+	return atomic.LoadInt32(&pb.dead) != 0
+}
+
+// please do not change these two functions.
+func (pb *PBServer) setunreliable(what bool) {
+	if what {
+		atomic.StoreInt32(&pb.unreliable, 1)
+	} else {
+		atomic.StoreInt32(&pb.unreliable, 0)
+	}
+}
+
+func (pb *PBServer) isunreliable() bool {
+	return atomic.LoadInt32(&pb.unreliable) != 0
 }
 
 func StartServer(vshost string, me string) *PBServer {
 	pb := new(PBServer)
 	pb.me = me
 	pb.vs = viewservice.MakeClerk(me, vshost)
-	pb.finish = make(chan interface{})
 	// Your pb.* initializations here.
 
 	rpcs := rpc.NewServer()
@@ -77,13 +92,13 @@ func StartServer(vshost string, me string) *PBServer {
 	// or do anything to subvert it.
 
 	go func() {
-		for pb.dead == false {
+		for pb.isdead() == false {
 			conn, err := pb.l.Accept()
-			if err == nil && pb.dead == false {
-				if pb.unreliable && (rand.Int63()%1000) < 100 {
+			if err == nil && pb.isdead() == false {
+				if pb.isunreliable() && (rand.Int63()%1000) < 100 {
 					// discard the request.
 					conn.Close()
-				} else if pb.unreliable && (rand.Int63()%1000) < 200 {
+				} else if pb.isunreliable() && (rand.Int63()%1000) < 200 {
 					// process the request but force discard of reply.
 					c1 := conn.(*net.UnixConn)
 					f, _ := c1.File()
@@ -91,40 +106,25 @@ func StartServer(vshost string, me string) *PBServer {
 					if err != nil {
 						fmt.Printf("shutdown: %v\n", err)
 					}
-					pb.done.Add(1)
-					go func() {
-						rpcs.ServeConn(conn)
-						pb.done.Done()
-					}()
+					go rpcs.ServeConn(conn)
 				} else {
-					pb.done.Add(1)
-					go func() {
-						rpcs.ServeConn(conn)
-						pb.done.Done()
-					}()
+					go rpcs.ServeConn(conn)
 				}
 			} else if err == nil {
 				conn.Close()
 			}
-			if err != nil && pb.dead == false {
+			if err != nil && pb.isdead() == false {
 				fmt.Printf("PBServer(%v) accept: %v\n", me, err.Error())
 				pb.kill()
 			}
 		}
-		DPrintf("%s: wait until all request are done\n", pb.me)
-		pb.done.Wait()
-		// If you have an additional thread in your solution, you could
-		// have it read to the finish channel to hear when to terminate.
-		close(pb.finish)
 	}()
 
-	pb.done.Add(1)
 	go func() {
-		for pb.dead == false {
+		for pb.isdead() == false {
 			pb.tick()
 			time.Sleep(viewservice.PingInterval)
 		}
-		pb.done.Done()
 	}()
 
 	return pb

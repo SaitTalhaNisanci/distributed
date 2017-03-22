@@ -7,6 +7,8 @@ import "os"
 import "time"
 import "fmt"
 import "math/rand"
+import "strings"
+import "sync/atomic"
 
 func check(t *testing.T, ck *Clerk, key string, value string) {
 	v := ck.Get(key)
@@ -34,9 +36,9 @@ func cleanup(kva []*KVPaxos) {
 	}
 }
 
-func NextValue(hprev string, val string) string {
-	h := hash(hprev + val)
-	return strconv.Itoa(int(h))
+// predict effect of Append(k, val) if old value is prev.
+func NextValue(prev string, val string) string {
+	return prev + val
 }
 
 func TestBasic(t *testing.T) {
@@ -60,13 +62,11 @@ func TestBasic(t *testing.T) {
 		cka[i] = MakeClerk([]string{kvh[i]})
 	}
 
-	fmt.Printf("Test: Basic put/puthash/get ...\n")
+	fmt.Printf("Test: Basic put/append/get ...\n")
 
-	pv := ck.PutHash("a", "x")
-	ov := ""
-	if ov != pv {
-		t.Fatalf("wrong value; expected %s got %s", ov, pv)
-	}
+	ck.Append("app", "x")
+	ck.Append("app", "y")
+	check(t, ck, "app", "xy")
 
 	ck.Put("a", "aa")
 	check(t, ck, "a", "aa")
@@ -270,23 +270,25 @@ func TestPartition(t *testing.T) {
 
 	fmt.Printf("Test: No progress in minority ...\n")
 
-	done0 := false
-	done1 := false
+	done0 := make(chan bool)
+	done1 := make(chan bool)
 	go func() {
 		cka[0].Put("1", "15")
-		done0 = true
+		done0 <- true
 	}()
 	go func() {
 		cka[1].Get("1")
-		done1 = true
+		done1 <- true
 	}()
-	time.Sleep(time.Second)
-	if done0 {
+
+	select {
+	case <-done0:
 		t.Fatalf("Put in minority completed")
-	}
-	if done1 {
+	case <-done1:
 		t.Fatalf("Get in minority completed")
+	case <-time.After(time.Second):
 	}
+
 	check(t, cka[4], "1", "14")
 	cka[3].Put("1", "16")
 	check(t, cka[4], "1", "16")
@@ -296,34 +298,67 @@ func TestPartition(t *testing.T) {
 	fmt.Printf("Test: Completion after heal ...\n")
 
 	part(t, tag, nservers, []int{0, 2, 3, 4}, []int{1}, []int{})
-	for iters := 0; iters < 30; iters++ {
-		if done0 {
-			break
-		}
-		time.Sleep(100 * time.Millisecond)
-	}
-	if done0 == false {
+
+	select {
+	case <-done0:
+	case <-time.After(30 * 100 * time.Millisecond):
 		t.Fatalf("Put did not complete")
 	}
-	if done1 {
+
+	select {
+	case <-done1:
 		t.Fatalf("Get in minority completed")
+	default:
 	}
+
 	check(t, cka[4], "1", "15")
 	check(t, cka[0], "1", "15")
 
 	part(t, tag, nservers, []int{0, 1, 2}, []int{3, 4}, []int{})
-	for iters := 0; iters < 100; iters++ {
-		if done1 {
-			break
-		}
-		time.Sleep(100 * time.Millisecond)
-	}
-	if done1 == false {
+
+	select {
+	case <-done1:
+	case <-time.After(100 * 100 * time.Millisecond):
 		t.Fatalf("Get did not complete")
 	}
+
 	check(t, cka[1], "1", "15")
 
 	fmt.Printf("  ... Passed\n")
+}
+
+func randclerk(kvh []string) *Clerk {
+	sa := make([]string, len(kvh))
+	copy(sa, kvh)
+	for i := range sa {
+		j := rand.Intn(i + 1)
+		sa[i], sa[j] = sa[j], sa[i]
+	}
+	return MakeClerk(sa)
+}
+
+// check that all known appends are present in a value,
+// and are in order for each concurrent client.
+func checkAppends(t *testing.T, v string, counts []int) {
+	nclients := len(counts)
+	for i := 0; i < nclients; i++ {
+		lastoff := -1
+		for j := 0; j < counts[i]; j++ {
+			wanted := "x " + strconv.Itoa(i) + " " + strconv.Itoa(j) + " y"
+			off := strings.Index(v, wanted)
+			if off < 0 {
+				t.Fatalf("missing element in Append result")
+			}
+			off1 := strings.LastIndex(v, wanted)
+			if off1 != off {
+				t.Fatalf("duplicate element in Append result")
+			}
+			if off <= lastoff {
+				t.Fatalf("wrong order for element in Append result")
+			}
+			lastoff = off
+		}
+	}
 }
 
 func TestUnreliable(t *testing.T) {
@@ -339,7 +374,7 @@ func TestUnreliable(t *testing.T) {
 	}
 	for i := 0; i < nservers; i++ {
 		kva[i] = StartServer(kvh, i)
-		kva[i].unreliable = true
+		kva[i].setunreliable(true)
 	}
 
 	ck := MakeClerk(kvh)
@@ -371,35 +406,20 @@ func TestUnreliable(t *testing.T) {
 			go func(me int) {
 				ok := false
 				defer func() { ca[me] <- ok }()
-				sa := make([]string, len(kvh))
-				copy(sa, kvh)
-				for i := range sa {
-					j := rand.Intn(i + 1)
-					sa[i], sa[j] = sa[j], sa[i]
-				}
-				myck := MakeClerk(sa)
+				myck := randclerk(kvh)
 				key := strconv.Itoa(me)
-				pv := myck.Get(key)
-				ov := myck.PutHash(key, "0")
-				if ov != pv {
-					t.Fatalf("wrong value; expected %s but got %s", pv, ov)
-				}
-				ov = myck.PutHash(key, "1")
-				pv = NextValue(pv, "0")
-				if ov != pv {
-					t.Fatalf("wrong value; expected %s but got %s", pv, ov)
-				}
-				ov = myck.PutHash(key, "2")
-				pv = NextValue(pv, "1")
-				if ov != pv {
-					t.Fatalf("wrong value; expected %s", pv)
-				}
-				nv := NextValue(pv, "2")
+				vv := myck.Get(key)
+				myck.Append(key, "0")
+				vv = NextValue(vv, "0")
+				myck.Append(key, "1")
+				vv = NextValue(vv, "1")
+				myck.Append(key, "2")
+				vv = NextValue(vv, "2")
 				time.Sleep(100 * time.Millisecond)
-				if myck.Get(key) != nv {
+				if myck.Get(key) != vv {
 					t.Fatalf("wrong value")
 				}
-				if myck.Get(key) != nv {
+				if myck.Get(key) != vv {
 					t.Fatalf("wrong value")
 				}
 				ok = true
@@ -424,13 +444,7 @@ func TestUnreliable(t *testing.T) {
 			ca[cli] = make(chan bool)
 			go func(me int) {
 				defer func() { ca[me] <- true }()
-				sa := make([]string, len(kvh))
-				copy(sa, kvh)
-				for i := range sa {
-					j := rand.Intn(i + 1)
-					sa[i], sa[j] = sa[j], sa[i]
-				}
-				myck := MakeClerk(sa)
+				myck := randclerk(kvh)
 				if (rand.Int() % 1000) < 500 {
 					myck.Put("b", strconv.Itoa(rand.Int()))
 				} else {
@@ -447,6 +461,52 @@ func TestUnreliable(t *testing.T) {
 			va[i] = cka[i].Get("b")
 			if va[i] != va[0] {
 				t.Fatalf("mismatch; 0 got %v, %v got %v", va[0], i, va[i])
+			}
+		}
+	}
+
+	fmt.Printf("  ... Passed\n")
+
+	fmt.Printf("Test: Concurrent Append to same key, unreliable ...\n")
+
+	ck.Put("k", "")
+
+	ff := func(me int, ch chan int) {
+		ret := -1
+		defer func() { ch <- ret }()
+		myck := randclerk(kvh)
+		n := 0
+		for n < 5 {
+			myck.Append("k", "x "+strconv.Itoa(me)+" "+strconv.Itoa(n)+" y")
+			n++
+		}
+		ret = n
+	}
+
+	ncli := 5
+	cha := []chan int{}
+	for i := 0; i < ncli; i++ {
+		cha = append(cha, make(chan int))
+		go ff(i, cha[i])
+	}
+
+	counts := []int{}
+	for i := 0; i < ncli; i++ {
+		n := <-cha[i]
+		if n < 0 {
+			t.Fatal("client failed")
+		}
+		counts = append(counts, n)
+	}
+
+	vx := ck.Get("k")
+	checkAppends(t, vx, counts)
+
+	{
+		for i := 0; i < nservers; i++ {
+			vi := cka[i].Get("k")
+			if vi != vx {
+				t.Fatalf("mismatch; 0 got %v, %v got %v", vx, i, vi)
 			}
 		}
 	}
@@ -486,7 +546,7 @@ func TestHole(t *testing.T) {
 		ck2 := MakeClerk([]string{port(tag, 2)})
 		ck2.Put("q", "q")
 
-		done := false
+		done := int32(0)
 		const nclients = 10
 		var ca [nclients]chan bool
 		for xcli := 0; xcli < nclients; xcli++ {
@@ -501,7 +561,7 @@ func TestHole(t *testing.T) {
 				key := strconv.Itoa(cli)
 				last := ""
 				cka[0].Put(key, last)
-				for done == false {
+				for atomic.LoadInt32(&done) == 0 {
 					ci := (rand.Int() % 2)
 					if (rand.Int() % 1000) < 500 {
 						nv := strconv.Itoa(rand.Int())
@@ -532,7 +592,7 @@ func TestHole(t *testing.T) {
 
 		// restore network, wait for all threads to exit.
 		part(t, tag, nservers, []int{0, 1, 2, 3, 4}, []int{}, []int{})
-		done = true
+		atomic.StoreInt32(&done, 1)
 		ok := true
 		for i := 0; i < nclients; i++ {
 			z := <-ca[i]
@@ -568,18 +628,18 @@ func TestManyPartition(t *testing.T) {
 			}
 		}
 		kva[i] = StartServer(kvh, i)
-		kva[i].unreliable = true
+		kva[i].setunreliable(true)
 	}
 	defer part(t, tag, nservers, []int{}, []int{}, []int{})
 	part(t, tag, nservers, []int{0, 1, 2, 3, 4}, []int{}, []int{})
 
-	done := false
+	done := int32(0)
 
 	// re-partition periodically
 	ch1 := make(chan bool)
 	go func() {
 		defer func() { ch1 <- true }()
-		for done == false {
+		for atomic.LoadInt32(&done) == 0 {
 			var a [nservers]int
 			for i := 0; i < nservers; i++ {
 				a[i] = (rand.Int() % 3)
@@ -617,14 +677,10 @@ func TestManyPartition(t *testing.T) {
 			key := strconv.Itoa(cli)
 			last := ""
 			myck.Put(key, last)
-			for done == false {
+			for atomic.LoadInt32(&done) == 0 {
 				if (rand.Int() % 1000) < 500 {
 					nv := strconv.Itoa(rand.Int())
-					v := myck.PutHash(key, nv)
-					if v != last {
-						t.Fatalf("%v: puthash wrong value, key %v, wanted %v, got %v",
-							cli, key, last, v)
-					}
+					myck.Append(key, nv)
 					last = NextValue(last, nv)
 				} else {
 					v := myck.Get(key)
@@ -639,7 +695,7 @@ func TestManyPartition(t *testing.T) {
 	}
 
 	time.Sleep(20 * time.Second)
-	done = true
+	atomic.StoreInt32(&done, 1)
 	<-ch1
 	part(t, tag, nservers, []int{0, 1, 2, 3, 4}, []int{}, []int{})
 

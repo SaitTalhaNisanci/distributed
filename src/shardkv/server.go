@@ -7,6 +7,7 @@ import "log"
 import "time"
 import "paxos"
 import "sync"
+import "sync/atomic"
 import "os"
 import "syscall"
 import "encoding/gob"
@@ -30,8 +31,8 @@ type ShardKV struct {
 	mu         sync.Mutex
 	l          net.Listener
 	me         int
-	dead       bool // for testing
-	unreliable bool // for testing
+	dead       int32 // for testing
+	unreliable int32 // for testing
 	sm         *shardmaster.Clerk
 	px         *paxos.Paxos
 
@@ -45,7 +46,8 @@ func (kv *ShardKV) Get(args *GetArgs, reply *GetReply) error {
 	return nil
 }
 
-func (kv *ShardKV) Put(args *PutArgs, reply *PutReply) error {
+// RPC handler for client Put and Append requests
+func (kv *ShardKV) PutAppend(args *PutAppendArgs, reply *PutAppendReply) error {
 	// Your code here.
 	return nil
 }
@@ -58,10 +60,29 @@ func (kv *ShardKV) tick() {
 }
 
 // tell the server to shut itself down.
+// please don't change these two functions.
 func (kv *ShardKV) kill() {
-	kv.dead = true
+	atomic.StoreInt32(&kv.dead, 1)
 	kv.l.Close()
 	kv.px.Kill()
+}
+
+// call this to find out if the server is dead.
+func (kv *ShardKV) isdead() bool {
+	return atomic.LoadInt32(&kv.dead) != 0
+}
+
+// please do not change these two functions.
+func (kv *ShardKV) Setunreliable(what bool) {
+	if what {
+		atomic.StoreInt32(&kv.unreliable, 1)
+	} else {
+		atomic.StoreInt32(&kv.unreliable, 0)
+	}
+}
+
+func (kv *ShardKV) isunreliable() bool {
+	return atomic.LoadInt32(&kv.unreliable) != 0
 }
 
 //
@@ -101,13 +122,13 @@ func StartServer(gid int64, shardmasters []string,
 	// or do anything to subvert it.
 
 	go func() {
-		for kv.dead == false {
+		for kv.isdead() == false {
 			conn, err := kv.l.Accept()
-			if err == nil && kv.dead == false {
-				if kv.unreliable && (rand.Int63()%1000) < 100 {
+			if err == nil && kv.isdead() == false {
+				if kv.isunreliable() && (rand.Int63()%1000) < 100 {
 					// discard the request.
 					conn.Close()
-				} else if kv.unreliable && (rand.Int63()%1000) < 200 {
+				} else if kv.isunreliable() && (rand.Int63()%1000) < 200 {
 					// process the request but force discard of reply.
 					c1 := conn.(*net.UnixConn)
 					f, _ := c1.File()
@@ -122,7 +143,7 @@ func StartServer(gid int64, shardmasters []string,
 			} else if err == nil {
 				conn.Close()
 			}
-			if err != nil && kv.dead == false {
+			if err != nil && kv.isdead() == false {
 				fmt.Printf("ShardKV(%v) accept: %v\n", me, err.Error())
 				kv.kill()
 			}
@@ -130,7 +151,7 @@ func StartServer(gid int64, shardmasters []string,
 	}()
 
 	go func() {
-		for kv.dead == false {
+		for kv.isdead() == false {
 			kv.tick()
 			time.Sleep(250 * time.Millisecond)
 		}

@@ -789,6 +789,177 @@ func Test5AppendUse(t *testing.T) {
 	fmt.Printf("  ... Passed\n")
 }
 
+//
+// recovery if a single replica loses disk content.
+//
+func Test5OneLostDisk(t *testing.T) {
+	tc := setup(t, "onelostdisk", 1, 3, false)
+	defer tc.cleanup()
+
+	fmt.Printf("Test: One server loses disk and restarts ...\n")
+
+	tc.join(0)
+	ck := tc.clerk()
+	g0 := tc.groups[0]
+
+	k1 := randstring(10)
+	k1v := ""
+	k2 := randstring(10)
+	k2v := ""
+
+	for i := 0; i < 7+(rand.Int()%7); i++ {
+		x := randstring(10)
+		ck.Append(k1, x)
+		k1v += x
+		k2v = randstring(10)
+		ck.Put(k2, k2v)
+	}
+
+	time.Sleep(300 * time.Millisecond)
+	ck.Get(k1)
+	time.Sleep(300 * time.Millisecond)
+	ck.Get(k2)
+
+	for i := 0; i < len(g0.servers); i++ {
+		k1x := ck.Get(k1)
+		if k1x != k1v {
+			t.Fatalf("wrong value for k1, i=%v, wanted=%v, got=%v", i, k1v, k1x)
+		}
+		k2x := ck.Get(k2)
+		if k2x != k2v {
+			t.Fatalf("wrong value for k2")
+		}
+
+		tc.kill1(0, i, true)
+		time.Sleep(1 * time.Second)
+
+		{
+			z := randstring(10)
+			k1v += z
+			ck.Append(k1, z)
+
+			k2v = randstring(10)
+			ck.Put(k2, k2v)
+		}
+
+		tc.start1(0, i)
+
+		{
+			z := randstring(10)
+			k1v += z
+			ck.Append(k1, z)
+
+			time.Sleep(10 * time.Millisecond)
+			z = randstring(10)
+			k1v += z
+			ck.Append(k1, z)
+		}
+
+		time.Sleep(2 * time.Second)
+	}
+
+	if ck.Get(k1) != k1v {
+		t.Fatalf("wrong value for k1")
+	}
+	if ck.Get(k2) != k2v {
+		t.Fatalf("wrong value for k2")
+	}
+
+	fmt.Printf("  ... Passed\n")
+}
+
+//
+// one disk lost while another replica is merely down.
+//
+func Test5OneLostOneDown(t *testing.T) {
+	tc := setup(t, "onelostonedown", 1, 5, false)
+	defer tc.cleanup()
+
+	fmt.Printf("Test: One server down, another loses disk ...\n")
+
+	tc.join(0)
+	ck := tc.clerk()
+	g0 := tc.groups[0]
+
+	k1 := randstring(10)
+	k1v := ""
+	k2 := randstring(10)
+	k2v := ""
+
+	for i := 0; i < 7+(rand.Int()%7); i++ {
+		x := randstring(10)
+		ck.Append(k1, x)
+		k1v += x
+		k2v = randstring(10)
+		ck.Put(k2, k2v)
+	}
+
+	time.Sleep(300 * time.Millisecond)
+	ck.Get(k1)
+	time.Sleep(300 * time.Millisecond)
+	ck.Get(k2)
+
+	tc.kill1(0, 0, false)
+
+	for i := 1; i < len(g0.servers); i++ {
+		k1x := ck.Get(k1)
+		if k1x != k1v {
+			t.Fatalf("wrong value for k1, i=%v, wanted=%v, got=%v", i, k1v, k1x)
+		}
+		k2x := ck.Get(k2)
+		if k2x != k2v {
+			t.Fatalf("wrong value for k2")
+		}
+
+		tc.kill1(0, i, true)
+		time.Sleep(1 * time.Second)
+
+		{
+			z := randstring(10)
+			k1v += z
+			ck.Append(k1, z)
+
+			k2v = randstring(10)
+			ck.Put(k2, k2v)
+		}
+
+		tc.start1(0, i)
+
+		{
+			z := randstring(10)
+			k1v += z
+			ck.Append(k1, z)
+
+			time.Sleep(10 * time.Millisecond)
+			z = randstring(10)
+			k1v += z
+			ck.Append(k1, z)
+		}
+
+		time.Sleep(2 * time.Second)
+	}
+
+	if ck.Get(k1) != k1v {
+		t.Fatalf("wrong value for k1")
+	}
+	if ck.Get(k2) != k2v {
+		t.Fatalf("wrong value for k2")
+	}
+
+	tc.start1(0, 0)
+	ck.Put("a", "b")
+	time.Sleep(1 * time.Second)
+	ck.Put("a", "c")
+	if ck.Get(k1) != k1v {
+		t.Fatalf("wrong value for k1")
+	}
+	if ck.Get(k2) != k2v {
+		t.Fatalf("wrong value for k2")
+	}
+
+	fmt.Printf("  ... Passed\n")
+}
+
 // check that all known appends are present in a value,
 // and are in order for each concurrent client.
 func checkAppends(t *testing.T, v string, counts []int) {
@@ -858,7 +1029,7 @@ func doConcurrentCrash(t *testing.T, unreliable bool) {
 	}
 
 	for i := 0; i < 3; i++ {
-		tc.kill1(0, i%3, false)
+		tc.kill1(0, i%3, true)
 		time.Sleep(1000 * time.Millisecond)
 		ck.Get(k1)
 		tc.start1(0, i%3)
@@ -943,7 +1114,7 @@ func Test5Simultaneous(t *testing.T) {
 		if (rand.Int() % 1000) < 500 {
 			tc.kill1(0, i%3, false)
 		} else {
-			tc.kill1(0, i%3, false)
+			tc.kill1(0, i%3, true)
 		}
 		time.Sleep(1000 * time.Millisecond)
 		vx := ck.Get(k1)
@@ -956,6 +1127,153 @@ func Test5Simultaneous(t *testing.T) {
 			t.Fatalf("Append thread failed")
 		}
 		counts[0] += z
+	}
+
+	fmt.Printf("  ... Passed\n")
+}
+
+//
+// recovery with mixture of lost disks and simple reboot.
+// does a replica that loses its disk wait for majority?
+//
+func Test5RejoinMix1(t *testing.T) {
+	tc := setup(t, "rejoinmix1", 1, 5, false)
+	defer tc.cleanup()
+
+	fmt.Printf("Test: replica waits correctly after disk loss ...\n")
+
+	tc.join(0)
+	ck := tc.clerk()
+
+	k1 := randstring(10)
+	k1v := ""
+
+	for i := 0; i < 7+(rand.Int()%7); i++ {
+		x := randstring(10)
+		ck.Append(k1, x)
+		k1v += x
+	}
+
+	time.Sleep(300 * time.Millisecond)
+	ck.Get(k1)
+
+	tc.kill1(0, 0, false)
+
+	for i := 0; i < 2; i++ {
+		x := randstring(10)
+		ck.Append(k1, x)
+		k1v += x
+	}
+
+	time.Sleep(300 * time.Millisecond)
+	ck.Get(k1)
+	time.Sleep(300 * time.Millisecond)
+
+	tc.kill1(0, 1, true)
+	tc.kill1(0, 2, true)
+
+	tc.kill1(0, 3, false)
+	tc.kill1(0, 4, false)
+
+	tc.start1(0, 0)
+	tc.start1(0, 1)
+	tc.start1(0, 2)
+	time.Sleep(300 * time.Millisecond)
+
+	// check that requests are not executed.
+	ch := make(chan string)
+	go func() {
+		ck1 := tc.clerk()
+		v := ck1.Get(k1)
+		ch <- v
+	}()
+
+	select {
+	case <-ch:
+		t.Fatalf("Get should not have succeeded.")
+	case <-time.After(3 * time.Second):
+		// this is what we hope for.
+	}
+
+	tc.start1(0, 3)
+	tc.start1(0, 4)
+
+	{
+		x := randstring(10)
+		ck.Append(k1, x)
+		k1v += x
+	}
+
+	v := ck.Get(k1)
+	if v != k1v {
+		t.Fatalf("Get returned wrong value")
+	}
+
+	fmt.Printf("  ... Passed\n")
+}
+
+//
+// does a replica that loses its state avoid
+// changing its mind about Paxos agreements?
+//
+func Test5RejoinMix3(t *testing.T) {
+	tc := setup(t, "rejoinmix3", 1, 5, false)
+	defer tc.cleanup()
+
+	fmt.Printf("Test: replica Paxos resumes correctly after disk loss ...\n")
+
+	tc.join(0)
+	ck := tc.clerk()
+
+	k1 := randstring(10)
+	k1v := ""
+
+	for i := 0; i < 7+(rand.Int()%7); i++ {
+		x := randstring(10)
+		ck.Append(k1, x)
+		k1v += x
+	}
+
+	time.Sleep(300 * time.Millisecond)
+	ck.Get(k1)
+
+	// kill R1, R2.
+	tc.kill1(0, 1, false)
+	tc.kill1(0, 2, false)
+
+	// R0, R3, and R4 are up.
+	for i := 0; i < 100+(rand.Int()%7); i++ {
+		x := randstring(10)
+		ck.Append(k1, x)
+		k1v += x
+	}
+
+	// kill R0, lose disk.
+	tc.kill1(0, 0, true)
+
+	time.Sleep(50 * time.Millisecond)
+
+	// restart R1, R2, R0.
+	tc.start1(0, 1)
+	tc.start1(0, 2)
+	time.Sleep(1 * time.Millisecond)
+	tc.start1(0, 0)
+
+	chx := make(chan bool)
+	x1 := randstring(10)
+	x2 := randstring(10)
+	go func() { ck.Append(k1, x1); chx <- true }()
+	time.Sleep(10 * time.Millisecond)
+	go func() { ck.Append(k1, x2); chx <- true }()
+
+	<-chx
+	<-chx
+
+	xv := ck.Get(k1)
+	if xv == k1v+x1+x2 || xv == k1v+x2+x1 {
+		// ok
+	} else {
+		t.Fatalf("wrong value")
 	}
 
 	fmt.Printf("  ... Passed\n")

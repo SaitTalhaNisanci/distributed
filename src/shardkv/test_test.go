@@ -8,7 +8,24 @@ import "os"
 import "time"
 import "fmt"
 import "sync"
+import "sync/atomic"
 import "math/rand"
+
+// information about the servers of one replica group.
+type tGroup struct {
+	gid     int64
+	servers []*ShardKV
+	ports   []string
+}
+
+// information about all the servers of a k/v cluster.
+type tCluster struct {
+	t           *testing.T
+	masters     []*shardmaster.ShardMaster
+	mck         *shardmaster.Clerk
+	masterports []string
+	groups      []*tGroup
+}
 
 func port(tag string, host int) string {
 	s := "/var/tmp/824-"
@@ -21,82 +38,100 @@ func port(tag string, host int) string {
 	return s
 }
 
-func NextValue(hprev string, val string) string {
-	h := hash(hprev + val)
-	return strconv.Itoa(int(h))
+//
+// start a k/v replica server thread.
+//
+func (tc *tCluster) start1(gi int, si int, unreliable bool) {
+	s := StartServer(tc.groups[gi].gid, tc.masterports, tc.groups[gi].ports, si)
+	tc.groups[gi].servers[si] = s
+	s.Setunreliable(unreliable)
 }
 
-func mcleanup(sma []*shardmaster.ShardMaster) {
-	for i := 0; i < len(sma); i++ {
-		if sma[i] != nil {
-			sma[i].Kill()
+func (tc *tCluster) cleanup() {
+	for gi := 0; gi < len(tc.groups); gi++ {
+		g := tc.groups[gi]
+		for si := 0; si < len(g.servers); si++ {
+			if g.servers[si] != nil {
+				g.servers[si].kill()
+			}
+		}
+	}
+
+	for i := 0; i < len(tc.masters); i++ {
+		if tc.masters[i] != nil {
+			tc.masters[i].Kill()
 		}
 	}
 }
 
-func cleanup(sa [][]*ShardKV) {
-	for i := 0; i < len(sa); i++ {
-		for j := 0; j < len(sa[i]); j++ {
-			sa[i][j].kill()
-		}
-	}
+func (tc *tCluster) shardclerk() *shardmaster.Clerk {
+	return shardmaster.MakeClerk(tc.masterports)
 }
 
-func setup(tag string, unreliable bool) ([]string, []int64, [][]string, [][]*ShardKV, func()) {
+func (tc *tCluster) clerk() *Clerk {
+	return MakeClerk(tc.masterports)
+}
+
+func (tc *tCluster) join(gi int) {
+	tc.mck.Join(tc.groups[gi].gid, tc.groups[gi].ports)
+}
+
+func (tc *tCluster) leave(gi int) {
+	tc.mck.Leave(tc.groups[gi].gid)
+}
+
+func setup(t *testing.T, tag string, unreliable bool) *tCluster {
 	runtime.GOMAXPROCS(4)
 
 	const nmasters = 3
-	var sma []*shardmaster.ShardMaster = make([]*shardmaster.ShardMaster, nmasters)
-	var smh []string = make([]string, nmasters)
-	// defer mcleanup(sma)
-	for i := 0; i < nmasters; i++ {
-		smh[i] = port(tag+"m", i)
-	}
-	for i := 0; i < nmasters; i++ {
-		sma[i] = shardmaster.StartServer(smh, i)
-	}
+	const ngroups = 3   // replica groups
+	const nreplicas = 3 // servers per group
 
-	const ngroups = 3                 // replica groups
-	const nreplicas = 3               // servers per group
-	gids := make([]int64, ngroups)    // each group ID
-	ha := make([][]string, ngroups)   // ShardKV ports, [group][replica]
-	sa := make([][]*ShardKV, ngroups) // ShardKVs
-	// defer cleanup(sa)
+	tc := &tCluster{}
+	tc.t = t
+	tc.masters = make([]*shardmaster.ShardMaster, nmasters)
+	tc.masterports = make([]string, nmasters)
+
+	for i := 0; i < nmasters; i++ {
+		tc.masterports[i] = port(tag+"m", i)
+	}
+	for i := 0; i < nmasters; i++ {
+		tc.masters[i] = shardmaster.StartServer(tc.masterports, i)
+	}
+	tc.mck = tc.shardclerk()
+
+	tc.groups = make([]*tGroup, ngroups)
+
 	for i := 0; i < ngroups; i++ {
-		gids[i] = int64(i + 100)
-		sa[i] = make([]*ShardKV, nreplicas)
-		ha[i] = make([]string, nreplicas)
+		tc.groups[i] = &tGroup{}
+		tc.groups[i].gid = int64(i + 100)
+		tc.groups[i].servers = make([]*ShardKV, nreplicas)
+		tc.groups[i].ports = make([]string, nreplicas)
 		for j := 0; j < nreplicas; j++ {
-			ha[i][j] = port(tag+"s", (i*nreplicas)+j)
+			tc.groups[i].ports[j] = port(tag+"s", (i*nreplicas)+j)
 		}
 		for j := 0; j < nreplicas; j++ {
-			sa[i][j] = StartServer(gids[i], smh, ha[i], j)
-			sa[i][j].unreliable = unreliable
+			tc.start1(i, j, unreliable)
 		}
 	}
 
-	clean := func() { cleanup(sa); mcleanup(sma) }
-	return smh, gids, ha, sa, clean
+	// return smh, gids, ha, sa, clean
+	return tc
 }
 
 func TestBasic(t *testing.T) {
-	smh, gids, ha, _, clean := setup("basic", false)
-	defer clean()
+	tc := setup(t, "basic", false)
+	defer tc.cleanup()
 
 	fmt.Printf("Test: Basic Join/Leave ...\n")
 
-	mck := shardmaster.MakeClerk(smh)
-	mck.Join(gids[0], ha[0])
+	tc.join(0)
 
-	ck := MakeClerk(smh)
+	ck := tc.clerk()
 
 	ck.Put("a", "x")
-	v := ck.PutHash("a", "b")
-	if v != "x" {
-		t.Fatalf("Puthash got wrong value")
-	}
-	ov := NextValue("x", "b")
-	if ck.Get("a") != ov {
+	ck.Append("a", "b")
+	if ck.Get("a") != "xb" {
 		t.Fatalf("Get got wrong value")
 	}
 
@@ -109,8 +144,8 @@ func TestBasic(t *testing.T) {
 	}
 
 	// are keys still there after joins?
-	for g := 1; g < len(gids); g++ {
-		mck.Join(gids[g], ha[g])
+	for g := 1; g < len(tc.groups); g++ {
+		tc.join(g)
 		time.Sleep(1 * time.Second)
 		for i := 0; i < len(keys); i++ {
 			v := ck.Get(keys[i])
@@ -124,8 +159,8 @@ func TestBasic(t *testing.T) {
 	}
 
 	// are keys still there after leaves?
-	for g := 0; g < len(gids)-1; g++ {
-		mck.Leave(gids[g])
+	for g := 0; g < len(tc.groups)-1; g++ {
+		tc.leave(g)
 		time.Sleep(1 * time.Second)
 		for i := 0; i < len(keys); i++ {
 			v := ck.Get(keys[i])
@@ -142,15 +177,14 @@ func TestBasic(t *testing.T) {
 }
 
 func TestMove(t *testing.T) {
-	smh, gids, ha, _, clean := setup("move", false)
-	defer clean()
+	tc := setup(t, "move", false)
+	defer tc.cleanup()
 
 	fmt.Printf("Test: Shards really move ...\n")
 
-	mck := shardmaster.MakeClerk(smh)
-	mck.Join(gids[0], ha[0])
+	tc.join(0)
 
-	ck := MakeClerk(smh)
+	ck := tc.clerk()
 
 	// insert one key per shard
 	for i := 0; i < shardmaster.NShards; i++ {
@@ -158,7 +192,7 @@ func TestMove(t *testing.T) {
 	}
 
 	// add group 1.
-	mck.Join(gids[1], ha[1])
+	tc.join(1)
 	time.Sleep(5 * time.Second)
 
 	// check that keys are still there.
@@ -169,54 +203,57 @@ func TestMove(t *testing.T) {
 	}
 
 	// remove sockets from group 0.
-	for i := 0; i < len(ha[0]); i++ {
-		os.Remove(ha[0][i])
+	for _, port := range tc.groups[0].ports {
+		os.Remove(port)
 	}
 
-	count := 0
+	count := int32(0)
 	var mu sync.Mutex
 	for i := 0; i < shardmaster.NShards; i++ {
 		go func(me int) {
-			myck := MakeClerk(smh)
+			myck := tc.clerk()
 			v := myck.Get(string('0' + me))
 			if v == string('0'+me) {
 				mu.Lock()
-				count++
+				atomic.AddInt32(&count, 1)
 				mu.Unlock()
 			} else {
-				t.Fatalf("Get(%v) yielded %v\n", i, v)
+				t.Fatalf("Get(%v) yielded %v\n", me, v)
 			}
 		}(i)
 	}
 
 	time.Sleep(10 * time.Second)
 
-	if count > shardmaster.NShards/3 && count < 2*(shardmaster.NShards/3) {
+	ccc := atomic.LoadInt32(&count)
+	if ccc > shardmaster.NShards/3 && ccc < 2*(shardmaster.NShards/3) {
 		fmt.Printf("  ... Passed\n")
 	} else {
 		t.Fatalf("%v keys worked after killing 1/2 of groups; wanted %v",
-			count, shardmaster.NShards/2)
+			ccc, shardmaster.NShards/2)
 	}
 }
 
 func TestLimp(t *testing.T) {
-	smh, gids, ha, sa, clean := setup("limp", false)
-	defer clean()
+	tc := setup(t, "limp", false)
+	defer tc.cleanup()
 
 	fmt.Printf("Test: Reconfiguration with some dead replicas ...\n")
 
-	mck := shardmaster.MakeClerk(smh)
-	mck.Join(gids[0], ha[0])
+	tc.join(0)
 
-	ck := MakeClerk(smh)
+	ck := tc.clerk()
 
 	ck.Put("a", "b")
 	if ck.Get("a") != "b" {
 		t.Fatalf("got wrong value")
 	}
 
-	for g := 0; g < len(sa); g++ {
-		sa[g][rand.Int()%len(sa[g])].kill()
+	// kill one server from each replica group.
+	for gi := 0; gi < len(tc.groups); gi++ {
+		sa := tc.groups[gi].servers
+		ns := len(sa)
+		sa[rand.Int()%ns].kill()
 	}
 
 	keys := make([]string, 10)
@@ -228,8 +265,8 @@ func TestLimp(t *testing.T) {
 	}
 
 	// are keys still there after joins?
-	for g := 1; g < len(gids); g++ {
-		mck.Join(gids[g], ha[g])
+	for g := 1; g < len(tc.groups); g++ {
+		tc.join(g)
 		time.Sleep(1 * time.Second)
 		for i := 0; i < len(keys); i++ {
 			v := ck.Get(keys[i])
@@ -243,11 +280,12 @@ func TestLimp(t *testing.T) {
 	}
 
 	// are keys still there after leaves?
-	for g := 0; g < len(gids)-1; g++ {
-		mck.Leave(gids[g])
+	for gi := 0; gi < len(tc.groups)-1; gi++ {
+		tc.leave(gi)
 		time.Sleep(2 * time.Second)
-		for i := 0; i < len(sa[g]); i++ {
-			sa[g][i].kill()
+		g := tc.groups[gi]
+		for i := 0; i < len(g.servers); i++ {
+			g.servers[i].kill()
 		}
 		for i := 0; i < len(keys); i++ {
 			v := ck.Get(keys[i])
@@ -264,12 +302,11 @@ func TestLimp(t *testing.T) {
 }
 
 func doConcurrent(t *testing.T, unreliable bool) {
-	smh, gids, ha, _, clean := setup("conc"+strconv.FormatBool(unreliable), unreliable)
-	defer clean()
+	tc := setup(t, "concurrent-"+strconv.FormatBool(unreliable), unreliable)
+	defer tc.cleanup()
 
-	mck := shardmaster.MakeClerk(smh)
-	for i := 0; i < len(gids); i++ {
-		mck.Join(gids[i], ha[i])
+	for i := 0; i < len(tc.groups); i++ {
+		tc.join(i)
 	}
 
 	const npara = 11
@@ -279,26 +316,23 @@ func doConcurrent(t *testing.T, unreliable bool) {
 		go func(me int) {
 			ok := true
 			defer func() { ca[me] <- ok }()
-			ck := MakeClerk(smh)
-			mymck := shardmaster.MakeClerk(smh)
+			ck := tc.clerk()
+			mymck := tc.shardclerk()
 			key := strconv.Itoa(me)
 			last := ""
 			for iters := 0; iters < 3; iters++ {
 				nv := strconv.Itoa(rand.Int())
-				v := ck.PutHash(key, nv)
-				if v != last {
-					ok = false
-					t.Fatalf("PutHash(%v) expected %v got %v\n", key, last, v)
-				}
-				last = NextValue(last, nv)
-				v = ck.Get(key)
+				ck.Append(key, nv)
+				last = last + nv
+				v := ck.Get(key)
 				if v != last {
 					ok = false
 					t.Fatalf("Get(%v) expected %v got %v\n", key, last, v)
 				}
 
-				mymck.Move(rand.Int()%shardmaster.NShards,
-					gids[rand.Int()%len(gids)])
+				gi := rand.Int() % len(tc.groups)
+				gid := tc.groups[gi].gid
+				mymck.Move(rand.Int()%shardmaster.NShards, gid)
 
 				time.Sleep(time.Duration(rand.Int()%30) * time.Millisecond)
 			}
