@@ -1,11 +1,13 @@
 package mapreduce
 
-import "fmt"
-import "os"
-import "log"
-import "net/rpc"
-import "net"
-import "container/list"
+import (
+	"container/list"
+	"fmt"
+	"log"
+	"net"
+	"net/rpc"
+	"os"
+)
 
 // Worker is a server waiting for DoJob or Shutdown RPCs
 

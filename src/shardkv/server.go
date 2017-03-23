@@ -1,18 +1,21 @@
 package shardkv
 
-import "net"
-import "fmt"
-import "net/rpc"
-import "log"
-import "time"
-import "paxos"
-import "sync"
-import "sync/atomic"
-import "os"
-import "syscall"
-import "encoding/gob"
-import "math/rand"
-import "shardmaster"
+import (
+	"encoding/gob"
+	"fmt"
+	"log"
+	"math/rand"
+	"net"
+	"net/rpc"
+	"os"
+	"sync"
+	"sync/atomic"
+	"syscall"
+	"time"
+
+	"paxos"
+	"shardmaster"
+)
 
 const Debug = 0
 

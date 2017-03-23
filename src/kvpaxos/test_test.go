@@ -1,14 +1,16 @@
 package kvpaxos
 
-import "testing"
-import "runtime"
-import "strconv"
-import "os"
-import "time"
-import "fmt"
-import "math/rand"
-import "strings"
-import "sync/atomic"
+import (
+	"fmt"
+	"math/rand"
+	"os"
+	"runtime"
+	"strconv"
+	"strings"
+	"sync/atomic"
+	"testing"
+	"time"
+)
 
 func check(t *testing.T, ck *Clerk, key string, value string) {
 	v := ck.Get(key)

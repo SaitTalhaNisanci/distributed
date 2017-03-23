@@ -1,19 +1,22 @@
 package pbservice
 
-import "viewservice"
-import "fmt"
-import "io"
-import "net"
-import "testing"
-import "time"
-import "log"
-import "runtime"
-import "math/rand"
-import "os"
-import "sync"
-import "strconv"
-import "strings"
-import "sync/atomic"
+import (
+	"fmt"
+	"io"
+	"log"
+	"math/rand"
+	"net"
+	"os"
+	"runtime"
+	"strconv"
+	"strings"
+	"sync"
+	"sync/atomic"
+	"testing"
+	"time"
+
+	"viewservice"
+)
 
 func check(ck *Clerk, key string, value string) {
 	v := ck.Get(key)

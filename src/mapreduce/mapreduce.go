@@ -1,18 +1,18 @@
 package mapreduce
 
-import "fmt"
-import "os"
-import "log"
-import "strconv"
-import "encoding/json"
-import "sort"
-import "container/list"
-import "net/rpc"
-import "net"
-import "bufio"
-import "hash/fnv"
-
-// import "os/exec"
+import (
+	"bufio"
+	"container/list"
+	"encoding/json"
+	"fmt"
+	"hash/fnv"
+	"log"
+	"net"
+	"net/rpc"
+	"os"
+	"sort"
+	"strconv"
+)
 
 // A simple mapreduce library with a sequential implementation.
 //

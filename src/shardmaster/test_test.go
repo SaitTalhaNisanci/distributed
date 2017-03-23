@@ -1,13 +1,14 @@
 package shardmaster
 
-import "testing"
-import "runtime"
-import "strconv"
-import "os"
-
-// import "time"
-import "fmt"
-import "math/rand"
+import (
+	"fmt"
+	"math/rand"
+	"os"
+	"runtime"
+	"strconv"
+	// "time"
+	"testing"
+)
 
 func port(tag string, host int) string {
 	s := "/var/tmp/824-"

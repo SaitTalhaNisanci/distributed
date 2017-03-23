@@ -1,12 +1,14 @@
 package lockservice
 
-import "testing"
-import "runtime"
-import "math/rand"
-import "os"
-import "strconv"
-import "time"
-import "fmt"
+import (
+	"fmt"
+	"math/rand"
+	"os"
+	"runtime"
+	"strconv"
+	"testing"
+	"time"
+)
 
 func tl(t *testing.T, ck *Clerk, lockname string, expected bool) {
 	x := ck.Lock(lockname)

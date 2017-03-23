@@ -1,16 +1,19 @@
 package pbservice
 
-import "net"
-import "fmt"
-import "net/rpc"
-import "log"
-import "time"
-import "viewservice"
-import "sync"
-import "sync/atomic"
-import "os"
-import "syscall"
-import "math/rand"
+import (
+	"fmt"
+	"log"
+	"math/rand"
+	"net"
+	"net/rpc"
+	"os"
+	"sync"
+	"sync/atomic"
+	"syscall"
+	"time"
+
+	"viewservice"
+)
 
 type PBServer struct {
 	mu         sync.Mutex

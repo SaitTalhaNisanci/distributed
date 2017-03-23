@@ -1,12 +1,15 @@
 package diskv
 
-import "shardmaster"
-import "net/rpc"
-import "time"
-import "sync"
-import "fmt"
-import "crypto/rand"
-import "math/big"
+import (
+	"crypto/rand"
+	"fmt"
+	"math/big"
+	"net/rpc"
+	"sync"
+	"time"
+
+	"shardmaster"
+)
 
 type Clerk struct {
 	mu     sync.Mutex // one RPC at a time

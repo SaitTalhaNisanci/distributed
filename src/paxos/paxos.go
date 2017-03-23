@@ -20,16 +20,17 @@ package paxos
 // px.Min() int -- instances before this seq have been forgotten
 //
 
-import "net"
-import "net/rpc"
-import "log"
-
-import "os"
-import "syscall"
-import "sync"
-import "sync/atomic"
-import "fmt"
-import "math/rand"
+import (
+	"fmt"
+	"log"
+	"math/rand"
+	"net"
+	"net/rpc"
+	"os"
+	"sync"
+	"sync/atomic"
+	"syscall"
+)
 
 // px.Status() return values, indicating
 // whether an agreement has been decided,

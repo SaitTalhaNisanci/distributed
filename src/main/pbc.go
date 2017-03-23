@@ -18,9 +18,12 @@ package main
 // and restart them to exercise fault tolerance.
 //
 
-import "pbservice"
-import "os"
-import "fmt"
+import (
+	"fmt"
+	"os"
+
+	"pbservice"
+)
 
 func usage() {
 	fmt.Printf("Usage: pbc viewport key\n")

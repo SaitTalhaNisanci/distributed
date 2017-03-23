@@ -1,13 +1,15 @@
 package lockservice
 
-import "net"
-import "net/rpc"
-import "log"
-import "sync"
-import "fmt"
-import "os"
-import "io"
-import "time"
+import (
+	"fmt"
+	"io"
+	"log"
+	"net"
+	"net/rpc"
+	"os"
+	"sync"
+	"time"
+)
 
 type LockServer struct {
 	mu    sync.Mutex

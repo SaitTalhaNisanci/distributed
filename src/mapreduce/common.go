@@ -1,7 +1,9 @@
 package mapreduce
 
-import "fmt"
-import "net/rpc"
+import (
+	"fmt"
+	"net/rpc"
+)
 
 const (
 	Map    = "Map"

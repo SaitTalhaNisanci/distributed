@@ -1,7 +1,9 @@
 package mapreduce
 
-import "container/list"
-import "fmt"
+import (
+	"container/list"
+	"fmt"
+)
 
 type WorkerInfo struct {
 	address string

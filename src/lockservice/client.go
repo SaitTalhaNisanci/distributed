@@ -1,7 +1,9 @@
 package lockservice
 
-import "net/rpc"
-import "fmt"
+import (
+	"fmt"
+	"net/rpc"
+)
 
 //
 // the lockservice Clerk lives in the client

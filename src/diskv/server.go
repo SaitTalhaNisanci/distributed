@@ -1,21 +1,24 @@
 package diskv
 
-import "net"
-import "fmt"
-import "net/rpc"
-import "log"
-import "time"
-import "paxos"
-import "sync"
-import "sync/atomic"
-import "os"
-import "syscall"
-import "encoding/gob"
-import "encoding/base32"
-import "math/rand"
-import "shardmaster"
-import "io/ioutil"
-import "strconv"
+import (
+	"encoding/base32"
+	"encoding/gob"
+	"fmt"
+	"io/ioutil"
+	"log"
+	"math/rand"
+	"net"
+	"net/rpc"
+	"os"
+	"strconv"
+	"sync"
+	"sync/atomic"
+	"syscall"
+	"time"
+
+	"paxos"
+	"shardmaster"
+)
 
 const Debug = 0
 

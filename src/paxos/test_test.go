@@ -1,15 +1,18 @@
 package paxos
 
-import "testing"
-import "runtime"
-import "strconv"
-import "os"
-import "time"
-import "fmt"
-import "math/rand"
-import crand "crypto/rand"
-import "encoding/base64"
-import "sync/atomic"
+import (
+	"encoding/base64"
+	"fmt"
+	"math/rand"
+	"os"
+	"runtime"
+	"strconv"
+	"sync/atomic"
+	"testing"
+	"time"
+
+	crand "crypto/rand"
+)
 
 func randstring(n int) string {
 	b := make([]byte, 2*n)

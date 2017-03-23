@@ -1,17 +1,19 @@
 package shardmaster
 
-import "net"
-import "fmt"
-import "net/rpc"
-import "log"
+import (
+	"encoding/gob"
+	"fmt"
+	"log"
+	"math/rand"
+	"net"
+	"net/rpc"
+	"os"
+	"sync"
+	"sync/atomic"
+	"syscall"
 
-import "paxos"
-import "sync"
-import "sync/atomic"
-import "os"
-import "syscall"
-import "encoding/gob"
-import "math/rand"
+	"paxos"
+)
 
 type ShardMaster struct {
 	mu         sync.Mutex

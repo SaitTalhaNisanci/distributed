@@ -1,11 +1,13 @@
 package pbservice
 
-import "viewservice"
-import "net/rpc"
-import "fmt"
+import (
+	"crypto/rand"
+	"fmt"
+	"math/big"
+	"net/rpc"
 
-import "crypto/rand"
-import "math/big"
+	"viewservice"
+)
 
 type Clerk struct {
 	vs *viewservice.Clerk
