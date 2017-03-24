@@ -23,16 +23,16 @@ LAB4_FILES=src/README.lab4 \
 					 src/shardkv/server.go
 
 
-lab1.tar.gz: $(LAB1_FILES)
+lab1_%.tar.gz: $(LAB1_FILES)
 	@ tar -cvzf $@ $^
 
-lab2.tar.gz: $(LAB2_FILES)
+lab2_%.tar.gz: $(LAB2_FILES)
 	@ tar -cvzf $@ $^
 
-lab3.tar.gz: $(LAB3_FILES)
+lab3_%.tar.gz: $(LAB3_FILES)
 	@ tar -cvzf $@ $^
 
-lab4.tar.gz: $(LAB4_FILES)
+lab4_%.tar.gz: $(LAB4_FILES)
 	@ tar -cvzf $@ $^
 
 
