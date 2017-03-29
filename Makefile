@@ -1,23 +1,19 @@
-LAB1_FILES=src/README.lab1 \
-				   src/main/wc.go \
+LAB1_FILES=src/main/wc.go \
 					 src/mapreduce/mapreduce.go \
 					 src/mapreduce/master.go
 
-LAB2_FILES=src/README.lab2 \
-					 src/viewservice/common.go \
+LAB2_FILES=src/viewservice/common.go \
 					 src/viewservice/server.go \
 					 src/pbservice/client.go \
 					 src/pbservice/common.go \
 					 src/pbservice/server.go
 
-LAB3_FILES=src/README.lab3 \
-					 src/paxos/paxos.go \
+LAB3_FILES=src/paxos/paxos.go \
 					 src/kvpaxos/client.go \
 					 src/kvpaxos/common.go \
 					 src/kvpaxos/server.go
 
-LAB4_FILES=src/README.lab4 \
-					 src/shardmaster/server.go \
+LAB4_FILES=src/shardmaster/server.go \
 					 src/shardkv/client.go \
 					 src/shardkv/common.go \
 					 src/shardkv/server.go
