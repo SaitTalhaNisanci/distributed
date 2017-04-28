@@ -14,6 +14,7 @@ LAB3_FILES=src/paxos/paxos.go \
 					 src/kvpaxos/server.go
 
 LAB4_FILES=src/shardmaster/server.go \
+					 src/paxos/paxos.go \
 					 src/shardkv/client.go \
 					 src/shardkv/common.go \
 					 src/shardkv/server.go
