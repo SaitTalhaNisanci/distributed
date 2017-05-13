@@ -10,6 +10,9 @@ import (
 type Clerk struct {
 	servers []string
 	// You will have to modify this struct.
+
+	cid   int64
+	seqNo int
 }
 
 func nrand() int64 {
@@ -23,6 +26,9 @@ func MakeClerk(servers []string) *Clerk {
 	ck := new(Clerk)
 	ck.servers = servers
 	// You'll have to add code here.
+	ck.cid = nrand()
+	ck.seqNo = 0
+
 	return ck
 }
 
@@ -66,7 +72,26 @@ func call(srv string, rpcname string,
 // keeps trying forever in the face of all other errors.
 //
 func (ck *Clerk) Get(key string) string {
-	// You will have to modify this function.
+	// update sequence number
+	ck.seqNo += 1
+
+	// create argument struct
+	gArgs := new(GetArgs)
+	gArgs.Key = key
+
+	gArgs.Cid = ck.cid
+	gArgs.SeqNo = ck.seqNo
+
+	// create reply struct
+	gReply := new(GetReply)
+
+	ck.sendToServer("Get", &gArgs, &gReply)
+
+	// return the value if one exists, otherwise return the empty string
+	if gReply.Err == OK {
+		return gReply.Value
+	}
+
 	return ""
 }
 
@@ -74,7 +99,23 @@ func (ck *Clerk) Get(key string) string {
 // shared by Put and Append.
 //
 func (ck *Clerk) PutAppend(key string, value string, op string) {
-	// You will have to modify this function.
+	// update sequence number
+	ck.seqNo += 1
+
+	// create argument struct
+	paArgs := new(PutAppendArgs)
+
+	paArgs.Key = key
+	paArgs.Value = value
+	paArgs.Op = op
+
+	paArgs.SeqNo = ck.seqNo
+	paArgs.Cid = ck.cid
+
+	// create reply struct
+	paReply := new(PutAppendReply)
+
+	ck.sendToServer("PutAppend", &paArgs, &paReply)
 }
 
 func (ck *Clerk) Put(key string, value string) {
@@ -82,4 +123,10 @@ func (ck *Clerk) Put(key string, value string) {
 }
 func (ck *Clerk) Append(key string, value string) {
 	ck.PutAppend(key, value, "Append")
+}
+
+func (ck *Clerk) sendToServer(op string, args interface{}, reply interface{}) {
+	// find a server
+	for i := 0; !call(ck.servers[i%len(ck.servers)], "KVPaxos."+op, args, reply); i += 1 {
+	}
 }

@@ -1,0 +1,17 @@
+# CSE 452 Spring 2017, Lab 3 Part b
+
+## Authors
+
+Jessica Negara (UWNetID: jnegara) (me)
+
+Talha Nisanci (UWNetID: Talha) (my partner)
+
+
+## Question Responses:
+
+We spent about two days on this lab. I mostly worked on the latter part of the paxos algorithm - recognizing when a consensus is achieved. I also helped test and debug.
+
+## High Level Description for part a
+When we get a start call we first check if it is less than px.Min() if it is we dont do anything. If it is not we basically find a number that is higher than any number seen so far and we prepare a request with that number, in other words we broadcast prepare that and also we learn the highest accepted proposals value because we will propose that value in broadcast accept step. So if majority said okay for prepare then we broadcast accept that value if found or the current peers value. If this is also accepted by majority then we send decided. We have local prepare, local accept and local decided instead of RPC for the same peer. Also we learn done values over RPC calls so that we can update them in our done map and we can garbage collect if needed. We dont have locks for the proposer method so that instances out of order can be also done.
+
+

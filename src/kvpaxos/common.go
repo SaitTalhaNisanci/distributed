@@ -5,6 +5,10 @@ const (
 	ErrNoKey = "ErrNoKey"
 )
 
+const type int (
+	PUT = iota + 1
+	APPEND
+)
 type Err string
 
 // Put or Append
@@ -16,6 +20,9 @@ type PutAppendArgs struct {
 	// You'll have to add definitions here.
 	// Field names must start with capital letters,
 	// otherwise RPC will break.
+
+	Cid   int64
+	SeqNo int
 }
 
 type PutAppendReply struct {
@@ -25,6 +32,9 @@ type PutAppendReply struct {
 type GetArgs struct {
 	Key string
 	// You'll have to add definitions here.
+
+	Cid   int64
+	SeqNo int
 }
 
 type GetReply struct {
