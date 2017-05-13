@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9eacf4ff-5f7b-4aac-86a4-9e45ac66e793" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/kvpaxos/common.go" afterPath="$PROJECT_DIR$/src/kvpaxos/common.go" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/kvpaxos/server.go" afterPath="$PROJECT_DIR$/src/kvpaxos/server.go" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -29,9 +28,11 @@
       <file leaf-file-name="server.go" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/kvpaxos/server.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="223">
-              <caret line="15" column="10" lean-forward="false" selection-start-line="15" selection-start-column="10" selection-end-line="15" selection-end-column="10" />
-              <folding />
+            <state relative-caret-position="343">
+              <caret line="34" column="21" lean-forward="false" selection-start-line="34" selection-start-column="21" selection-end-line="34" selection-end-column="21" />
+              <folding>
+                <element signature="e#17#162#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -551,7 +552,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="420">
           <caret line="42" column="16" lean-forward="false" selection-start-line="42" selection-start-column="16" selection-end-line="42" selection-end-column="16" />
-          <folding />
+          <folding>
+            <element signature="e#17#162#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -589,9 +592,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/kvpaxos/server.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="223">
-          <caret line="15" column="10" lean-forward="false" selection-start-line="15" selection-start-column="10" selection-end-line="15" selection-end-column="10" />
-          <folding />
+        <state relative-caret-position="343">
+          <caret line="34" column="21" lean-forward="false" selection-start-line="34" selection-start-column="21" selection-end-line="34" selection-end-column="21" />
+          <folding>
+            <element signature="e#17#162#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

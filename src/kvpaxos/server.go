@@ -21,12 +21,6 @@ import (
 
 const Debug = 0
 
-const (
-	PUT    = 0
-	APPEND = 1
-	GET    = 2
-)
-
 func DPrintf(format string, a ...interface{}) (n int, err error) {
 	if Debug > 0 {
 		log.Printf(format, a...)
@@ -38,7 +32,7 @@ type Op struct {
 	// Your definitions here.
 	// Field names must start with capital letters,
 	// otherwise RPC will break.
-	OpType int
+	OpType string
 	Key    string
 	Value  string // empty string if get operation
 
@@ -143,7 +137,7 @@ func (kv *KVPaxos) garbageCollect() {
 func (kv *KVPaxos) Get(args *GetArgs, reply *GetReply) error {
 	// create and populate op struct
 	op := new(Op)
-	op.OpType = GET
+	op.OpType = "Get"
 	op.Key = args.Key
 	op.Value = ""
 
@@ -168,11 +162,7 @@ func (kv *KVPaxos) PutAppend(args *PutAppendArgs, reply *PutAppendReply) error {
 
 	// create and populate op struct
 	op := new(Op)
-	if args.Op == "Put" {
-		op.OpType = PUT
-	} else {
-		op.OpType = APPEND
-	}
+	op.OpType = args.Op
 	op.Key = args.Key
 	op.Value = args.Value
 
