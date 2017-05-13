@@ -1,0 +1,18 @@
+<component name="libraryTable">
+  <library name="GOPATH &lt;452-labs&gt;">
+    <CLASSES>
+      <root url="file://$USER_HOME$/work/src/github.com" />
+      <root url="file://$USER_HOME$/work/src/golang.org" />
+      <root url="file://$USER_HOME$/work/src/sourcegraph.com" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$USER_HOME$/work/src/github.com" />
+      <root url="file://$USER_HOME$/work/src/golang.org" />
+      <root url="file://$USER_HOME$/work/src/sourcegraph.com" />
+    </SOURCES>
+    <excluded>
+      <root url="file://$PROJECT_DIR$" />
+    </excluded>
+  </library>
+</component>

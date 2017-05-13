@@ -5,10 +5,6 @@ const (
 	ErrNoKey = "ErrNoKey"
 )
 
-const type int (
-	PUT = iota + 1
-	APPEND
-)
 type Err string
 
 // Put or Append
