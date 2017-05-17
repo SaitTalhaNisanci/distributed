@@ -37,8 +37,12 @@ type Op struct {
 	Value  string // empty string if get operation
 
 	// for duplicate detection
-	Cid int64
-	SeqNo int
+	Cid    int64
+	SeqNo  int
+
+	// for reply caching
+	Res    string // for gets
+	Done   bool
 }
 
 type KVPaxos struct {
@@ -51,7 +55,7 @@ type KVPaxos struct {
 
 	// Your definitions here.
 	kvstore map[string]string
-	ops     []Op
+	ops     []*Op
 }
 
 // Returns whether or not two operations are equal
@@ -76,9 +80,15 @@ func (op *Op) equals2(other Op) bool {
 
 // returns true iff this op has already been assigned a sequence number
 func (kv *KVPaxos) hasDuplicates(op *Op) bool {
-	// TODO: this probably isn't sufficient
+	kv.mu.Lock()
+	defer kv.mu.Unlock()
+
+	// TODO: This isn't sufficient.
+	// kv.ops does not contain every single op that has been submitted, but rather
+	// the ops in the order decided by paxos
+
 	for i := 0; i < len(kv.ops); i++ {
-		if op.equals(&kv.ops[i]) {
+		if op.equals(kv.ops[i]) {
 			return true
 		}
 	}
@@ -95,7 +105,10 @@ func (kv *KVPaxos) propose(op *Op) {
 	opNo := kv.px.Min()
 	for {
 		// case 1: this instance is done, continue
-		if fate, _ := kv.px.Status(opNo); fate == paxos.Decided {
+		if fate, decision := kv.px.Status(opNo); fate == paxos.Decided {
+			kv.ops[opNo] = decision.(*Op)
+			kv.ops[opNo].Done = false
+			kv.px.Done(opNo)
 			continue
 		}
 
@@ -111,6 +124,9 @@ func (kv *KVPaxos) propose(op *Op) {
 
 		// if the decided value is the op we proposed, we're done
 		if op.equals2(decision.(Op)) {
+			kv.ops[opNo] = op
+			kv.ops[opNo].Done = false
+			kv.px.Done(kv.px.Min())
 			return
 		}
 
@@ -119,6 +135,49 @@ func (kv *KVPaxos) propose(op *Op) {
 	}
 }
 
+func (kv *KVPaxos) executeOp(op *Op) int {
+	kv.mu.Lock()
+	defer kv.mu.Unlock()
+
+	minDone := 0
+	for {
+
+		for i := minDone; i < len(kv.ops); i++ {
+			// the operation has already been executed
+			if kv.ops[i].Done {
+				if op.equals(kv.ops[i]) {
+					return i
+				}
+				continue
+			}
+
+			// execute action
+			switch kv.ops[i].OpType {
+			case "Get":
+				// get behavior
+				if res, ok := kv.kvstore[kv.ops[i].Key]; ok {
+					kv.ops[i].Res = res
+				} else {
+					kv.ops[i].Res = ""
+				}
+				break
+			case "PutAppend":
+				// put/append behavior
+				if res, ok := kv.kvstore[kv.ops[i].Key]; ok {
+					kv.kvstore[kv.ops[i].Key] = res + kv.ops[i].Value
+				} else {
+					kv.kvstore[kv.ops[i].Key] = kv.ops[i].Value
+				}
+				break
+			}
+
+			minDone = i
+		}
+		time.Sleep(time.Second)
+	}
+}
+
+/*
 //	 Put and Append are probably wrong
 func (kv *KVPaxos) garbageCollect() {
 	kv.mu.Lock()
@@ -132,6 +191,7 @@ func (kv *KVPaxos) garbageCollect() {
 
 	kv.px.Done(opNo - 1)
 }
+*/
 
 
 func (kv *KVPaxos) Get(args *GetArgs, reply *GetReply) error {
@@ -144,16 +204,18 @@ func (kv *KVPaxos) Get(args *GetArgs, reply *GetReply) error {
 	op.Cid = args.Cid
 	op.SeqNo = args.SeqNo
 
-	// TODO: figure out how to handle duplicates
-	if kv.hasDuplicates(op) {
-		return nil
+	if !kv.hasDuplicates(op) {
+		kv.propose(op)
 	}
 
-	kv.propose(op)
-	kv.garbageCollect()
+	//kv.garbageCollect()
+	opIdx := kv.executeOp(op)
 
-	// TODO: format reply
+	kv.mu.Lock()
+	defer kv.mu.Unlock()
 
+	reply.Value = kv.ops[opIdx].Value
+	reply.Err = OK
 	return nil
 }
 
@@ -169,16 +231,16 @@ func (kv *KVPaxos) PutAppend(args *PutAppendArgs, reply *PutAppendReply) error {
 	op.Cid = args.Cid
 	op.SeqNo = args.SeqNo
 
-	// TODO: figure out how to handle duplicates
-	if kv.hasDuplicates(op) {
-		return nil
+	reply.Err = OK
+
+	if !kv.hasDuplicates(op) {
+		kv.propose(op)
 	}
 
 	kv.propose(op)
-	kv.garbageCollect()
+	//kv.garbageCollect()
 
-	// TODO: format reply
-
+	kv.executeOp(op)
 	return nil
 }
 
