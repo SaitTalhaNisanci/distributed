@@ -85,14 +85,13 @@ func (ck *Clerk) Get(key string) string {
 	// create reply struct
 	gReply := new(GetReply)
 
-	ck.sendToServer("Get", &gArgs, &gReply)
-
 	// return the value if one exists, otherwise return the empty string
-	if gReply.Err == OK {
-		return gReply.Value
+	ck.sendToServer("Get", &gArgs, &gReply)
+	for gReply.Err != OK {
+		ck.sendToServer("Get", &gArgs, &gReply)
 	}
 
-	return ""
+	return gReply.Value
 }
 
 //
@@ -116,6 +115,9 @@ func (ck *Clerk) PutAppend(key string, value string, op string) {
 	paReply := new(PutAppendReply)
 
 	ck.sendToServer("PutAppend", &paArgs, &paReply)
+	for paReply.Err != OK {
+		ck.sendToServer("PutAppend", &paArgs, &paReply)
+	}
 }
 
 func (ck *Clerk) Put(key string, value string) {

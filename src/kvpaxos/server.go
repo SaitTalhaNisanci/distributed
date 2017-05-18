@@ -13,11 +13,10 @@ import (
 	"syscall"
 
 	"paxos"
-	//"crypto/tls"
+	//"net/http/httptrace"
+	"strconv"
 	"time"
 )
-
-// TODO: implement concurrency and locks correctly
 
 const Debug = 0
 
@@ -28,21 +27,29 @@ func DPrintf(format string, a ...interface{}) (n int, err error) {
 	return
 }
 
+type OpType int
+
+const (
+	GET = iota
+	PUTAPPEND
+)
+
 type Op struct {
 	// Your definitions here.
 	// Field names must start with capital letters,
 	// otherwise RPC will break.
-	OpType string
-	Key    string
-	Value  string // empty string if get operation
 
-	// for duplicate detection
+	// for  identifying the operation instance
 	Cid    int64
 	SeqNo  int
 
-	// for reply caching
-	Res    string // for gets
-	Done   bool
+	// for executing the operation
+	Type   OpType
+	Key    string
+	Value  string
+
+	// for after the ordering has been decided
+	OpNo   int
 }
 
 type KVPaxos struct {
@@ -53,194 +60,165 @@ type KVPaxos struct {
 	unreliable int32 // for testing
 	px         *paxos.Paxos
 
-	// Your definitions here.
-	kvstore map[string]string
-	ops     []*Op
+			 // Your definitions here.
+	doneIdx       int   // all operations <= done have been executed
+	ops        map[int]*Op
+
+	kvstore    map[string]string
+	seen 	   map[string]bool
+	done       map[string]bool
 }
 
-// Returns whether or not two operations are equal
-// op1 == op2 iff they have the same client id and sequence number
+// returns true iff the two operations are of the same instance
+// false otherwise
 func (op *Op) equals(other *Op) bool {
-	if op.Cid != other.Cid && op.SeqNo != other.SeqNo {
-		return false
-	}
-
-	return true
-}
-
-// Returns whether or not two operations are equal
-// op1 == op2 iff they have the same client id and sequence number
-func (op *Op) equals2(other Op) bool {
-	if op.Cid != other.Cid && op.SeqNo != other.SeqNo {
-		return false
-	}
-
-	return true
-}
-
-// returns true iff this op has already been assigned a sequence number
-func (kv *KVPaxos) hasDuplicates(op *Op) bool {
-	kv.mu.Lock()
-	defer kv.mu.Unlock()
-
-	// TODO: This isn't sufficient.
-	// kv.ops does not contain every single op that has been submitted, but rather
-	// the ops in the order decided by paxos
-
-	for i := 0; i < len(kv.ops); i++ {
-		if op.equals(kv.ops[i]) {
-			return true
-		}
+	if op.Cid == other.Cid && op.SeqNo == other.SeqNo {
+		return true
 	}
 
 	return false
 }
 
-// continues to propose an operation to paxos until it is finally accepted
-// only returns after it has been accepted by some sequence number
-func (kv *KVPaxos) propose(op *Op) {
+// returns a formatted op struct
+func formatOp(cid int64, seqNo int, opType OpType, key string, val string) (op *Op) {
+	op = new(Op)
+
+	// instance identifiers
+	op.Cid = cid
+	op.SeqNo = seqNo
+
+	// operation unique information
+	op.Type = opType
+	op.Key = key
+	op.Value = val
+
+	// for identifying the state of the operation
+	op.OpNo = -1
+
+	return
+}
+
+// returns true iff this instance of kvpaxos has already seen or proposed this operation, false otherwise
+//
+// ensuring that this instance alone is not sufficient for ensuring that duplicate operations are not executed
+//
+// has the following side effect:
+// if the operation has not been seen or proposed, it is marked seen
+func (kv *KVPaxos) hasDuplicates(op *Op) bool {
 	kv.mu.Lock()
 	defer kv.mu.Unlock()
 
-	opNo := kv.px.Min()
-	for {
-		// case 1: this instance is done, continue
-		if fate, decision := kv.px.Status(opNo); fate == paxos.Decided {
-			kv.ops[opNo] = decision.(*Op)
-			kv.ops[opNo].Done = false
-			kv.px.Done(opNo)
-			continue
-		}
+	// create a string representation of the instance
+	opId := strconv.Itoa(int(op.Cid)) + strconv.Itoa(op.SeqNo)
 
-		// case 2: this instance is not done, propose the value
+	if val, ok := kv.seen[opId]; ok {
+		if val {
+			// this operation has been already seen
+			return true
+		}
+	}
+
+	// this operation has not been seen; mark it seen
+	kv.seen[opId] = true
+	return false
+}
+
+// proposes the given op
+// also learns what ops have been chosen, and garbage collects
+func (kv *KVPaxos) proposeOp(op *Op) {
+	kv.mu.Lock()
+	defer kv.mu.Unlock()
+
+	opNo := kv.doneIdx
+	for {
+		// attempt to propose the value
 		kv.px.Start(opNo, op)
 
-		// wait until it has been decided
+		// wait for this instance to make a decision
 		status, decision := kv.px.Status(opNo)
 		for status != paxos.Decided {
 			time.Sleep(time.Second)
 			status, decision = kv.px.Status(opNo)
 		}
 
-		// if the decided value is the op we proposed, we're done
-		if op.equals2(decision.(Op)) {
-			kv.ops[opNo] = op
-			kv.ops[opNo].Done = false
-			kv.px.Done(kv.px.Min())
+		// put the decision in its place
+		kv.ops[opNo] = decision.(*Op)
+		kv.ops[opNo].SeqNo = opNo
+
+		// check to see if our value was chosen
+		if op.equals(decision.(*Op)) {
 			return
 		}
 
-		// otherwise continue
+		// value was not chosen, mark seen and continue
+		kv.seen[strconv.Itoa(int(op.Cid)) + strconv.Itoa(op.SeqNo)] = true
 		opNo++
 	}
 }
 
-func (kv *KVPaxos) executeOp(op *Op) int {
-	kv.mu.Lock()
-	defer kv.mu.Unlock()
-
-	minDone := 0
-	for {
-
-		for i := minDone; i < len(kv.ops); i++ {
-			// the operation has already been executed
-			if kv.ops[i].Done {
-				if op.equals(kv.ops[i]) {
-					return i
-				}
-				continue
-			}
-
-			// execute action
-			switch kv.ops[i].OpType {
-			case "Get":
-				// get behavior
-				if res, ok := kv.kvstore[kv.ops[i].Key]; ok {
-					kv.ops[i].Res = res
-				} else {
-					kv.ops[i].Res = ""
-				}
-				break
-			case "PutAppend":
-				// put/append behavior
-				if res, ok := kv.kvstore[kv.ops[i].Key]; ok {
-					kv.kvstore[kv.ops[i].Key] = res + kv.ops[i].Value
-				} else {
-					kv.kvstore[kv.ops[i].Key] = kv.ops[i].Value
-				}
-				break
-			}
-
-			minDone = i
-		}
-		time.Sleep(time.Second)
-	}
-}
-
-/*
-//	 Put and Append are probably wrong
-func (kv *KVPaxos) garbageCollect() {
-	kv.mu.Lock()
-	defer kv.mu.Unlock()
-
-	// go through all the operations that have been decided (in order), and execute them, then delete their instances
-	opNo := kv.px.Min()
-	for status, decision := kv.px.Status(opNo); status == paxos.Decided; opNo++ {
-		kv.ops[opNo] = decision.(Op)
-	}
-
-	kv.px.Done(opNo - 1)
-}
-*/
-
-
 func (kv *KVPaxos) Get(args *GetArgs, reply *GetReply) error {
-	// create and populate op struct
-	op := new(Op)
-	op.OpType = "Get"
-	op.Key = args.Key
-	op.Value = ""
-
-	op.Cid = args.Cid
-	op.SeqNo = args.SeqNo
+	// Your code here.
+	op := formatOp(args.Cid, args.SeqNo, GET, args.Key, "")
+	reply.Err = OK
 
 	if !kv.hasDuplicates(op) {
-		kv.propose(op)
+		kv.proposeOp(op)
 	}
-
-	//kv.garbageCollect()
-	opIdx := kv.executeOp(op)
 
 	kv.mu.Lock()
 	defer kv.mu.Unlock()
 
-	reply.Value = kv.ops[opIdx].Value
-	reply.Err = OK
+	// execute all known ops in order
+	for ; kv.doneIdx <= op.OpNo; kv.doneIdx++ {
+		// get the earliest op that has not been executed
+		curOp := kv.ops[kv.doneIdx]
+
+		// format the op id
+		curId := strconv.Itoa(int(op.Cid)) + strconv.Itoa(op.SeqNo)
+
+		// a duplicate has been detected, skip it
+		if _, ok := kv.done[curId]; ok {
+			continue
+		}
+
+		// execute op
+		switch curOp.Type {
+		case GET:
+			// get behavior
+			if res, ok := kv.kvstore[curOp.Key]; ok {
+				kv.ops[kv.doneIdx].Value = res
+			} else {
+				kv.ops[kv.doneIdx].Value = ""
+			}
+		case PUTAPPEND:
+			// putappend behavior
+			if res, ok := kv.kvstore[curOp.Key]; ok {
+				kv.kvstore[curOp.Key] = res + curOp.Value
+			} else {
+				kv.kvstore[curOp.Key] = curOp.Value
+			}
+		}
+
+		// mark op finished
+		kv.done[curId] = true
+	}
+
+	// return value at the time at which op was executed
+	reply.Value = kv.ops[op.SeqNo].Value
+
 	return nil
 }
 
 func (kv *KVPaxos) PutAppend(args *PutAppendArgs, reply *PutAppendReply) error {
 	// Your code here.
 
-	// create and populate op struct
-	op := new(Op)
-	op.OpType = args.Op
-	op.Key = args.Key
-	op.Value = args.Value
-
-	op.Cid = args.Cid
-	op.SeqNo = args.SeqNo
-
+	op := formatOp(args.Cid, args.SeqNo, PUTAPPEND, args.Key, args.Value)
 	reply.Err = OK
 
 	if !kv.hasDuplicates(op) {
-		kv.propose(op)
+		kv.proposeOp(op)
 	}
 
-	kv.propose(op)
-	//kv.garbageCollect()
-
-	kv.executeOp(op)
 	return nil
 }
 
@@ -286,6 +264,13 @@ func StartServer(servers []string, me int) *KVPaxos {
 	kv.me = me
 
 	// Your initialization code here.
+	kv.doneIdx = 0
+	kv.kvstore = make(map[string]string)
+	kv.ops = make(map[int]*Op)
+	kv.seen = make(map[string]bool)
+	kv.done = make(map[string]bool)
+
+
 
 	rpcs := rpc.NewServer()
 	rpcs.Register(kv)
