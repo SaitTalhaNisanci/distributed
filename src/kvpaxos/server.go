@@ -66,7 +66,7 @@ type KVPaxos struct {
 
 	kvstore    map[string]string
 	seen 	   map[string]bool
-	done       map[string]bool
+	done       map[string]string
 }
 
 // returns true iff the two operations are of the same instance
@@ -150,11 +150,18 @@ func (kv *KVPaxos) proposeOp(op *Op) {
 		kv.px.Done(opNo)
 
 		// put the decision in its place
-		curOp := formatOp(decision.(Op).Cid,
-		                  decision.(Op).SeqNo,
-				  decision.(Op).Type,
-				  decision.(Op).Key,
-				  decision.(Op).Value)
+		curOp := &Op{}
+		switch decision.(type) {
+		case Op:
+			curOp = formatOp(decision.(Op).Cid,
+				decision.(Op).SeqNo,
+				decision.(Op).Type,
+				decision.(Op).Key,
+				decision.(Op).Value)
+		case *Op:
+			curOp = decision.(*Op)
+		}
+
 		kv.ops[opNo] = curOp
 		kv.ops[opNo].SeqNo = opNo
 
@@ -174,9 +181,13 @@ func (kv *KVPaxos) Get(args *GetArgs, reply *GetReply) error {
 	op := formatOp(args.Cid, args.SeqNo, GET, args.Key, "")
 	reply.Err = OK
 
+	fmt.Println("DOES THIS WORK")
+
 	if !kv.hasDuplicates(op) {
 		kv.proposeOp(op)
 	}
+
+	fmt.Println("HOW ABOUT THIS")
 
 	kv.mu.Lock()
 	defer kv.mu.Unlock()
@@ -184,6 +195,7 @@ func (kv *KVPaxos) Get(args *GetArgs, reply *GetReply) error {
 	// execute all known ops in order
 	for ; kv.doneIdx <= op.OpNo; kv.doneIdx++ {
 		// get the earliest op that has not been executed
+		fmt.Println("AND THIS? DOES THIS FUCKING WORK")
 		curOp := kv.ops[kv.doneIdx]
 
 		// format the op id
@@ -195,21 +207,32 @@ func (kv *KVPaxos) Get(args *GetArgs, reply *GetReply) error {
 		}
 
 		// execute op
+		fmt.Println("doneIdx: ", kv.doneIdx)
 		switch curOp.Type {
 		case GET:
 			// get behavior
 			kv.ops[kv.doneIdx].Value = kv.kvstore[curOp.Key]
-		case PUTAPPEND:
+
+			// mark done, save response
+			kv.done[curId] = kv.kvstore[curOp.Key]
+
+			fmt.Println("Get: ", curOp.Key, "\t-> ", kv.kvstore[curOp.Key])
+ 		case PUTAPPEND:
 			// putappend behavior
 			kv.kvstore[curOp.Key] = kv.kvstore[curOp.Key] + curOp.Value
+
+			// mark done, save response (no response necessary for putappend)
+			kv.done[curId] = ""
+
+			fmt.Println("PutAppend(", curOp.Key, ", ", curOp.Value, ")\tnewVal: ", kv.kvstore[curOp.Key])
 		}
 
-		// mark op finished
-		kv.done[curId] = true
+		// garbage collect from ops
+		delete(kv.ops, kv.doneIdx)
 	}
 
 	// return value at the time at which op was executed
-	reply.Value = kv.ops[op.SeqNo].Value
+	reply.Value = kv.done[op.getOpId()]
 
 	return nil
 }
@@ -271,7 +294,7 @@ func StartServer(servers []string, me int) *KVPaxos {
 	kv.kvstore = make(map[string]string)
 	kv.ops = make(map[int]*Op)
 	kv.seen = make(map[string]bool)
-	kv.done = make(map[string]bool)
+	kv.done = make(map[string]string)
 
 
 
