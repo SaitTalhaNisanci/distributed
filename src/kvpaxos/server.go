@@ -16,6 +16,7 @@ import (
 	//"net/http/httptrace"
 	"strconv"
 	"time"
+	//"go/format"
 )
 
 const Debug = 0
@@ -62,7 +63,8 @@ type KVPaxos struct {
 	px         *paxos.Paxos
 
 			 // Your definitions here.
-	doneIdx       int   // all operations <= done have been executed
+	doneIdx    int   // all operations <= done have been executed
+	knownIdx   int   // all operations <= knownIdx have been discovered
 	ops        map[int]Op
 
 	kvstore    map[string]string
@@ -115,13 +117,11 @@ func (kv *KVPaxos) hasDuplicates(op Op) bool {
 	defer kv.mu.Unlock()
 
 	// create a string representation of the instance
-	opId := strconv.Itoa(int(op.Cid)) + strconv.Itoa(op.SeqNo)
+	opId := op.getOpId()
 
-	if val, ok := kv.seen[opId]; ok {
-		if val {
-			// this operation has been already seen
-			return true
-		}
+	if _, ok := kv.seen[opId]; ok {
+		// this operation has already been seen
+		return true
 	}
 
 	// this operation has not been seen; mark it seen
@@ -135,15 +135,19 @@ func (kv *KVPaxos) proposeOp(op Op) (Op) {
 	kv.mu.Lock()
 	defer kv.mu.Unlock()
 
-	opNo := kv.doneIdx
+	opNo := kv.knownIdx
 	for {
 		// attempt to propose the value
 		kv.px.Start(opNo, op)
 
 		// wait for this instance to make a decision
+		to := 10 * time.Millisecond
 		status, decision := kv.px.Status(opNo)
 		for status != paxos.Decided {
-			time.Sleep(time.Second)
+			time.Sleep(to)
+			if to < 10 * time.Second {
+				to *= 2
+			}
 			status, decision = kv.px.Status(opNo)
 		}
 
@@ -158,6 +162,7 @@ func (kv *KVPaxos) proposeOp(op Op) (Op) {
 
 		// check to see if our value was chosen
 		if op.equals(curOp) {
+			kv.knownIdx = opNo + 1
 			return curOp
 		}
 
@@ -184,12 +189,14 @@ func (kv *KVPaxos) Get(args *GetArgs, reply *GetReply) error {
 		// get the earliest op that has not been executed
 		curOp := kv.ops[kv.doneIdx]
 
+		// garbage collect from ops
+		delete(kv.ops, kv.doneIdx)
+
 		// format the op id
 		curId := curOp.getOpId()
 
 		// a duplicate has been detected, skip it
 		if _, ok := kv.done[curId]; ok {
-			fmt.Println("skip?")
 			continue
 		}
 
@@ -200,7 +207,7 @@ func (kv *KVPaxos) Get(args *GetArgs, reply *GetReply) error {
 			// mark done, save response
 			kv.done[curId] = kv.kvstore[curOp.Key]
  		case PUT:
-			// putappend behavior
+			// put behavior
 			kv.kvstore[curOp.Key] = curOp.Value
 
 			// mark done, save response (no response necessary for put)
@@ -212,9 +219,6 @@ func (kv *KVPaxos) Get(args *GetArgs, reply *GetReply) error {
 			// mark done, save response (no response necessary for append)
 			kv.done[curId] = ""
 		}
-
-		// garbage collect from ops
-		delete(kv.ops, kv.doneIdx)
 	}
 
 	// return value at the time at which op was executed
@@ -283,6 +287,7 @@ func StartServer(servers []string, me int) *KVPaxos {
 
 	// Your initialization code here.
 	kv.doneIdx = 0
+	kv.knownIdx = 0
 	kv.kvstore = make(map[string]string)
 	kv.ops = make(map[int]Op)
 	kv.seen = make(map[string]bool)
