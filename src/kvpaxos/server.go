@@ -79,6 +79,11 @@ func (op *Op) equals(other *Op) bool {
 	return false
 }
 
+// returns the unique op id for a given op
+func (op *Op) getOpId() string {
+	return strconv.Itoa(int(op.Cid)) + strconv.Itoa(op.SeqNo)
+}
+
 // returns a formatted op struct
 func formatOp(cid int64, seqNo int, opType OpType, key string, val string) (op *Op) {
 	op = new(Op)
@@ -141,17 +146,25 @@ func (kv *KVPaxos) proposeOp(op *Op) {
 			status, decision = kv.px.Status(opNo)
 		}
 
+		// garbage collect
+		kv.px.Done(opNo)
+
 		// put the decision in its place
-		kv.ops[opNo] = decision.(*Op)
+		curOp := formatOp(decision.(Op).Cid,
+		                  decision.(Op).SeqNo,
+				  decision.(Op).Type,
+				  decision.(Op).Key,
+				  decision.(Op).Value)
+		kv.ops[opNo] = curOp
 		kv.ops[opNo].SeqNo = opNo
 
 		// check to see if our value was chosen
-		if op.equals(decision.(*Op)) {
+		if op.equals(curOp) {
 			return
 		}
 
 		// value was not chosen, mark seen and continue
-		kv.seen[strconv.Itoa(int(op.Cid)) + strconv.Itoa(op.SeqNo)] = true
+		kv.seen[curOp.getOpId()] = true
 		opNo++
 	}
 }
@@ -174,7 +187,7 @@ func (kv *KVPaxos) Get(args *GetArgs, reply *GetReply) error {
 		curOp := kv.ops[kv.doneIdx]
 
 		// format the op id
-		curId := strconv.Itoa(int(op.Cid)) + strconv.Itoa(op.SeqNo)
+		curId := curOp.getOpId()
 
 		// a duplicate has been detected, skip it
 		if _, ok := kv.done[curId]; ok {
@@ -185,18 +198,10 @@ func (kv *KVPaxos) Get(args *GetArgs, reply *GetReply) error {
 		switch curOp.Type {
 		case GET:
 			// get behavior
-			if res, ok := kv.kvstore[curOp.Key]; ok {
-				kv.ops[kv.doneIdx].Value = res
-			} else {
-				kv.ops[kv.doneIdx].Value = ""
-			}
+			kv.ops[kv.doneIdx].Value = kv.kvstore[curOp.Key]
 		case PUTAPPEND:
 			// putappend behavior
-			if res, ok := kv.kvstore[curOp.Key]; ok {
-				kv.kvstore[curOp.Key] = res + curOp.Value
-			} else {
-				kv.kvstore[curOp.Key] = curOp.Value
-			}
+			kv.kvstore[curOp.Key] = kv.kvstore[curOp.Key] + curOp.Value
 		}
 
 		// mark op finished
@@ -210,8 +215,6 @@ func (kv *KVPaxos) Get(args *GetArgs, reply *GetReply) error {
 }
 
 func (kv *KVPaxos) PutAppend(args *PutAppendArgs, reply *PutAppendReply) error {
-	// Your code here.
-
 	op := formatOp(args.Cid, args.SeqNo, PUTAPPEND, args.Key, args.Value)
 	reply.Err = OK
 
