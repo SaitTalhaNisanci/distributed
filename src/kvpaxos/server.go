@@ -42,8 +42,7 @@ type Op struct {
 	// otherwise RPC will break.
 
 	// for  identifying the operation instance
-	Cid    int64
-	SeqNo  int
+	Id     string
 
 	// for executing the operation
 	Type   OpType
@@ -75,16 +74,11 @@ type KVPaxos struct {
 // returns true iff the two operations are of the same instance
 // false otherwise
 func (op Op) equals(other Op) bool {
-	if op.Cid == other.Cid && op.SeqNo == other.SeqNo {
+	if op.Id == other.Id {
 		return true
 	}
 
 	return false
-}
-
-// returns the unique op id for a given op
-func (op Op) getOpId() string {
-	return strconv.Itoa(int(op.Cid)) + strconv.Itoa(op.SeqNo)
 }
 
 // returns a formatted op struct
@@ -92,8 +86,7 @@ func formatOp(cid int64, seqNo int, opType OpType, key string, val string) (op O
 	op = Op{}
 
 	// instance identifiers
-	op.Cid = cid
-	op.SeqNo = seqNo
+	op.Id = strconv.Itoa(int(cid)) + strconv.Itoa(seqNo)
 
 	// operation unique information
 	op.Type = opType
@@ -106,10 +99,11 @@ func formatOp(cid int64, seqNo int, opType OpType, key string, val string) (op O
 	return
 }
 
+// returns true iff an operation has been recorded before, false otherwise
+// does not lock, any operation that calls this must surround it in locks
 func (kv *KVPaxos) hasDuplicates(op Op) bool {
-	opId := op.getOpId()
-	_, seen := kv.seen[opId]
-	_, done := kv.done[opId]
+	_, seen := kv.seen[op.Id]
+	_, done := kv.done[op.Id]
 
 	return seen || done
 }
@@ -147,7 +141,7 @@ func (kv *KVPaxos) proposeOp(op Op) (Op) {
 		if !kv.hasDuplicates(op) {
 			kv.ops[opNo] = curOp
 		}
-		kv.seen[curOp.getOpId()] = true // mark op seen
+		kv.seen[curOp.Id] = true // mark op seen
 
 		// check to see if our value was chosen
 		if op.equals(curOp) {
@@ -185,7 +179,7 @@ func (kv *KVPaxos) Get(args *GetArgs, reply *GetReply) error {
 		delete(kv.ops, kv.doneIdx)
 
 		// format the op id
-		curId := curOp.getOpId()
+		curId := curOp.Id
 
 		// execute op
 		switch curOp.Type {
@@ -193,8 +187,6 @@ func (kv *KVPaxos) Get(args *GetArgs, reply *GetReply) error {
 			// get behavior
 			// mark done, save response
 			kv.done[curId] = kv.kvstore[curOp.Key]
-
-			delete(kv.seen, curId)
  		case PUT:
 			// put behavior
 			kv.kvstore[curOp.Key] = curOp.Value
@@ -205,7 +197,7 @@ func (kv *KVPaxos) Get(args *GetArgs, reply *GetReply) error {
 	}
 
 	// return value at the time at which op was executed
-	reply.Value = kv.done[op.getOpId()]
+	reply.Value = kv.done[op.Id]
 
 	return nil
 }
