@@ -42,7 +42,8 @@ type Op struct {
 	// otherwise RPC will break.
 
 	// for  identifying the operation instance
-	Id     string
+	Cid    int64
+	SeqNo  int
 
 	// for executing the operation
 	Type   OpType
@@ -74,11 +75,15 @@ type KVPaxos struct {
 // returns true iff the two operations are of the same instance
 // false otherwise
 func (op Op) equals(other Op) bool {
-	if op.Id == other.Id {
+	if op.Cid == other.Cid && op.SeqNo == other.SeqNo {
 		return true
 	}
 
 	return false
+}
+
+func (op Op) getOpId() string {
+	return strconv.Itoa(int(op.Cid)) + strconv.Itoa(int(op.SeqNo))
 }
 
 // returns a formatted op struct
@@ -86,7 +91,8 @@ func formatOp(cid int64, seqNo int, opType OpType, key string, val string) (op O
 	op = Op{}
 
 	// instance identifiers
-	op.Id = strconv.Itoa(int(cid)) + strconv.Itoa(seqNo)
+	op.Cid = cid
+	op.SeqNo = seqNo
 
 	// operation unique information
 	op.Type = opType
@@ -102,8 +108,8 @@ func formatOp(cid int64, seqNo int, opType OpType, key string, val string) (op O
 // returns true iff an operation has been recorded before, false otherwise
 // does not lock, any operation that calls this must surround it in locks
 func (kv *KVPaxos) hasDuplicates(op Op) bool {
-	_, seen := kv.seen[op.Id]
-	_, done := kv.done[op.Id]
+	_, seen := kv.seen[op.getOpId()]
+	_, done := kv.done[op.getOpId()]
 
 	return seen || done
 }
@@ -141,7 +147,7 @@ func (kv *KVPaxos) proposeOp(op Op) (Op) {
 		if !kv.hasDuplicates(op) {
 			kv.ops[opNo] = curOp
 		}
-		kv.seen[curOp.Id] = true // mark op seen
+		kv.seen[curOp.getOpId()] = true // mark op seen
 
 		// check to see if our value was chosen
 		if op.equals(curOp) {
@@ -179,7 +185,7 @@ func (kv *KVPaxos) Get(args *GetArgs, reply *GetReply) error {
 		delete(kv.ops, kv.doneIdx)
 
 		// format the op id
-		curId := curOp.Id
+		curId := curOp.getOpId()
 
 		// execute op
 		switch curOp.Type {
@@ -197,7 +203,7 @@ func (kv *KVPaxos) Get(args *GetArgs, reply *GetReply) error {
 	}
 
 	// return value at the time at which op was executed
-	reply.Value = kv.done[op.Id]
+	reply.Value = kv.done[op.getOpId()]
 
 	return nil
 }
