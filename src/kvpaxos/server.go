@@ -31,7 +31,8 @@ type OpType int
 
 const (
 	GET = iota
-	PUTAPPEND
+	PUT
+	APPEND
 )
 
 type Op struct {
@@ -62,7 +63,7 @@ type KVPaxos struct {
 
 			 // Your definitions here.
 	doneIdx       int   // all operations <= done have been executed
-	ops        map[int]*Op
+	ops        map[int]Op
 
 	kvstore    map[string]string
 	seen 	   map[string]bool
@@ -71,7 +72,7 @@ type KVPaxos struct {
 
 // returns true iff the two operations are of the same instance
 // false otherwise
-func (op *Op) equals(other *Op) bool {
+func (op Op) equals(other Op) bool {
 	if op.Cid == other.Cid && op.SeqNo == other.SeqNo {
 		return true
 	}
@@ -80,13 +81,13 @@ func (op *Op) equals(other *Op) bool {
 }
 
 // returns the unique op id for a given op
-func (op *Op) getOpId() string {
+func (op Op) getOpId() string {
 	return strconv.Itoa(int(op.Cid)) + strconv.Itoa(op.SeqNo)
 }
 
 // returns a formatted op struct
-func formatOp(cid int64, seqNo int, opType OpType, key string, val string) (op *Op) {
-	op = new(Op)
+func formatOp(cid int64, seqNo int, opType OpType, key string, val string) (op Op) {
+	op = Op{}
 
 	// instance identifiers
 	op.Cid = cid
@@ -109,7 +110,7 @@ func formatOp(cid int64, seqNo int, opType OpType, key string, val string) (op *
 //
 // has the following side effect:
 // if the operation has not been seen or proposed, it is marked seen
-func (kv *KVPaxos) hasDuplicates(op *Op) bool {
+func (kv *KVPaxos) hasDuplicates(op Op) bool {
 	kv.mu.Lock()
 	defer kv.mu.Unlock()
 
@@ -130,7 +131,7 @@ func (kv *KVPaxos) hasDuplicates(op *Op) bool {
 
 // proposes the given op
 // also learns what ops have been chosen, and garbage collects
-func (kv *KVPaxos) proposeOp(op *Op) {
+func (kv *KVPaxos) proposeOp(op Op) (Op) {
 	kv.mu.Lock()
 	defer kv.mu.Unlock()
 
@@ -150,24 +151,14 @@ func (kv *KVPaxos) proposeOp(op *Op) {
 		kv.px.Done(opNo)
 
 		// put the decision in its place
-		curOp := &Op{}
-		switch decision.(type) {
-		case Op:
-			curOp = formatOp(decision.(Op).Cid,
-				decision.(Op).SeqNo,
-				decision.(Op).Type,
-				decision.(Op).Key,
-				decision.(Op).Value)
-		case *Op:
-			curOp = decision.(*Op)
-		}
+		curOp := decision.(Op)
+		curOp.OpNo = opNo
 
 		kv.ops[opNo] = curOp
-		kv.ops[opNo].SeqNo = opNo
 
 		// check to see if our value was chosen
 		if op.equals(curOp) {
-			return
+			return curOp
 		}
 
 		// value was not chosen, mark seen and continue
@@ -181,13 +172,9 @@ func (kv *KVPaxos) Get(args *GetArgs, reply *GetReply) error {
 	op := formatOp(args.Cid, args.SeqNo, GET, args.Key, "")
 	reply.Err = OK
 
-	fmt.Println("DOES THIS WORK")
-
 	if !kv.hasDuplicates(op) {
-		kv.proposeOp(op)
+		op = kv.proposeOp(op)
 	}
-
-	fmt.Println("HOW ABOUT THIS")
 
 	kv.mu.Lock()
 	defer kv.mu.Unlock()
@@ -195,7 +182,6 @@ func (kv *KVPaxos) Get(args *GetArgs, reply *GetReply) error {
 	// execute all known ops in order
 	for ; kv.doneIdx <= op.OpNo; kv.doneIdx++ {
 		// get the earliest op that has not been executed
-		fmt.Println("AND THIS? DOES THIS FUCKING WORK")
 		curOp := kv.ops[kv.doneIdx]
 
 		// format the op id
@@ -203,28 +189,28 @@ func (kv *KVPaxos) Get(args *GetArgs, reply *GetReply) error {
 
 		// a duplicate has been detected, skip it
 		if _, ok := kv.done[curId]; ok {
+			fmt.Println("skip?")
 			continue
 		}
 
 		// execute op
-		fmt.Println("doneIdx: ", kv.doneIdx)
 		switch curOp.Type {
 		case GET:
 			// get behavior
-			kv.ops[kv.doneIdx].Value = kv.kvstore[curOp.Key]
-
 			// mark done, save response
 			kv.done[curId] = kv.kvstore[curOp.Key]
-
-			fmt.Println("Get: ", curOp.Key, "\t-> ", kv.kvstore[curOp.Key])
- 		case PUTAPPEND:
+ 		case PUT:
 			// putappend behavior
+			kv.kvstore[curOp.Key] = curOp.Value
+
+			// mark done, save response (no response necessary for put)
+			kv.done[curId] = ""
+		case APPEND:
+			// append behavior
 			kv.kvstore[curOp.Key] = kv.kvstore[curOp.Key] + curOp.Value
 
-			// mark done, save response (no response necessary for putappend)
+			// mark done, save response (no response necessary for append)
 			kv.done[curId] = ""
-
-			fmt.Println("PutAppend(", curOp.Key, ", ", curOp.Value, ")\tnewVal: ", kv.kvstore[curOp.Key])
 		}
 
 		// garbage collect from ops
@@ -238,7 +224,13 @@ func (kv *KVPaxos) Get(args *GetArgs, reply *GetReply) error {
 }
 
 func (kv *KVPaxos) PutAppend(args *PutAppendArgs, reply *PutAppendReply) error {
-	op := formatOp(args.Cid, args.SeqNo, PUTAPPEND, args.Key, args.Value)
+	op := Op{}
+	switch args.Op {
+	case "Put":
+		op = formatOp(args.Cid, args.SeqNo, PUT, args.Key, args.Value)
+	case "Append":
+		op = formatOp(args.Cid, args.SeqNo, APPEND, args.Key, args.Value)
+	}
 	reply.Err = OK
 
 	if !kv.hasDuplicates(op) {
@@ -292,7 +284,7 @@ func StartServer(servers []string, me int) *KVPaxos {
 	// Your initialization code here.
 	kv.doneIdx = 0
 	kv.kvstore = make(map[string]string)
-	kv.ops = make(map[int]*Op)
+	kv.ops = make(map[int]Op)
 	kv.seen = make(map[string]bool)
 	kv.done = make(map[string]string)
 
