@@ -106,27 +106,12 @@ func formatOp(cid int64, seqNo int, opType OpType, key string, val string) (op O
 	return
 }
 
-// returns true iff this instance of kvpaxos has already seen or proposed this operation, false otherwise
-//
-// ensuring that this instance alone is not sufficient for ensuring that duplicate operations are not executed
-//
-// has the following side effect:
-// if the operation has not been seen or proposed, it is marked seen
 func (kv *KVPaxos) hasDuplicates(op Op) bool {
-	kv.mu.Lock()
-	defer kv.mu.Unlock()
-
-	// create a string representation of the instance
 	opId := op.getOpId()
+	_, seen := kv.seen[opId]
+	_, done := kv.done[opId]
 
-	if _, ok := kv.seen[opId]; ok {
-		// this operation has already been seen
-		return true
-	}
-
-	// this operation has not been seen; mark it seen
-	kv.seen[opId] = true
-	return false
+	return seen || done
 }
 
 // proposes the given op
@@ -158,7 +143,11 @@ func (kv *KVPaxos) proposeOp(op Op) (Op) {
 		curOp := decision.(Op)
 		curOp.OpNo = opNo
 
-		kv.ops[opNo] = curOp
+		// only add op if it has not already been seen
+		if !kv.hasDuplicates(op) {
+			kv.ops[opNo] = curOp
+		}
+		kv.seen[curOp.getOpId()] = true // mark op seen
 
 		// check to see if our value was chosen
 		if op.equals(curOp) {
@@ -167,7 +156,6 @@ func (kv *KVPaxos) proposeOp(op Op) (Op) {
 		}
 
 		// value was not chosen, mark seen and continue
-		kv.seen[curOp.getOpId()] = true
 		opNo++
 	}
 }
@@ -177,8 +165,12 @@ func (kv *KVPaxos) Get(args *GetArgs, reply *GetReply) error {
 	op := formatOp(args.Cid, args.SeqNo, GET, args.Key, "")
 	reply.Err = OK
 
+	kv.mu.Lock()
 	if !kv.hasDuplicates(op) {
+		kv.mu.Unlock()
 		op = kv.proposeOp(op)
+	} else {
+		kv.mu.Unlock()
 	}
 
 	kv.mu.Lock()
@@ -195,29 +187,20 @@ func (kv *KVPaxos) Get(args *GetArgs, reply *GetReply) error {
 		// format the op id
 		curId := curOp.getOpId()
 
-		// a duplicate has been detected, skip it
-		if _, ok := kv.done[curId]; ok {
-			continue
-		}
-
 		// execute op
 		switch curOp.Type {
 		case GET:
 			// get behavior
 			// mark done, save response
 			kv.done[curId] = kv.kvstore[curOp.Key]
+
+			delete(kv.seen, curId)
  		case PUT:
 			// put behavior
 			kv.kvstore[curOp.Key] = curOp.Value
-
-			// mark done, save response (no response necessary for put)
-			kv.done[curId] = ""
 		case APPEND:
 			// append behavior
 			kv.kvstore[curOp.Key] = kv.kvstore[curOp.Key] + curOp.Value
-
-			// mark done, save response (no response necessary for append)
-			kv.done[curId] = ""
 		}
 	}
 
@@ -237,8 +220,12 @@ func (kv *KVPaxos) PutAppend(args *PutAppendArgs, reply *PutAppendReply) error {
 	}
 	reply.Err = OK
 
+	kv.mu.Lock()
 	if !kv.hasDuplicates(op) {
-		kv.proposeOp(op)
+		kv.mu.Unlock()
+		op = kv.proposeOp(op)
+	} else {
+		kv.mu.Unlock()
 	}
 
 	return nil
