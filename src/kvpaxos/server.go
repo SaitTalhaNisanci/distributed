@@ -86,25 +86,6 @@ func (op Op) getOpId() string {
 	return strconv.Itoa(int(op.Cid)) + strconv.Itoa(int(op.SeqNo))
 }
 
-// returns a formatted op struct
-func formatOp(cid int64, seqNo int, opType OpType, key string, val string) (op Op) {
-	op = Op{}
-
-	// instance identifiers
-	op.Cid = cid
-	op.SeqNo = seqNo
-
-	// operation unique information
-	op.Type = opType
-	op.Key = key
-	op.Value = val
-
-	// for identifying the state of the operation
-	op.OpNo = -1
-
-	return
-}
-
 // returns true iff an operation has been recorded before, false otherwise
 // does not lock, any operation that calls this must surround it in locks
 func (kv *KVPaxos) hasDuplicates(op Op) bool {
@@ -119,8 +100,11 @@ func (kv *KVPaxos) proposeOp(op Op) (Op) {
 	kv.mu.Lock()
 	defer kv.mu.Unlock()
 
+	//fmt.Println("Propose!")
+
 	opNo := kv.knownIdx
 	for {
+		//fmt.Println("\topNo: ", opNo)
 		// attempt to propose the value
 		kv.px.Start(opNo, op)
 
@@ -140,18 +124,19 @@ func (kv *KVPaxos) proposeOp(op Op) (Op) {
 
 		// put the decision in its place
 		curOp := decision.(Op)
-		curOp.OpNo = opNo
 
 		// only add op if it has not already been seen
 		if !kv.hasDuplicates(op) {
+			curOp.OpNo = opNo
 			kv.ops[opNo] = curOp
-		}
-		kv.seen[curOp.getOpId()] = true // mark op seen
+			kv.seen[curOp.getOpId()] = true // mark op seen
 
-		// check to see if our value was chosen
-		if op.equals(curOp) {
-			kv.knownIdx = opNo + 1
-			return curOp
+			// check to see if our value was chosen
+			if op.equals(curOp) {
+				kv.knownIdx = opNo + 1
+				//fmt.Println("kv.knownIdx")
+				return curOp
+			}
 		}
 
 		// value was not chosen, mark seen and continue
@@ -161,14 +146,17 @@ func (kv *KVPaxos) proposeOp(op Op) (Op) {
 
 func (kv *KVPaxos) Get(args *GetArgs, reply *GetReply) error {
 	// Your code here.
-	op := formatOp(args.Cid, args.SeqNo, GET, args.Key, "")
+	op := Op{args.Cid, args.SeqNo, GET, args.Key, "", -1}
 	reply.Err = OK
 
+	//fmt.Println("Get!")
 	kv.mu.Lock()
 	if !kv.hasDuplicates(op) {
+		//fmt.Println("\tthere are no duplicates, propose")
 		kv.mu.Unlock()
 		op = kv.proposeOp(op)
 	} else {
+		//fmt.Println("\tthere are duplicates")
 		kv.mu.Unlock()
 	}
 
@@ -176,7 +164,7 @@ func (kv *KVPaxos) Get(args *GetArgs, reply *GetReply) error {
 	defer kv.mu.Unlock()
 
 	// execute all known ops in order
-	for ; kv.doneIdx <= op.OpNo; kv.doneIdx++ {
+	for ; kv.doneIdx < kv.knownIdx; kv.doneIdx++ {
 		// get the earliest op that has not been executed
 		curOp := kv.ops[kv.doneIdx]
 
@@ -208,9 +196,9 @@ func (kv *KVPaxos) PutAppend(args *PutAppendArgs, reply *PutAppendReply) error {
 	op := Op{}
 	switch args.Op {
 	case "Put":
-		op = formatOp(args.Cid, args.SeqNo, PUT, args.Key, args.Value)
+		op = Op{args.Cid, args.SeqNo, PUT, args.Key, args.Value, -1}
 	case "Append":
-		op = formatOp(args.Cid, args.SeqNo, APPEND, args.Key, args.Value)
+		op = Op{args.Cid, args.SeqNo, APPEND, args.Key, args.Value, -1}
 	}
 	reply.Err = OK
 
