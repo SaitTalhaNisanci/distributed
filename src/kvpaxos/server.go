@@ -49,9 +49,6 @@ type Op struct {
 	Type   OpType
 	Key    string
 	Value  string
-
-	// for after the ordering has been decided
-	OpNo   int
 }
 
 type KVPaxos struct {
@@ -72,16 +69,8 @@ type KVPaxos struct {
 	cache      map[int64]string
 }
 
-// returns true iff the two operations are of the same instance
-// false otherwise
-func (op Op) equals(other Op) bool {
-	if op.Cid == other.Cid && op.SeqNo == other.SeqNo {
-		return true
-	}
-
-	return false
-}
-
+// returns a unique operation id for each operation based on the client id
+// and sequence number
 func (op Op) getOpId() string {
 	return strconv.Itoa(int(op.Cid)) + strconv.Itoa(int(op.SeqNo))
 }
@@ -100,11 +89,8 @@ func (kv *KVPaxos) proposeOp(op Op) (Op) {
 	kv.mu.Lock()
 	defer kv.mu.Unlock()
 
-	//fmt.Println("Propose!")
-
 	opNo := kv.knownIdx
 	for {
-		//fmt.Println("\topNo: ", opNo)
 		// attempt to propose the value
 		kv.px.Start(opNo, op)
 
@@ -118,23 +104,19 @@ func (kv *KVPaxos) proposeOp(op Op) (Op) {
 			}
 			status, decision = kv.px.Status(opNo)
 		}
+		curOp := decision.(Op)
 
 		// garbage collect
 		kv.px.Done(opNo)
 
-		// put the decision in its place
-		curOp := decision.(Op)
-
 		// only add op if it has not already been seen
 		if !kv.hasDuplicates(op) {
-			curOp.OpNo = opNo
 			kv.ops[opNo] = curOp
 			kv.seen[curOp.getOpId()] = true // mark op seen
 
 			// check to see if our value was chosen
-			if op.equals(curOp) {
+			if op.getOpId() == curOp.getOpId() {
 				kv.knownIdx = opNo + 1
-				//fmt.Println("kv.knownIdx")
 				return curOp
 			}
 		}
@@ -144,26 +126,26 @@ func (kv *KVPaxos) proposeOp(op Op) (Op) {
 	}
 }
 
+// Get RPC handler
 func (kv *KVPaxos) Get(args *GetArgs, reply *GetReply) error {
-	// Your code here.
-	op := Op{args.Cid, args.SeqNo, GET, args.Key, "", -1}
+	// format op struct
+	op := Op{args.Cid, args.SeqNo, GET, args.Key, ""}
 	reply.Err = OK
 
-	//fmt.Println("Get!")
 	kv.mu.Lock()
 	if !kv.hasDuplicates(op) {
-		//fmt.Println("\tthere are no duplicates, propose")
 		kv.mu.Unlock()
+		// case 1: op has not yet been seen, propose it
 		op = kv.proposeOp(op)
 	} else {
-		//fmt.Println("\tthere are duplicates")
+		// case 2: op has already been seen
 		kv.mu.Unlock()
 	}
 
 	kv.mu.Lock()
 	defer kv.mu.Unlock()
 
-	// execute all known ops in order
+	// apply all the ops in the log
 	for ; kv.doneIdx < kv.knownIdx; kv.doneIdx++ {
 		// get the earliest op that has not been executed
 		curOp := kv.ops[kv.doneIdx]
@@ -192,21 +174,25 @@ func (kv *KVPaxos) Get(args *GetArgs, reply *GetReply) error {
 	return nil
 }
 
+// PutAppend RPC handler
 func (kv *KVPaxos) PutAppend(args *PutAppendArgs, reply *PutAppendReply) error {
+	// format op struct
 	op := Op{}
 	switch args.Op {
 	case "Put":
-		op = Op{args.Cid, args.SeqNo, PUT, args.Key, args.Value, -1}
+		op = Op{args.Cid, args.SeqNo, PUT, args.Key, args.Value}
 	case "Append":
-		op = Op{args.Cid, args.SeqNo, APPEND, args.Key, args.Value, -1}
+		op = Op{args.Cid, args.SeqNo, APPEND, args.Key, args.Value}
 	}
 	reply.Err = OK
 
 	kv.mu.Lock()
 	if !kv.hasDuplicates(op) {
 		kv.mu.Unlock()
+		// case 1: op has not yet been seen, propose it
 		op = kv.proposeOp(op)
 	} else {
+		// case 2: op has already been seen
 		kv.mu.Unlock()
 	}
 
