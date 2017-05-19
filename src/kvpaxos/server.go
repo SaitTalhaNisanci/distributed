@@ -69,7 +69,7 @@ type KVPaxos struct {
 
 	kvstore    map[string]string
 	seen 	   map[string]bool
-	done       map[string]string
+	cache      map[int64]string
 }
 
 // returns true iff the two operations are of the same instance
@@ -109,9 +109,8 @@ func formatOp(cid int64, seqNo int, opType OpType, key string, val string) (op O
 // does not lock, any operation that calls this must surround it in locks
 func (kv *KVPaxos) hasDuplicates(op Op) bool {
 	_, seen := kv.seen[op.getOpId()]
-	_, done := kv.done[op.getOpId()]
 
-	return seen || done
+	return seen
 }
 
 // proposes the given op
@@ -184,15 +183,12 @@ func (kv *KVPaxos) Get(args *GetArgs, reply *GetReply) error {
 		// garbage collect from ops
 		delete(kv.ops, kv.doneIdx)
 
-		// format the op id
-		curId := curOp.getOpId()
-
 		// execute op
 		switch curOp.Type {
 		case GET:
 			// get behavior
 			// mark done, save response
-			kv.done[curId] = kv.kvstore[curOp.Key]
+			kv.cache[curOp.Cid] = kv.kvstore[curOp.Key]
  		case PUT:
 			// put behavior
 			kv.kvstore[curOp.Key] = curOp.Value
@@ -203,7 +199,7 @@ func (kv *KVPaxos) Get(args *GetArgs, reply *GetReply) error {
 	}
 
 	// return value at the time at which op was executed
-	reply.Value = kv.done[op.getOpId()]
+	reply.Value = kv.cache[op.Cid]
 
 	return nil
 }
@@ -276,7 +272,7 @@ func StartServer(servers []string, me int) *KVPaxos {
 	kv.kvstore = make(map[string]string)
 	kv.ops = make(map[int]Op)
 	kv.seen = make(map[string]bool)
-	kv.done = make(map[string]string)
+	kv.cache = make(map[int64]string)
 
 
 
