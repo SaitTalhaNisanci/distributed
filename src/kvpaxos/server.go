@@ -83,14 +83,29 @@ func (kv *KVPaxos) hasDuplicates(op Op) bool {
 	return seen
 }
 
+func max(a, b int) (c int) {
+	if a > b {
+		c = a
+	} else {
+		c = b
+	}
+
+	return
+}
+
 // proposes the given op
 // also learns what ops have been chosen, and garbage collects
 func (kv *KVPaxos) proposeOp(op Op) {
 	kv.mu.Lock()
 	defer kv.mu.Unlock()
 
-	opNo := kv.knownIdx
 	for {
+		if kv.hasDuplicates(op) {
+			return
+		}
+
+		opNo := kv.knownIdx
+
 		// attempt to propose the value
 		kv.px.Start(opNo, op)
 
@@ -110,19 +125,11 @@ func (kv *KVPaxos) proposeOp(op Op) {
 		kv.px.Done(opNo)
 
 		// only add op if it has not already been seen
-		if !kv.hasDuplicates(op) {
+		if !kv.hasDuplicates(curOp) {
 			kv.ops[opNo] = curOp
 			kv.seen[curOp.getOpId()] = true // mark op seen
-
-			// check to see if our value was chosen
-			if op.getOpId() == curOp.getOpId() {
-				kv.knownIdx = opNo + 1
-				return
-			}
+			kv.knownIdx = max(kv.knownIdx, opNo + 1)
 		}
-
-		// value was not chosen, mark seen and continue
-		opNo++
 	}
 }
 
@@ -132,15 +139,7 @@ func (kv *KVPaxos) Get(args *GetArgs, reply *GetReply) error {
 	op := Op{args.Cid, args.SeqNo, GET, args.Key, ""}
 	reply.Err = OK
 
-	kv.mu.Lock()
-	if !kv.hasDuplicates(op) {
-		kv.mu.Unlock()
-		// case 1: op has not yet been seen, propose it
-		kv.proposeOp(op)
-	} else {
-		// case 2: op has already been seen
-		kv.mu.Unlock()
-	}
+	kv.proposeOp(op)
 
 	kv.mu.Lock()
 	defer kv.mu.Unlock()
@@ -186,15 +185,7 @@ func (kv *KVPaxos) PutAppend(args *PutAppendArgs, reply *PutAppendReply) error {
 	}
 	reply.Err = OK
 
-	kv.mu.Lock()
-	if !kv.hasDuplicates(op) {
-		kv.mu.Unlock()
-		// case 1: op has not yet been seen, propose it
-		kv.proposeOp(op)
-	} else {
-		// case 2: op has already been seen
-		kv.mu.Unlock()
-	}
+	kv.proposeOp(op)
 
 	return nil
 }
