@@ -63,6 +63,7 @@ type KVPaxos struct {
 	doneIdx    int   // all operations <= done have been executed
 	knownIdx   int   // all operations <= knownIdx have been discovered
 	ops        map[int]Op
+	muSeq      map[int]*sync.Mutex
 
 	kvstore    map[string]string
 	seen 	   map[string]bool
@@ -96,20 +97,29 @@ func max(a, b int) (c int) {
 // proposes the given op
 // also learns what ops have been chosen, and garbage collects
 func (kv *KVPaxos) proposeOp(op Op) {
-	kv.mu.Lock()
-	defer kv.mu.Unlock()
-
 	for {
+		kv.mu.Lock()
+		// check if op has already been chosen
 		if kv.hasDuplicates(op) {
+			kv.mu.Unlock()
 			return
 		}
 
+		// propose the smallest value
 		opNo := kv.knownIdx
 
-		// attempt to propose the value
-		kv.px.Start(opNo, op)
+		// create a lock for this sequence number if there isn't one
+		if _, ok := kv.muSeq[opNo]; !ok {
+			kv.muSeq[opNo] = &sync.Mutex{}
+		}
+		kv.mu.Unlock()
 
+		// lock this sequence number
+		kv.muSeq[opNo].Lock()
+
+		// attempt to propose the value
 		// wait for this instance to make a decision
+		kv.px.Start(opNo, op)
 		to := 10 * time.Millisecond
 		status, decision := kv.px.Status(opNo)
 		for status != paxos.Decided {
@@ -124,12 +134,17 @@ func (kv *KVPaxos) proposeOp(op Op) {
 		// garbage collect
 		kv.px.Done(opNo)
 
+		// unlock this sequence number
+		kv.muSeq[opNo].Unlock()
+
 		// only add op if it has not already been seen
+		kv.mu.Lock()
 		if !kv.hasDuplicates(curOp) {
 			kv.ops[opNo] = curOp
 			kv.seen[curOp.getOpId()] = true // mark op seen
 			kv.knownIdx = max(kv.knownIdx, opNo + 1)
 		}
+		kv.mu.Unlock()
 	}
 }
 
@@ -236,6 +251,7 @@ func StartServer(servers []string, me int) *KVPaxos {
 	kv.knownIdx = 0
 	kv.kvstore = make(map[string]string)
 	kv.ops = make(map[int]Op)
+	kv.muSeq = make(map[int]*sync.Mutex)
 	kv.seen = make(map[string]bool)
 	kv.cache = make(map[int64]string)
 
