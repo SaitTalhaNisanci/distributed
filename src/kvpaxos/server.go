@@ -249,13 +249,11 @@ func StartServer(servers []string, me int) *KVPaxos {
 	// Your initialization code here.
 	kv.doneIdx = 0
 	kv.knownIdx = 0
-	kv.kvstore = make(map[string]string)
 	kv.ops = make(map[int]Op)
 	kv.muSeq = make(map[int]*sync.Mutex)
+	kv.kvstore = make(map[string]string)
 	kv.seen = make(map[string]bool)
 	kv.cache = make(map[int64]string)
-
-
 
 	rpcs := rpc.NewServer()
 	rpcs.Register(kv)
