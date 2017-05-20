@@ -85,7 +85,7 @@ func (kv *KVPaxos) hasDuplicates(op Op) bool {
 
 // proposes the given op
 // also learns what ops have been chosen, and garbage collects
-func (kv *KVPaxos) proposeOp(op Op) (Op) {
+func (kv *KVPaxos) proposeOp(op Op) {
 	kv.mu.Lock()
 	defer kv.mu.Unlock()
 
@@ -117,7 +117,7 @@ func (kv *KVPaxos) proposeOp(op Op) (Op) {
 			// check to see if our value was chosen
 			if op.getOpId() == curOp.getOpId() {
 				kv.knownIdx = opNo + 1
-				return curOp
+				return
 			}
 		}
 
@@ -136,7 +136,7 @@ func (kv *KVPaxos) Get(args *GetArgs, reply *GetReply) error {
 	if !kv.hasDuplicates(op) {
 		kv.mu.Unlock()
 		// case 1: op has not yet been seen, propose it
-		op = kv.proposeOp(op)
+		kv.proposeOp(op)
 	} else {
 		// case 2: op has already been seen
 		kv.mu.Unlock()
@@ -190,7 +190,7 @@ func (kv *KVPaxos) PutAppend(args *PutAppendArgs, reply *PutAppendReply) error {
 	if !kv.hasDuplicates(op) {
 		kv.mu.Unlock()
 		// case 1: op has not yet been seen, propose it
-		op = kv.proposeOp(op)
+		kv.proposeOp(op)
 	} else {
 		// case 2: op has already been seen
 		kv.mu.Unlock()
