@@ -9,9 +9,10 @@ Talha Nisanci (UWNetID: Talha) (my partner)
 
 ## Question Responses:
 
-We spent about two days on this lab. I mostly worked on the latter part of the paxos algorithm - recognizing when a consensus is achieved. I also helped test and debug.
+We spent about four days working on this lab.
 
-## High Level Description for part a
-When we get a start call we first check if it is less than px.Min() if it is we dont do anything. If it is not we basically find a number that is higher than any number seen so far and we prepare a request with that number, in other words we broadcast prepare that and also we learn the highest accepted proposals value because we will propose that value in broadcast accept step. So if majority said okay for prepare then we broadcast accept that value if found or the current peers value. If this is also accepted by majority then we send decided. We have local prepare, local accept and local decided instead of RPC for the same peer. Also we learn done values over RPC calls so that we can update them in our done map and we can garbage collect if needed. We dont have locks for the proposer method so that instances out of order can be also done.
+Jessica wrote the client, and Talha did much of the work when it came to making the server concurrent. Most of the lab was pair programmed.
 
+## high level description
 
+When the server receives a putappend or get request, it formats the operation struct and proposes it to paxos. If it's a putappend request, then the function returns as soon as a paxos instance accepts the operation. If its a get request, it waits for a paxos instance to accept the operation, and then goes through and evaluates all of the operations in the operation log. Once all operations have been evaluated, it returns a formatted reply struct.
