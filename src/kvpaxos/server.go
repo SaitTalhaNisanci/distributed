@@ -167,7 +167,6 @@ func (kv *KVPaxos) proposeOp(op Op) {
 func (kv *KVPaxos) Get(args *GetArgs, reply *GetReply) error {
 	// format op struct
 	op := Op{args.Cid, args.SeqNo, GET, args.Key, ""}
-	reply.Err = OK
 
 	kv.proposeOp(op)
 
@@ -199,7 +198,7 @@ func (kv *KVPaxos) Get(args *GetArgs, reply *GetReply) error {
 
 	// return value at the time at which op was executed
 	reply.Value = kv.cache[op.Cid]
-
+	reply.Err = OK
 	return nil
 }
 
@@ -213,10 +212,9 @@ func (kv *KVPaxos) PutAppend(args *PutAppendArgs, reply *PutAppendReply) error {
 	case "Append":
 		op = Op{args.Cid, args.SeqNo, APPEND, args.Key, args.Value}
 	}
-	reply.Err = OK
 
 	kv.proposeOp(op)
-
+	reply.Err = OK
 	return nil
 }
 
