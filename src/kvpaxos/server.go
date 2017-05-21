@@ -112,10 +112,11 @@ func (kv *KVPaxos) proposeOp(op Op) {
 		if _, ok := kv.muSeq[opNo]; !ok {
 			kv.muSeq[opNo] = &sync.Mutex{}
 		}
-		kv.mu.Unlock()
 
 		// lock this sequence number
 		kv.muSeq[opNo].Lock()
+
+		kv.mu.Unlock()
 
 		// attempt to propose the value
 		// wait for this instance to make a decision
@@ -134,11 +135,13 @@ func (kv *KVPaxos) proposeOp(op Op) {
 		// garbage collect
 		kv.px.Done(opNo)
 
+
 		// unlock this sequence number
 		kv.muSeq[opNo].Unlock()
 
 		// only add op if it has not already been seen
 		kv.mu.Lock()
+
 		if !kv.hasDuplicates(curOp) {
 			kv.ops[opNo] = curOp
 			kv.seen[curOp.getOpId()] = true // mark op seen
