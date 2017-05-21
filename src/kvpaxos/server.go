@@ -123,7 +123,7 @@ func (kv *KVPaxos) proposeOp(op Op) {
 		kv.px.Start(opNo, op)
 		to := 10 * time.Millisecond
 		status, decision := kv.px.Status(opNo)
-		for status != paxos.Decided {
+		for status == paxos.Pending {
 			time.Sleep(to)
 			if to < 10 * time.Second {
 				to *= 2
@@ -146,7 +146,6 @@ func (kv *KVPaxos) proposeOp(op Op) {
 
 		// garbage collect
 		kv.px.Done(opNo)
-
 
 		// unlock this sequence number
 		kv.muSeq[opNo].Unlock()
