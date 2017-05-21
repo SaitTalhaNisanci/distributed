@@ -63,7 +63,7 @@ type KVPaxos struct {
 	doneIdx    int   // all operations <= done have been executed
 	knownIdx   int   // all operations <= knownIdx have been discovered
 	ops        map[int]Op
-	muSeq      map[int]*sync.Mutex
+	muSeq      map[string]*sync.Mutex
 
 	kvstore    map[string]string
 	seen 	   map[string]bool
@@ -109,12 +109,7 @@ func (kv *KVPaxos) proposeOp(op Op) {
 		opNo := kv.knownIdx
 
 		// create a lock for this sequence number if there isn't one
-		if _, ok := kv.muSeq[opNo]; !ok {
-			kv.muSeq[opNo] = &sync.Mutex{}
-		}
 
-		// lock this sequence number
-		kv.muSeq[opNo].Lock()
 
 		kv.mu.Unlock()
 
@@ -133,7 +128,6 @@ func (kv *KVPaxos) proposeOp(op Op) {
 
 		// continue if this instance has been forgotten
 		if status == paxos.Forgotten {
-			kv.muSeq[opNo].Unlock()
 
 			kv.mu.Lock()
 			kv.knownIdx = max(kv.knownIdx, opNo + 1)
@@ -147,12 +141,11 @@ func (kv *KVPaxos) proposeOp(op Op) {
 		// garbage collect
 		kv.px.Done(opNo)
 
-		// unlock this sequence number
-		kv.muSeq[opNo].Unlock()
 
 		// only add op if it has not already been seen
 		kv.mu.Lock()
 
+		// unlock this sequence number
 		if !kv.hasDuplicates(curOp) {
 			kv.ops[opNo] = curOp
 			kv.seen[curOp.getOpId()] = true // mark op seen
@@ -167,17 +160,22 @@ func (kv *KVPaxos) proposeOp(op Op) {
 func (kv *KVPaxos) Get(args *GetArgs, reply *GetReply) error {
 	// format op struct
 	op := Op{args.Cid, args.SeqNo, GET, args.Key, ""}
+  if _, ok := kv.muSeq[args.Key]; !ok {
+			kv.muSeq[args.Key] = &sync.Mutex{}
+	}
+
+	// lock this sequence number
+	kv.muSeq[args.Key].Lock()
+  defer kv.muSeq[args.Key].Unlock()
 
 	kv.proposeOp(op)
 
 	kv.mu.Lock()
 	defer kv.mu.Unlock()
-
-	// apply all the ops in the log
+		// apply all the ops in the log
 	for ; kv.doneIdx < kv.knownIdx; kv.doneIdx++ {
 		// get the earliest op that has not been executed
 		curOp := kv.ops[kv.doneIdx]
-
 		// garbage collect from ops
 		delete(kv.ops, kv.doneIdx)
 
@@ -204,7 +202,14 @@ func (kv *KVPaxos) Get(args *GetArgs, reply *GetReply) error {
 
 // PutAppend RPC handler
 func (kv *KVPaxos) PutAppend(args *PutAppendArgs, reply *PutAppendReply) error {
-	// format op struct
+	if _, ok := kv.muSeq[args.Key]; !ok {
+			kv.muSeq[args.Key] = &sync.Mutex{}
+	}
+
+	// lock this sequence number
+	kv.muSeq[args.Key].Lock()
+  defer kv.muSeq[args.Key].Unlock()
+  // format op struct
 	op := Op{}
 	switch args.Op {
 	case "Put":
@@ -263,7 +268,7 @@ func StartServer(servers []string, me int) *KVPaxos {
 	kv.doneIdx = 0
 	kv.knownIdx = 0
 	kv.ops = make(map[int]Op)
-	kv.muSeq = make(map[int]*sync.Mutex)
+	kv.muSeq = make(map[string]*sync.Mutex)
 	kv.kvstore = make(map[string]string)
 	kv.seen = make(map[string]bool)
 	kv.cache = make(map[int64]string)
