@@ -147,6 +147,7 @@ func (kv *KVPaxos) proposeOp(op Op) {
 			kv.seen[curOp.getOpId()] = true // mark op seen
 			kv.knownIdx = max(kv.knownIdx, opNo + 1)
 		}
+
 		kv.mu.Unlock()
 	}
 }
