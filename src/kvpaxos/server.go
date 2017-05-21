@@ -130,6 +130,18 @@ func (kv *KVPaxos) proposeOp(op Op) {
 			}
 			status, decision = kv.px.Status(opNo)
 		}
+
+		// continue if this instance has been forgotten
+		if status == paxos.Forgotten {
+			kv.muSeq[opNo].Unlock()
+
+			kv.mu.Lock()
+			kv.knownIdx = max(kv.knownIdx, opNo + 1)
+			kv.mu.Unlock()
+
+			continue
+		}
+
 		curOp := decision.(Op)
 
 		// garbage collect
