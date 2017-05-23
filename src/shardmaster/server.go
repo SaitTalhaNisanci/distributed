@@ -13,6 +13,8 @@ import (
 	"syscall"
 
 	"paxos"
+	"golang.org/x/tools/godoc"
+	"time"
 )
 
 type ShardMaster struct {
@@ -24,20 +26,110 @@ type ShardMaster struct {
 	px         *paxos.Paxos
 
 	configs []Config // indexed by config num
+
+	ops []Op
+	seen map[int64]bool
 }
+
+const (
+	JOIN = iota
+	LEAVE
+	MOVE
+	QUERY
+)
+
+
+type OpType int
 
 type Op struct {
 	// Your data here.
+	Type OpType
+	OpId int64
+
+	GID int64 // for join/leave/move
+
+	// for join
+	Servers []string
+
+	// for move
+	Shard int
+
+	// for query
+	Num int
+}
+
+// proposes the given op
+// also learns what ops have been chosen, and garbage collects
+func (sm *ShardMaster) proposeOp(op Op) {
+	for {
+		// propose the smallest value
+		sm.mu.Lock()
+		if sm.seen[op.OpId] {
+			sm.mu.Unlock()
+			return
+		}
+		opNo := len(sm.configs)
+		sm.mu.Unlock()
+
+		// attempt to propose the value
+		// wait for this instance to make a decision
+		sm.px.Start(opNo, op)
+		to := 10 * time.Millisecond
+		status, decision := sm.px.Status(opNo)
+		for status == paxos.Pending {
+			time.Sleep(to)
+			if to < 10 * time.Second {
+				to *= 2
+			}
+			status, decision = sm.px.Status(opNo)
+		}
+
+		// continue if this instance has been forgotten
+		if status == paxos.Forgotten {
+			continue
+		}
+
+		curOp := decision.(Op)
+
+		// garbage collect
+		sm.px.Done(opNo)
+
+
+		// only add op if it has not already been seen
+		sm.mu.Lock()
+		// unlock this sequence number
+		if op.OpId == curOp.OpId {
+			sm.ops[opNo] = curOp
+			sm.seen[curOp.OpId] = true // mark op seen
+		}
+		sm.mu.Unlock()
+	}
 }
 
 func (sm *ShardMaster) Join(args *JoinArgs, reply *JoinReply) error {
-	// Your code here.
+	// check to see if this group has already joined
+
+	// create op
+
+	// propose op
+
+	// evaluate existing ops
 
 	return nil
 }
 
+
+
 func (sm *ShardMaster) Leave(args *LeaveArgs, reply *LeaveReply) error {
 	// Your code here.
+
+	// check to see if this group is present
+
+	// create op
+
+	// propose op
+
+	// evaluate existing ops
 
 	return nil
 }
@@ -45,11 +137,23 @@ func (sm *ShardMaster) Leave(args *LeaveArgs, reply *LeaveReply) error {
 func (sm *ShardMaster) Move(args *MoveArgs, reply *MoveReply) error {
 	// Your code here.
 
+	// create op
+
+	// propose op
+
+	// evaluate existing ops
+
 	return nil
 }
 
 func (sm *ShardMaster) Query(args *QueryArgs, reply *QueryReply) error {
 	// Your code here.
+
+	// create op
+
+	// propose op
+
+	// evaluate existing op
 
 	return nil
 }
@@ -91,6 +195,7 @@ func StartServer(servers []string, me int) *ShardMaster {
 
 	sm.configs = make([]Config, 1)
 	sm.configs[0].Groups = map[int64][]string{}
+	sm.ops = map[int64]bool{}
 
 	rpcs := rpc.NewServer()
 

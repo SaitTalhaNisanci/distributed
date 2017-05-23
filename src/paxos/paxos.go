@@ -24,13 +24,13 @@ import (
 	"fmt"
 	"log"
 	"math/rand"
-	"time"
 	"net"
 	"net/rpc"
 	"os"
 	"sync"
 	"sync/atomic"
 	"syscall"
+	"time"
 )
 
 // px.Status() return values, indicating
@@ -55,45 +55,45 @@ type Paxos struct {
 	me         int // index into peers[]
 
 	// Your data here.
-  state map[int] *InstanceInfo
-  done map[string] int 
-  peer_amount int
+	state       map[int]*InstanceInfo
+	done        map[string]int
+	peer_amount int
 }
-type InstanceInfo struct{
-  decided bool
-  highest_promised int
-  current_proposal int
-  accepted_value interface{}
-	accepted_num int
-	decided_value interface{}	
-
+type InstanceInfo struct {
+	decided          bool
+	highest_promised int
+	current_proposal int
+	accepted_value   interface{}
+	accepted_num     int
+	decided_value    interface{}
 }
 type PrepareReply struct {
 	Highest_promised int
 	Highest_accepted int
-  Highest_done int
-	OK bool
-	Value interface{}
+	Highest_done     int
+	OK               bool
+	Value            interface{}
 }
 type PrepareArgs struct {
-	Seq int
+	Seq              int
 	Current_proposed int
 }
 type AcceptArgs struct {
-	Seq int
-  Current_proposed int 
-  Value interface{}
+	Seq              int
+	Current_proposed int
+	Value            interface{}
 }
-type AcceptReply struct{
-  Highest_done int
-  OK bool
+type AcceptReply struct {
+	Highest_done int
+	OK           bool
 }
 type DecidedReply struct {
 }
 type DecidedArgs struct {
-	Seq int 
+	Seq   int
 	Value interface{}
 }
+
 //
 // call() sends an RPC to the rpcname handler on server srv
 // with arguments args, waits for the reply, and leaves the
@@ -139,278 +139,282 @@ func call(srv string, name string, args interface{}, reply interface{}) bool {
 //
 func (px *Paxos) Start(seq int, v interface{}) {
 	// Your code here.
-  px.mu.Lock()
-  defer px.mu.Unlock()
-  //Ignore if we already forgot the seq.
-  if seq <  px.Min_without_lock() {
+	px.mu.Lock()
+	defer px.mu.Unlock()
+	//Ignore if we already forgot the seq.
+	if seq < px.Min_without_lock() {
 		return
 	}
-  px.first_time_init(seq) // Initialize if this is the first time we see this seq
- 	go px.proposer(seq,v)
+	px.first_time_init(seq) // Initialize if this is the first time we see this seq
+	go px.proposer(seq, v)
 }
-func ( px *Paxos) initialize() *InstanceInfo{
-  return &InstanceInfo{ 
-			highest_promised : -1,
-			decided : false,
- 		  current_proposal : px.me, // Since px.me is a unique number we can use it.
-      accepted_num : -1	,
+func (px *Paxos) initialize() *InstanceInfo {
+	return &InstanceInfo{
+		highest_promised: -1,
+		decided:          false,
+		current_proposal: px.me, // Since px.me is a unique number we can use it.
+		accepted_num:     -1,
 	}
-} 
-func (px *Paxos) choose_propose_num(seq int,highest_promised int) int {
-   px.mu.Lock()
-   defer px.mu.Unlock()
-
-   candidate_propose_num := px.state[seq].current_proposal
-   //Increase it until it is greater than the highest proposed number for this seq
-   for candidate_propose_num <= highest_promised {
-       candidate_propose_num += px.peer_amount
-   }
-   px.state[seq].current_proposal  =candidate_propose_num
-	 return candidate_propose_num   
 }
-func (px *Paxos) local_accept(seq int , propose_num int ,value interface{} ) (bool){
-  px.mu.Lock()
-  defer px.mu.Unlock()
+func (px *Paxos) choose_propose_num(seq int, highest_promised int) int {
+	px.mu.Lock()
+	defer px.mu.Unlock()
+
+	candidate_propose_num := px.state[seq].current_proposal
+	//Increase it until it is greater than the highest proposed number for this seq
+	for candidate_propose_num <= highest_promised {
+		candidate_propose_num += px.peer_amount
+	}
+	px.state[seq].current_proposal = candidate_propose_num
+	return candidate_propose_num
+}
+func (px *Paxos) local_accept(seq int, propose_num int, value interface{}) bool {
+	px.mu.Lock()
+	defer px.mu.Unlock()
 	status := false
-  px.first_time_init(seq) //initialize if this is the first time we see this eeq
-	if propose_num >= px.state[seq].highest_promised{
-			px.state[seq].highest_promised = propose_num //update the highest promised number
-			px.state[seq].accepted_value = value // update the accepted value 	
-			px.state[seq].accepted_num= propose_num //update the accepted proposal number
-			status= true
+	px.first_time_init(seq) //initialize if this is the first time we see this eeq
+	if propose_num >= px.state[seq].highest_promised {
+		px.state[seq].highest_promised = propose_num //update the highest promised number
+		px.state[seq].accepted_value = value         // update the accepted value
+		px.state[seq].accepted_num = propose_num     //update the accepted proposal number
+		status = true
 	}
-  return status
+	return status
 }
 
-func (px *Paxos) local_prepare(seq int , propose_num int ) (bool,int,int,interface {}){
-  px.mu.Lock()
-  defer px.mu.Unlock()
-	status :=false
-  px.first_time_init(seq)
-	if propose_num > px.state[seq].highest_promised{
-		px.state[seq].highest_promised =propose_num
-	  status = true 	
+func (px *Paxos) local_prepare(seq int, propose_num int) (bool, int, int, interface{}) {
+	px.mu.Lock()
+	defer px.mu.Unlock()
+	status := false
+	px.first_time_init(seq)
+	if propose_num > px.state[seq].highest_promised {
+		px.state[seq].highest_promised = propose_num
+		status = true
 	}
-  return status,px.state[seq].highest_promised,px.state[seq].accepted_num,px.state[seq].accepted_value
-	
+	return status, px.state[seq].highest_promised, px.state[seq].accepted_num, px.state[seq].accepted_value
+
 }
-func (px *Paxos) local_decided(seq int , value interface{} ) {
-  px.mu.Lock()
-  defer px.mu.Unlock()
-  px.first_time_init(seq)
-	if  !px.state[seq].decided {
-    //fmt.Println(seq,value)
+func (px *Paxos) local_decided(seq int, value interface{}) {
+	px.mu.Lock()
+	defer px.mu.Unlock()
+	px.first_time_init(seq)
+	if !px.state[seq].decided {
+		//fmt.Println(seq,value)
 		px.state[seq].decided = true
-		px.state[seq].decided_value= value
-    
+		px.state[seq].decided_value = value
+
 	}
 }
 
-func (px *Paxos) broadcast_prepare(seq int, propose_num int) (int,bool,interface{} ,int) {
-   highest_accepted := -1
-	 highest_promised := -1
-	 var value interface{}
-   total_ok := 0
-   for _,peer := range px.peers {
-     		if peer == px.peers[px.me] {
-            ok,cur_promised,cur_accepted,val :=px.local_prepare(seq,propose_num) // call local prepare instead of rpc
-            //Update the highest accepted proposal
-						if cur_accepted > highest_accepted{
-								value = val
-								highest_accepted= cur_accepted
-						}
-						highest_promised = max (highest_promised,cur_promised) //In order to choose a higher number than the highest seen
-            //In order to check the majority
-            if ok {
-							total_ok++
-						}
-        }else {
-            args := PrepareArgs {Seq: seq, Current_proposed: propose_num, }
-            reply := PrepareReply{}
-						ok:= call(peer,"Paxos.Handle_prepare",&args,&reply) //RPC prepare call
-            if ok {
-              //Update the highest accepted proposal
-							if reply.Highest_accepted > highest_accepted{
-									highest_accepted= reply.Highest_accepted
-									value = reply.Value
-							}
-							highest_promised = max ( highest_promised, reply.Highest_promised)//In order to choose a higher number than the highest seen
-              //In order to check the majority
-  						if reply.OK{
-								total_ok++
-							}
-						}
+func (px *Paxos) broadcast_prepare(seq int, propose_num int) (int, bool, interface{}, int) {
+	highest_accepted := -1
+	highest_promised := -1
+	var value interface{}
+	total_ok := 0
+	for _, peer := range px.peers {
+		if peer == px.peers[px.me] {
+			ok, cur_promised, cur_accepted, val := px.local_prepare(seq, propose_num) // call local prepare instead of rpc
+			//Update the highest accepted proposal
+			if cur_accepted > highest_accepted {
+				value = val
+				highest_accepted = cur_accepted
+			}
+			highest_promised = max(highest_promised, cur_promised) //In order to choose a higher number than the highest seen
+			//In order to check the majority
+			if ok {
+				total_ok++
+			}
+		} else {
+			args := PrepareArgs{Seq: seq, Current_proposed: propose_num}
+			reply := PrepareReply{}
+			ok := call(peer, "Paxos.Handle_prepare", &args, &reply) //RPC prepare call
+			if ok {
+				//Update the highest accepted proposal
+				if reply.Highest_accepted > highest_accepted {
+					highest_accepted = reply.Highest_accepted
+					value = reply.Value
 				}
-   }
-	 return highest_promised,px.check_majority(total_ok), value, highest_accepted
-   
-}
-func (px *Paxos) broadcast_decided(seq int,  v interface{})  {
-   for _,peer := range px.peers {
-     		if peer == px.peers[px.me] {
-            px.local_decided(seq,v) // send a local decided instead of rpc
-        }else {
-            args := DecidedArgs {Seq: seq, Value: v }
-            reply := DecidedReply{}
-						call(peer,"Paxos.Handle_decided",&args,&reply) 
+				highest_promised = max(highest_promised, reply.Highest_promised) //In order to choose a higher number than the highest seen
+				//In order to check the majority
+				if reply.OK {
+					total_ok++
 				}
-   }
+			}
+		}
+	}
+	return highest_promised, px.check_majority(total_ok), value, highest_accepted
+
 }
+func (px *Paxos) broadcast_decided(seq int, v interface{}) {
+	for _, peer := range px.peers {
+		if peer == px.peers[px.me] {
+			px.local_decided(seq, v) // send a local decided instead of rpc
+		} else {
+			args := DecidedArgs{Seq: seq, Value: v}
+			reply := DecidedReply{}
+			call(peer, "Paxos.Handle_decided", &args, &reply)
+		}
+	}
+}
+
 // Iterates over the states and removes the ones that are less than px.Min()
 func (px *Paxos) free_state(num int) {
-		for seq,_:= range  px.state{
-		  if seq < num {
-				delete( px.state, seq )
-			}
-		}	
+	for seq, _ := range px.state {
+		if seq < num {
+			delete(px.state, seq)
+		}
+	}
 
 }
+
 //Update done entry for the given peer
-func (px *Paxos) update(peer string,highest_done int) {
-		px.mu.Lock()
-    defer px.mu.Unlock()
-    if highest_done >  px.done[peer] {
-			px.done[peer] =  highest_done
-      px.free_state(px.Min_without_lock())// Since we might have updated done entry for this peer it is possible that we need to free some states.
-    }
+func (px *Paxos) update(peer string, highest_done int) {
+	px.mu.Lock()
+	defer px.mu.Unlock()
+	if highest_done > px.done[peer] {
+		px.done[peer] = highest_done
+		px.free_state(px.Min_without_lock()) // Since we might have updated done entry for this peer it is possible that we need to free some states.
+	}
 }
-func (px *Paxos) broadcast_accept(seq int, propose_num int, v interface{}) (bool) {
-   total_ok := 0
-   for _,peer := range px.peers {
-        // send a local accept instead of rpc 
-     		if peer == px.peers[px.me] {
-            ok :=px.local_accept(seq,propose_num,v)
-            if ok{
-							total_ok++
-						}
-        }else {
-            args := AcceptArgs{Seq: seq, Current_proposed: propose_num,Value : v }
-            reply := AcceptReply{}
-						ok:= call(peer,"Paxos.Handle_accept",&args,&reply) //call handle accept 
-            if ok  {
-              px.update(peer,reply.Highest_done)
-  						if reply.OK{
-								total_ok++
-							}
-						}
+func (px *Paxos) broadcast_accept(seq int, propose_num int, v interface{}) bool {
+	total_ok := 0
+	for _, peer := range px.peers {
+		// send a local accept instead of rpc
+		if peer == px.peers[px.me] {
+			ok := px.local_accept(seq, propose_num, v)
+			if ok {
+				total_ok++
+			}
+		} else {
+			args := AcceptArgs{Seq: seq, Current_proposed: propose_num, Value: v}
+			reply := AcceptReply{}
+			ok := call(peer, "Paxos.Handle_accept", &args, &reply) //call handle accept
+			if ok {
+				px.update(peer, reply.Highest_done)
+				if reply.OK {
+					total_ok++
 				}
-   }
-	 return px.check_majority(total_ok)
-   
-}
-
-//Given total ok check if it is majority 
-func (px *Paxos) check_majority(total_ok int) bool{
-		return total_ok > (px.peer_amount)/2
-}
-func max(x int,y int) int {
-		if x >y {
-			return x
-		}
-		return y
-}
-func (px *Paxos) Handle_accept(args *AcceptArgs, reply * AcceptReply) error {
-     px.mu.Lock()
-		 defer px.mu.Unlock()
-     px.first_time_init(args.Seq) // if this seq number is seen for the first time create an entry for it.
-		 if args.Current_proposed >= px.state[args.Seq].highest_promised {
-				reply.OK= true
-        px.state[args.Seq].highest_promised = args.Current_proposed 
-				px.state[args.Seq].accepted_num = args.Current_proposed // update the accepted num
-        px.state[args.Seq].accepted_value = args.Value //update the accepted value.
-		 }else {
-				reply.OK =false
-		 }
-     reply.Highest_done= px.done[px.peers[px.me]] 
-     return nil
-
-}
-func (px *Paxos) Handle_decided(args *DecidedArgs, reply * DecidedReply) error {
-     px.mu.Lock()
-		 defer px.mu.Unlock()
-     px.first_time_init(args.Seq) //if this seq number is seen for the first time create an entry for it.
-     //If it already decided a value then dont do anything.
-     if !px.state[args.Seq].decided{ 
-    		//fmt.Println(args.Seq,args.Value)
-				px.state[args.Seq].decided=true
-				px.state[args.Seq].decided_value= args.Value
 			}
-     return nil
+		}
+	}
+	return px.check_majority(total_ok)
 
 }
+
+//Given total ok check if it is majority
+func (px *Paxos) check_majority(total_ok int) bool {
+	return total_ok > (px.peer_amount)/2
+}
+func max(x int, y int) int {
+	if x > y {
+		return x
+	}
+	return y
+}
+func (px *Paxos) Handle_accept(args *AcceptArgs, reply *AcceptReply) error {
+	px.mu.Lock()
+	defer px.mu.Unlock()
+	px.first_time_init(args.Seq) // if this seq number is seen for the first time create an entry for it.
+	if args.Current_proposed >= px.state[args.Seq].highest_promised {
+		reply.OK = true
+		px.state[args.Seq].highest_promised = args.Current_proposed
+		px.state[args.Seq].accepted_num = args.Current_proposed // update the accepted num
+		px.state[args.Seq].accepted_value = args.Value          //update the accepted value.
+	} else {
+		reply.OK = false
+	}
+	reply.Highest_done = px.done[px.peers[px.me]]
+	return nil
+
+}
+func (px *Paxos) Handle_decided(args *DecidedArgs, reply *DecidedReply) error {
+	px.mu.Lock()
+	defer px.mu.Unlock()
+	px.first_time_init(args.Seq) //if this seq number is seen for the first time create an entry for it.
+	//If it already decided a value then dont do anything.
+	if !px.state[args.Seq].decided {
+		//fmt.Println(args.Seq,args.Value)
+		px.state[args.Seq].decided = true
+		px.state[args.Seq].decided_value = args.Value
+	}
+	return nil
+
+}
+
 //If this is the first time this peer sees this seq then initialize it
-func (px *Paxos) first_time_init(seq int){
-		_, found := px.state[seq]
-    if !found{
-			px.state[seq] = px.initialize()
-		}		
+func (px *Paxos) first_time_init(seq int) {
+	_, found := px.state[seq]
+	if !found {
+		px.state[seq] = px.initialize()
+	}
 }
-func (px *Paxos) Handle_prepare(args *PrepareArgs, reply * PrepareReply) error {
-     px.mu.Lock()
-		 defer px.mu.Unlock()
-     px.first_time_init(args.Seq) //if this seq number is seen for the first time create an entry for it.
-		 if args.Current_proposed > px.state[args.Seq].highest_promised{
-					reply.OK =true	
-					px.state[args.Seq].highest_promised = args.Current_proposed // Update the highest seen value
-		 }else {
-					reply.OK =false
+func (px *Paxos) Handle_prepare(args *PrepareArgs, reply *PrepareReply) error {
+	px.mu.Lock()
+	defer px.mu.Unlock()
+	px.first_time_init(args.Seq) //if this seq number is seen for the first time create an entry for it.
+	if args.Current_proposed > px.state[args.Seq].highest_promised {
+		reply.OK = true
+		px.state[args.Seq].highest_promised = args.Current_proposed // Update the highest seen value
+	} else {
+		reply.OK = false
+	}
+	reply.Highest_promised = px.state[args.Seq].highest_promised // to update the highest seen number of the caller
+	reply.Value = px.state[args.Seq].accepted_value              //To broadcast accept we need to find the value of the highest accepted num
+	reply.Highest_accepted = px.state[args.Seq].accepted_num     // To find the highest accepted value among the peers.
+	reply.Highest_done = px.done[px.peers[px.me]]                // get the done value for this peer so that we can update the done map of the caller
+	return nil
+
+}
+func (px *Paxos) proposer(seq int, v interface{}) {
+	highest_num := -1 // highest number seen so far
+	//keep proposing until we decide on a single value, break if the peer is dead.
+	for px.is_deciding(seq) && !px.isdead() {
+		proposal_num := px.choose_propose_num(seq, highest_num)                                // Choose a number to propose that is greater than highest number seen so far.
+		highest_promised, ok, val, highest_accepted := px.broadcast_prepare(seq, proposal_num) // broadcast prepare to the other nodes
+		highest_num = highest_promised                                                         // update highest num
+		value := v                                                                             // Initialize the value to be accepted as this peers value.
+
+
+		//If highest accepted number from some other peer is found then we need to broadcast accept its value.
+		if highest_accepted != -1 {
+			value = val //Update value to be broadcasted to be accepted.
+		}
+		//If we got ok from majority of peers for prepare broadcast accept.
+		if ok {
+			ok = px.broadcast_accept(seq, proposal_num, value) //Broadcast accept
+			// If we got ok from majority of peers for accept then we can send decide.
+			if ok {
+				//If some other value has been decided then break.
+				if !px.is_deciding(seq) {
+					break
+				}
+				px.broadcast_decided(seq, value) //broadcast the value.
+				break
+			} else {
+				time.Sleep(time.Duration(rand.Intn(200)))
 			}
-     reply.Highest_promised = px.state[args.Seq].highest_promised // to update the highest seen number of the caller 
-		 reply.Value = px.state[args.Seq].accepted_value  //To broadcast accept we need to find the value of the highest accepted num
-		 reply.Highest_accepted = px.state[args.Seq].accepted_num // To find the highest accepted value among the peers.
-     reply.Highest_done = px.done[px.peers[px.me]] // get the done value for this peer so that we can update the done map of the caller 
-     return nil
-
-}
-func (px *Paxos) proposer(seq int,v interface{}) {
-   highest_num := -1 // highest number seen so far
-   //keep proposing until we decide on a single value, break if the peer is dead. 
-   for px.is_deciding(seq) && !px.isdead(){
-       proposal_num:= px.choose_propose_num(seq,highest_num) // Choose a number to propose that is greater than highest number seen so far.
-       highest_promised, ok,val,highest_accepted := px.broadcast_prepare(seq,proposal_num) // broadcast prepare to the other nodes 
-       highest_num = highest_promised // update highest num
-			 value := v // Initialize the value to be accepted as this peers value.
-       //If highest accepted number from some other peer is found then we need to broadcast accept its value.
-       if highest_accepted != -1 {
-					value = val //Update value to be broadcasted to be accepted.
-			 }
-       //If we got ok from majority of peers for prepare broadcast accept.
-     	 if ok {
-					ok =px.broadcast_accept(seq,proposal_num,value)	//Broadcast accept
-          // If we got ok from majority of peers for accept then we can send decide.
-          if ok {
-            //If some other value has been decided then break.
-       			if !px.is_deciding(seq) {
-							break
-			 			}
-             px.broadcast_decided(seq,value) //broadcast the value.
-						 break
-					}else {
-					  time.Sleep(time.Duration(rand.Intn(200)))
-					}
-			 }else{
-					time.Sleep(time.Duration(rand.Intn(200)))
-			 }
-        
-
-
+		} else {
+			time.Sleep(time.Duration(rand.Intn(200)))
 		}
+
+	}
 }
-func (px *Paxos) is_deciding(seq int ) bool{
-    px.mu.Lock()
-		defer px.mu.Unlock()
-    // Check if we forgot this seq number
-    if seq < px.Min_without_lock() {
-			return false
-		}
-    //Assumtion: if we are here then this seq number must exist in our state
-    _,found := px.state[seq]
-    if !found {
-			return false
-    }
-    return !px.state[seq].decided 
+func (px *Paxos) is_deciding(seq int) bool {
+	px.mu.Lock()
+	defer px.mu.Unlock()
+	// Check if we forgot this seq number
+	if seq < px.Min_without_lock() {
+		return false
+	}
+	//Assumtion: if we are here then this seq number must exist in our state
+	_, found := px.state[seq]
+	if !found {
+		return false
+	}
+	return !px.state[seq].decided
 
 }
+
 //
 // the application on this machine is done with
 // all instances <= seq.
@@ -419,9 +423,9 @@ func (px *Paxos) is_deciding(seq int ) bool{
 //
 func (px *Paxos) Done(seq int) {
 	// Your code here.
-  px.mu.Lock()
-  defer px.mu.Unlock()
-  px.done[px.peers[px.me]] = max(seq,px.done[px.peers[px.me]]) // update this peers highest done with the passed arg.
+	px.mu.Lock()
+	defer px.mu.Unlock()
+	px.done[px.peers[px.me]] = max(seq, px.done[px.peers[px.me]]) // update this peers highest done with the passed arg.
 }
 
 //
@@ -431,12 +435,12 @@ func (px *Paxos) Done(seq int) {
 //
 func (px *Paxos) Max() int {
 	// Your code here.
-  px.mu.Lock()
-  defer px.mu.Unlock()
-  max_instance := -1 
-  /// Iterate over all seqs known to this peer to find the maximum one.
-  for seq,_:= range px.state{
-		max_instance = max(max_instance,seq)
+	px.mu.Lock()
+	defer px.mu.Unlock()
+	max_instance := -1
+	/// Iterate over all seqs known to this peer to find the maximum one.
+	for seq, _ := range px.state {
+		max_instance = max(max_instance, seq)
 
 	}
 	return max_instance
@@ -472,23 +476,23 @@ func (px *Paxos) Max() int {
 //
 func (px *Paxos) Min() int {
 	// You code here.
-  px.mu.Lock()
-  defer px.mu.Unlock()
-	min_value := px.done[px.peers[px.me]] 
-  //Iterate over all done values for peers to find the minimum one
-  for _,cur := range px.done{
-      min_value = min(cur, min_value)
+	px.mu.Lock()
+	defer px.mu.Unlock()
+	min_value := px.done[px.peers[px.me]]
+	//Iterate over all done values for peers to find the minimum one
+	for _, cur := range px.done {
+		min_value = min(cur, min_value)
 	}
-  return min_value +1
+	return min_value + 1
 }
 func (px *Paxos) Min_without_lock() int {
 	// You code here.
-	min_value := px.done[px.peers[px.me]] 
-  //Iterate over all done values for peers to find the minimum one
-  for _,cur := range px.done{
-      min_value = min(cur, min_value)
+	min_value := px.done[px.peers[px.me]]
+	//Iterate over all done values for peers to find the minimum one
+	for _, cur := range px.done {
+		min_value = min(cur, min_value)
 	}
-  return min_value +1
+	return min_value + 1
 }
 
 func min(x int, y int) int {
@@ -507,15 +511,15 @@ func min(x int, y int) int {
 //
 func (px *Paxos) Status(seq int) (Fate, interface{}) {
 	// Your code here.
-  px.mu.Lock()
-  defer px.mu.Unlock()
-  //We forgot the value 
-  if seq < px.Min_without_lock() {
-			return Forgotten,nil
+	px.mu.Lock()
+	defer px.mu.Unlock()
+	//We forgot the value
+	if seq < px.Min_without_lock() {
+		return Forgotten, nil
 	}
-  _,found := px.state[seq]
-  if found && px.state[seq].decided {
-			return Decided,px.state[seq].decided_value
+	_, found := px.state[seq]
+	if found && px.state[seq].decided {
+		return Decided, px.state[seq].decided_value
 	}
 	return Pending, nil
 }
@@ -564,13 +568,13 @@ func Make(peers []string, me int, rpcs *rpc.Server) *Paxos {
 
 	// Your initialization code here.
 
-  px.state = map[int] *InstanceInfo{}
-  px.done = map[string] int{}
-  // Initialize all of peer's nodes as -1 since when we iterate they need to be in the map even though we haven't received anything from them.
-  for _,peer := range px.peers {
-			px.done[peer] = -1
+	px.state = map[int]*InstanceInfo{}
+	px.done = map[string]int{}
+	// Initialize all of peer's nodes as -1 since when we iterate they need to be in the map even though we haven't received anything from them.
+	for _, peer := range px.peers {
+		px.done[peer] = -1
 	}
-  px.peer_amount = len(peers)
+	px.peer_amount = len(peers)
 	if rpcs != nil {
 		// caller will create socket &c
 		rpcs.Register(px)
