@@ -1,10 +1,11 @@
 package shardmaster
 
 import (
+	"crypto/rand"
+	"math/big"
 	"encoding/gob"
 	"fmt"
 	"log"
-	"math/rand"
 	"net"
 	"net/rpc"
 	"os"
@@ -29,6 +30,9 @@ type ShardMaster struct {
 
 	ops []Op
 	seen map[int64]bool
+
+	seenIdx int
+	doneIdx int
 }
 
 const (
@@ -58,9 +62,27 @@ type Op struct {
 	Num int
 }
 
+func nrand() int64 {
+	max := big.NewInt(int64(1) << 62)
+	bigx, _ := rand.Int(rand.Reader, max)
+	x := bigx.Int64()
+	return x
+}
+
+func max(a, b int) (c int) {
+	if a > b {
+		c = a
+	} else {
+		c = b
+	}
+
+	return
+}
+
+
 // proposes the given op
 // also learns what ops have been chosen, and garbage collects
-func (sm *ShardMaster) proposeOp(op Op) {
+func (sm *ShardMaster) propose(op Op) {
 	for {
 		// propose the smallest value
 		sm.mu.Lock()
@@ -101,19 +123,69 @@ func (sm *ShardMaster) proposeOp(op Op) {
 		if op.OpId == curOp.OpId {
 			sm.ops[opNo] = curOp
 			sm.seen[curOp.OpId] = true // mark op seen
+			sm.seenIdx = max(sm.seenIdx, opNo + 1)
 		}
 		sm.mu.Unlock()
 	}
 }
 
+func (sm *ShardMaster) evaluate() {
+	sm.mu.Lock()
+	defer sm.mu.Unlock()
+	// apply all the ops in the log
+	for ; sm.doneIdx < sm.seenIdx; sm.doneIdx++ {
+		// get the earliest op that has not been executed
+		op := sm.ops[sm.doneIdx]
+		// garbage collect from ops
+		delete(sm.ops, sm.doneIdx)
+
+		// execute op
+		switch op.Type {
+		case JOIN:
+			sm.evaluateJoin(op)
+		case LEAVE:
+			sm.evaluateLeave(op)
+		case MOVE:
+			sm.evaluateMove(op)
+		case QUERY:
+			sm.evaluateQuery(op)
+		}
+	}
+}
+
+func (sm *ShardMaster) evaluateJoin(op Op) {
+
+}
+
+func (sm *ShardMaster) evaluateLeave(op Op) {
+
+}
+
+func (sm *ShardMaster) evaluateMove(op Op) {
+
+}
+
+func (sm *ShardMaster) evaluateQuery(op Op) {
+
+}
+
 func (sm *ShardMaster) Join(args *JoinArgs, reply *JoinReply) error {
-	// check to see if this group has already joined
+	// check if group is already present
+	sm.mu.Lock()
+	if _, ok := sm.configs[len(sm.configs) - 1].Groups[args.GID]; ok {
+		sm.mu.Unlock()
+		return nil
+	}
+	sm.mu.Unlock()
 
 	// create op
+	op := Op{JOIN, nrand(), args.GID, args.Servers, -1, -1}
 
 	// propose op
+	sm.propose(op)
 
 	// evaluate existing ops
+	sm.evaluate()
 
 	return nil
 }
@@ -123,13 +195,22 @@ func (sm *ShardMaster) Join(args *JoinArgs, reply *JoinReply) error {
 func (sm *ShardMaster) Leave(args *LeaveArgs, reply *LeaveReply) error {
 	// Your code here.
 
-	// check to see if this group is present
+	// check if group is not present
+	sm.mu.Lock()
+	if _, ok := sm.configs[len(sm.configs) - 1].Groups[args.GID]; !ok {
+		sm.mu.Unlock()
+		return nil
+	}
+	sm.mu.Unlock()
 
 	// create op
+	op := Op{LEAVE, nrand(), args.GID, nil, -1, -1}
 
 	// propose op
+	sm.propose(op)
 
 	// evaluate existing ops
+	sm.evaluate()
 
 	return nil
 }
@@ -138,10 +219,13 @@ func (sm *ShardMaster) Move(args *MoveArgs, reply *MoveReply) error {
 	// Your code here.
 
 	// create op
+	op := Op{MOVE, nrand(), args.GID, nil, args.Shard, -1}
 
 	// propose op
+	sm.propose(op)
 
 	// evaluate existing ops
+	sm.evaluate()
 
 	return nil
 }
@@ -150,10 +234,13 @@ func (sm *ShardMaster) Query(args *QueryArgs, reply *QueryReply) error {
 	// Your code here.
 
 	// create op
+	op := Op{QUERY, -1, nil, -1, args.Num}
 
 	// propose op
+	sm.propose(op)
 
-	// evaluate existing op
+	// evaluate existing ops
+	sm.evaluate()
 
 	return nil
 }
