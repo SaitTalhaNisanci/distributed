@@ -1,8 +1,7 @@
 package shardmaster
 
 import (
-	"crypto/rand"
-	"math/big"
+  "math/rand"
 	"encoding/gob"
 	"fmt"
 	"log"
@@ -14,7 +13,7 @@ import (
 	"syscall"
 
 	"paxos"
-	"golang.org/x/tools/godoc"
+//	"golang.org/x/tools/godoc"
 	"time"
 )
 
@@ -27,8 +26,7 @@ type ShardMaster struct {
 	px         *paxos.Paxos
 
 	configs []Config // indexed by config num
-
-	ops []Op
+	ops map[int]Op
 	seen map[int64]bool
 
 	seenIdx int
@@ -36,22 +34,23 @@ type ShardMaster struct {
 }
 
 const (
-	JOIN = iota
-	LEAVE
-	MOVE
-	QUERY
+	JOIN ="Join" 
+	LEAVE = "Leave"
+	MOVE = "Move"
+	QUERY ="Query"
 )
 
 
-type OpType int
-
+type OpType string
+type Args interface{}
 type Op struct {
 	// Your data here.
-	Type OpType
+	Type OpType 
 	OpId int64
-
+  Args Args
+ /*
 	GID int64 // for join/leave/move
-
+  
 	// for join
 	Servers []string
 
@@ -60,12 +59,11 @@ type Op struct {
 
 	// for query
 	Num int
+*/
 }
 
 func nrand() int64 {
-	max := big.NewInt(int64(1) << 62)
-	bigx, _ := rand.Int(rand.Reader, max)
-	x := bigx.Int64()
+	x := rand.Int63()
 	return x
 }
 
@@ -85,13 +83,13 @@ func max(a, b int) (c int) {
 func (sm *ShardMaster) propose(op Op) {
 	for {
 		// propose the smallest value
-		sm.mu.Lock()
+    //sm.mu.Lock()
 		if sm.seen[op.OpId] {
-			sm.mu.Unlock()
+			//sm.mu.Unlock()
 			return
 		}
-		opNo := len(sm.configs)
-		sm.mu.Unlock()
+		opNo := sm.seenIdx 
+		//sm.mu.Unlock()
 
 		// attempt to propose the value
 		// wait for this instance to make a decision
@@ -113,25 +111,105 @@ func (sm *ShardMaster) propose(op Op) {
 
 		curOp := decision.(Op)
 
+    //fmt.Println(op.OpId,curOp.OpId)
 		// garbage collect
 		sm.px.Done(opNo)
 
 
 		// only add op if it has not already been seen
-		sm.mu.Lock()
+		//sm.mu.Lock()
 		// unlock this sequence number
-		if op.OpId == curOp.OpId {
+		//if op.OpId == curOp.OpId {
 			sm.ops[opNo] = curOp
 			sm.seen[curOp.OpId] = true // mark op seen
-			sm.seenIdx = max(sm.seenIdx, opNo + 1)
-		}
-		sm.mu.Unlock()
+		//}
+		sm.seenIdx = max(sm.seenIdx, opNo + 1)
+		//sm.mu.Unlock()
 	}
 }
 
-func (sm *ShardMaster) evaluate() {
-	sm.mu.Lock()
-	defer sm.mu.Unlock()
+func (cf *Config) add_rg(gid int64,servers []string){
+    cf.Num += 1
+    cf.Groups[gid] = servers 
+}
+//Returns a map , key : groupid, value: how many shards it has
+func (cf *Config) loads() map[int64] int {
+  rp_groups := make(map[int64] int)
+  //Finds groups that are still up.
+  for gid,_ := range cf.Groups {
+      rp_groups[gid] = 0
+  }
+  for _,gid := range cf.Shards {
+      _,found := rp_groups[gid]
+      if found {
+         rp_groups[gid] += 1
+      }
+  }
+  return rp_groups
+}
+//Returns the minimum loads gid and the amount
+func (cf *Config) minimum_load() (int64,int) {
+     rp_loads:= cf.loads()
+     var gid int64 = 0
+     min_load:= 9999999 //Can set this to Num+1
+     for g,v := range rp_loads{
+         if v < min_load {
+            min_load = v 
+            gid = g
+         } 
+     } 
+     return gid,min_load
+
+}
+func (cf *Config) maximum_load() (int64,int) {
+     rp_loads:= cf.loads()
+     var gid int64 =0 
+     max_load:= 0//Can set this to Num+1
+     for g,v := range rp_loads{
+         if v > max_load{
+            max_load= v 
+            gid = g
+         } 
+     } 
+     return gid,max_load
+
+}
+func (cf *Config) difference()int {
+     _,maximum := cf.maximum_load()
+     _,minimum := cf.minimum_load()
+     return maximum-minimum 
+}
+func (cf *Config) move_shard(s_index int, gid int64){
+     cf.Shards[s_index] = gid
+}
+func (cf *Config) assign_invalid_shards() {
+     for shard,gid := range cf.Shards{
+					if gid == 0 {
+						gid1, _ := cf.minimum_load()
+            cf.move_shard(shard,gid1)
+					}
+
+			}
+}
+func (cf *Config) balance() {
+     for cf.difference() > 1 {
+         gid1,_ := cf.maximum_load()
+         gid2,_ := cf.minimum_load()
+         //Find a shard in gid1 and move it to gid2
+         for shard,gid := range cf.Shards {
+							if gid == gid1{
+									cf.move_shard(shard,gid2)
+                  break
+
+							}
+
+			   }	
+
+
+     } 
+}
+func (sm *ShardMaster) evaluate() Config{
+  var config Config
 	// apply all the ops in the log
 	for ; sm.doneIdx < sm.seenIdx; sm.doneIdx++ {
 		// get the earliest op that has not been executed
@@ -141,46 +219,94 @@ func (sm *ShardMaster) evaluate() {
 
 		// execute op
 		switch op.Type {
-		case JOIN:
-			sm.evaluateJoin(op)
-		case LEAVE:
-			sm.evaluateLeave(op)
-		case MOVE:
-			sm.evaluateMove(op)
-		case QUERY:
-			sm.evaluateQuery(op)
+		case "Join":
+      var JoinArgs = (op.Args).(JoinArgs)
+			sm.evaluateJoin(&JoinArgs)
+      
+		case "Leave":
+      var LeaveArgs = op.Args.(LeaveArgs)
+			sm.evaluateLeave(&LeaveArgs)
+		case "Move":
+      var MoveArgs = op.Args.(MoveArgs)
+			sm.evaluateMove(&MoveArgs)
+		case "Query":
+      var QueryArgs = (op.Args).(QueryArgs)
+			config =sm.evaluateQuery(&QueryArgs)
 		}
 	}
+  return config
+}
+func (cf *Config) remove_group(gid int64) {
+    cf.Num += 1
+    delete(cf.Groups,gid)
+}
+func (cf *Config) assign_shards(gid int64) {
+		for shard,gid1 := range cf.Shards {
+				if gid == gid1 {
+					min_gid,_ := cf.minimum_load()
+          cf.move_shard(shard,min_gid)
+        }
+
+		}
+
+}
+func (cf *Config) copy_config() Config {
+  var newConfig = Config { cf.Num, cf.Shards, make(map [int64][]string)}
+  for key,value := range cf.Groups {
+       newConfig.Groups[key] = value
+  }
+  return newConfig
+
 }
 
-func (sm *ShardMaster) evaluateJoin(op Op) {
-
+func (sm *ShardMaster) evaluateJoin(args *JoinArgs) {
+  
+  previous_config := sm.configs[len(sm.configs)-1]
+  new_config := previous_config.copy_config()
+  new_config.add_rg(args.GID,args.Servers)
+  new_config.assign_invalid_shards()
+  new_config.balance()
+  sm.configs = append(sm.configs,new_config) 
+  
 }
 
-func (sm *ShardMaster) evaluateLeave(op Op) {
-
+func (sm *ShardMaster) evaluateLeave(args *LeaveArgs ) {
+  previous_config := sm.configs[len(sm.configs)-1]
+  new_config := previous_config.copy_config()
+  new_config.remove_group(args.GID)
+  new_config.assign_shards(args.GID)
+  new_config.balance()
+  sm.configs = append(sm.configs,new_config) 
 }
 
-func (sm *ShardMaster) evaluateMove(op Op) {
-
+func (sm *ShardMaster) evaluateMove(args *MoveArgs) {
+  previous_config := sm.configs[len(sm.configs)-1]
+  new_config := previous_config.copy_config()
+  new_config.Num += 1
+  new_config.move_shard(args.Shard,args.GID)
+  sm.configs = append(sm.configs,new_config) 
 }
 
-func (sm *ShardMaster) evaluateQuery(op Op) {
-
+func (sm *ShardMaster) evaluateQuery(args *QueryArgs) Config{
+  num := args.Num
+  if num == -1 || num >=len(sm.configs) {
+     return sm.configs[len(sm.configs)-1] 
+  }
+  return sm.configs[num]
+  
 }
 
 func (sm *ShardMaster) Join(args *JoinArgs, reply *JoinReply) error {
-	// check if group is already present
 	sm.mu.Lock()
+	defer sm.mu.Unlock()
+	// check if group is already present
 	if _, ok := sm.configs[len(sm.configs) - 1].Groups[args.GID]; ok {
-		sm.mu.Unlock()
 		return nil
 	}
-	sm.mu.Unlock()
-
 	// create op
-	op := Op{JOIN, nrand(), args.GID, args.Servers, -1, -1}
-
+	//op := Op{JOIN, nrand(), args.GID, args.Servers, -1, -1}
+	op := Op{JOIN, nrand(), *args}
+  //fmt.Println("Join", op.OpId)
 	// propose op
 	sm.propose(op)
 
@@ -194,18 +320,18 @@ func (sm *ShardMaster) Join(args *JoinArgs, reply *JoinReply) error {
 
 func (sm *ShardMaster) Leave(args *LeaveArgs, reply *LeaveReply) error {
 	// Your code here.
-
+  sm.mu.Lock()
+  defer sm.mu.Unlock()
 	// check if group is not present
-	sm.mu.Lock()
 	if _, ok := sm.configs[len(sm.configs) - 1].Groups[args.GID]; !ok {
-		sm.mu.Unlock()
 		return nil
 	}
-	sm.mu.Unlock()
 
 	// create op
-	op := Op{LEAVE, nrand(), args.GID, nil, -1, -1}
+	//op := Op{LEAVE, nrand(), args.GID, nil, -1, -1}
 
+	op := Op{LEAVE, nrand(), *args}
+  //nfmt.Println("Leave", op.OpId)
 	// propose op
 	sm.propose(op)
 
@@ -218,10 +344,15 @@ func (sm *ShardMaster) Leave(args *LeaveArgs, reply *LeaveReply) error {
 func (sm *ShardMaster) Move(args *MoveArgs, reply *MoveReply) error {
 	// Your code here.
 
+  sm.mu.Lock()
+  defer sm.mu.Unlock()
 	// create op
-	op := Op{MOVE, nrand(), args.GID, nil, args.Shard, -1}
+	//op := Op{MOVE, nrand(), args.GID, nil, args.Shard, -1}
+	op := Op{MOVE, nrand(), *args}
 
+  //fmt.Println("Move", op.OpId)
 	// propose op
+
 	sm.propose(op)
 
 	// evaluate existing ops
@@ -232,17 +363,16 @@ func (sm *ShardMaster) Move(args *MoveArgs, reply *MoveReply) error {
 
 func (sm *ShardMaster) Query(args *QueryArgs, reply *QueryReply) error {
 	// Your code here.
-
+  sm.mu.Lock()
+  defer sm.mu.Unlock()
 	// create op
-	op := Op{QUERY, -1, nil, -1, args.Num}
-
+	//op := Op{QUERY, nrand(),-1, nil, -1, args.Num}
+  op := Op{QUERY, nrand(),*args}
+  //fmt.Println("Query", op.OpId)
 	// propose op
 	sm.propose(op)
-
-	// evaluate existing ops
-	sm.evaluate()
-
-	return nil
+  reply.Config = sm.evaluate()
+  return nil
 }
 
 // please don't change these two functions.
@@ -282,11 +412,15 @@ func StartServer(servers []string, me int) *ShardMaster {
 
 	sm.configs = make([]Config, 1)
 	sm.configs[0].Groups = map[int64][]string{}
-	sm.ops = map[int64]bool{}
-
+	sm.ops = map[int]Op{}
+  sm.seen = map[int64]bool{}
 	rpcs := rpc.NewServer()
 
 	gob.Register(Op{})
+	gob.Register(QueryArgs{})
+	gob.Register(LeaveArgs{})
+	gob.Register(MoveArgs{})
+	gob.Register(JoinArgs{})
 	rpcs.Register(sm)
 	sm.px = paxos.Make(servers, me, rpcs)
 
