@@ -47,18 +47,6 @@ type Op struct {
 	Type OpType
 	OpId int64
 	Args Args
-	/*
-		GID int64 // for join/leave/move
-
-		// for join
-		Servers []string
-
-		// for move
-		Shard int
-
-		// for query
-		Num int
-	*/
 }
 
 func nrand() int64 {
@@ -109,17 +97,13 @@ func (sm *ShardMaster) propose(op Op) {
 
 		curOp := decision.(Op)
 
-		//fmt.Println(op.OpId,curOp.OpId)
-
 		// garbage collect
 		sm.px.Done(opNo)
 
 		// only add op if it has not already been seen
 		sm.mu.Lock()
-		// unlock this sequence number
 		sm.ops[opNo] = curOp
 		sm.seen[curOp.OpId] = true // mark op seen
-		//}
 		sm.seenIdx = max(sm.seenIdx, opNo+1)
 		sm.mu.Unlock()
 	}
@@ -210,7 +194,10 @@ func (cf *Config) balance() {
 }
 func (sm *ShardMaster) evaluate() Config {
 	var config Config
+
 	sm.mu.Lock()
+	defer sm.mu.Unlock()
+
 	// apply all the ops in the log
 	for ; sm.doneIdx < sm.seenIdx; sm.doneIdx++ {
 		// get the earliest op that has not been executed
@@ -234,7 +221,6 @@ func (sm *ShardMaster) evaluate() Config {
 			config = sm.evaluateQuery(&QueryArgs)
 		}
 	}
-	sm.mu.Unlock()
 	return config
 }
 
@@ -298,12 +284,8 @@ func (sm *ShardMaster) evaluateQuery(args *QueryArgs) Config {
 }
 
 func (sm *ShardMaster) Join(args *JoinArgs, reply *JoinReply) error {
-	//sm.mu.Lock()
-	//defer sm.mu.Unlock()
-
 	// create op
 	op := Op{JOIN, nrand(), *args}
-	//fmt.Println("Join", op.OpId)
 
 	// propose op
 	sm.propose(op)
@@ -315,13 +297,8 @@ func (sm *ShardMaster) Join(args *JoinArgs, reply *JoinReply) error {
 }
 
 func (sm *ShardMaster) Leave(args *LeaveArgs, reply *LeaveReply) error {
-	// Your code here.
-	//sm.mu.Lock()
-	//defer sm.mu.Unlock()
-
 	// create op
 	op := Op{LEAVE, nrand(), *args}
-	//fmt.Println("Leave", op.OpId)
 
 	// propose op
 	sm.propose(op)
@@ -333,13 +310,8 @@ func (sm *ShardMaster) Leave(args *LeaveArgs, reply *LeaveReply) error {
 }
 
 func (sm *ShardMaster) Move(args *MoveArgs, reply *MoveReply) error {
-	// Your code here.
-	//sm.mu.Lock()
-	//defer sm.mu.Unlock()
-
 	// create op
 	op := Op{MOVE, nrand(), *args}
-	//fmt.Println("Move", op.OpId)
 
 	// propose op
 	sm.propose(op)
@@ -351,13 +323,8 @@ func (sm *ShardMaster) Move(args *MoveArgs, reply *MoveReply) error {
 }
 
 func (sm *ShardMaster) Query(args *QueryArgs, reply *QueryReply) error {
-	// Your code here.
-	//sm.mu.Lock()
-	//defer sm.mu.Unlock()
-
 	// create op
 	op := Op{QUERY, nrand(), *args}
-	//fmt.Println("Query", op.OpId)
 
 	// propose op
 	sm.propose(op)
