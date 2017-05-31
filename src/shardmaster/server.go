@@ -43,7 +43,6 @@ const (
 type OpType string
 type Args interface{}
 type Op struct {
-	// Your data here.
 	Type OpType
 	OpId int64
 	Args Args
