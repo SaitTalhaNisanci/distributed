@@ -81,13 +81,13 @@ func max(a, b int) (c int) {
 func (sm *ShardMaster) propose(op Op) {
 	for {
 		// propose the smallest value
-		//sm.mu.Lock()
+		sm.mu.Lock()
 		if sm.seen[op.OpId] {
-			//sm.mu.Unlock()
+			sm.mu.Unlock()
 			return
 		}
 		opNo := sm.seenIdx
-		//sm.mu.Unlock()
+		sm.mu.Unlock()
 
 		// attempt to propose the value
 		// wait for this instance to make a decision
@@ -115,14 +115,13 @@ func (sm *ShardMaster) propose(op Op) {
 		sm.px.Done(opNo)
 
 		// only add op if it has not already been seen
-		//sm.mu.Lock()
+		sm.mu.Lock()
 		// unlock this sequence number
-		//if op.OpId == curOp.OpId {
 		sm.ops[opNo] = curOp
 		sm.seen[curOp.OpId] = true // mark op seen
 		//}
 		sm.seenIdx = max(sm.seenIdx, opNo+1)
-		//sm.mu.Unlock()
+		sm.mu.Unlock()
 	}
 }
 
@@ -211,6 +210,7 @@ func (cf *Config) balance() {
 }
 func (sm *ShardMaster) evaluate() Config {
 	var config Config
+	sm.mu.Lock()
 	// apply all the ops in the log
 	for ; sm.doneIdx < sm.seenIdx; sm.doneIdx++ {
 		// get the earliest op that has not been executed
@@ -234,6 +234,7 @@ func (sm *ShardMaster) evaluate() Config {
 			config = sm.evaluateQuery(&QueryArgs)
 		}
 	}
+	sm.mu.Unlock()
 	return config
 }
 
@@ -297,14 +298,8 @@ func (sm *ShardMaster) evaluateQuery(args *QueryArgs) Config {
 }
 
 func (sm *ShardMaster) Join(args *JoinArgs, reply *JoinReply) error {
-	sm.mu.Lock()
-	defer sm.mu.Unlock()
-	// check if group is already present
-	/*
-	if _, ok := sm.configs[len(sm.configs)-1].Groups[args.GID]; ok {
-		return nil
-	}
-	*/
+	//sm.mu.Lock()
+	//defer sm.mu.Unlock()
 
 	// create op
 	op := Op{JOIN, nrand(), *args}
@@ -321,15 +316,8 @@ func (sm *ShardMaster) Join(args *JoinArgs, reply *JoinReply) error {
 
 func (sm *ShardMaster) Leave(args *LeaveArgs, reply *LeaveReply) error {
 	// Your code here.
-	sm.mu.Lock()
-	defer sm.mu.Unlock()
-
-	// check if group is not present
-	/*
-	if _, ok := sm.configs[len(sm.configs)-1].Groups[args.GID]; !ok {
-		return nil
-	}
-	*/
+	//sm.mu.Lock()
+	//defer sm.mu.Unlock()
 
 	// create op
 	op := Op{LEAVE, nrand(), *args}
@@ -346,8 +334,8 @@ func (sm *ShardMaster) Leave(args *LeaveArgs, reply *LeaveReply) error {
 
 func (sm *ShardMaster) Move(args *MoveArgs, reply *MoveReply) error {
 	// Your code here.
-	sm.mu.Lock()
-	defer sm.mu.Unlock()
+	//sm.mu.Lock()
+	//defer sm.mu.Unlock()
 
 	// create op
 	op := Op{MOVE, nrand(), *args}
@@ -364,8 +352,8 @@ func (sm *ShardMaster) Move(args *MoveArgs, reply *MoveReply) error {
 
 func (sm *ShardMaster) Query(args *QueryArgs, reply *QueryReply) error {
 	// Your code here.
-	sm.mu.Lock()
-	defer sm.mu.Unlock()
+	//sm.mu.Lock()
+	//defer sm.mu.Unlock()
 
 	// create op
 	op := Op{QUERY, nrand(), *args}
