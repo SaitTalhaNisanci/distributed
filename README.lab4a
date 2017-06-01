@@ -1,0 +1,17 @@
+# CSE 452 Spring 2017, Lab 4 Part a
+
+## Authors
+
+Talha Nisanci (UWNetID: Talha)
+
+Jessica Negara (UWNetID: jnegara)
+
+## Question Responses:
+
+We spent about three days working on this project. Day 1 was spent copying the relevant parts of the 3B code into shardmaster/server.go, and writing the skeleton. Day 2 was spent writing the shardmaster specific operations, i.e. the logic behind Join, Leave, Move, Query. Finally, day 3 was spent debugging.
+
+Jessica worked on the reworking the lab 3b code and writing the skeletons. Talha worked on the specific operations, and fixed the operations struct. Debugging was done together.
+
+## High Level Description
+
+When the server receives an RPC, it formats an Op struct, and then proposes it via the propose method. Once a paxos instance accepts the op, the server then evaluates the entire operation log.
