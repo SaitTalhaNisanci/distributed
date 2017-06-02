@@ -17,7 +17,10 @@ const (
 )
 
 type Err string
-
+type Pair struct {
+	Key string 
+	Value string 
+}
 type PutAppendArgs struct {
 	Key   string
 	Value string
@@ -43,4 +46,16 @@ type GetArgs struct {
 type GetReply struct {
 	Err   Err
 	Value string
+}
+type SendShardArgs struct{
+	Storage []Pair
+  Shard_index int
+  Config_num int
+}
+type SendShardReply struct{
+	Err Err
+}
+type DeleteShardArgs struct{
+		Shard_index int
+	  Config_num int	
 }

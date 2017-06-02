@@ -146,6 +146,7 @@ func TestBasic(t *testing.T) {
 		ck.Put(keys[i], vals[i])
 	}
 
+  fmt.Println("something")
 	// are keys still there after joins?
 	for g := 1; g < len(tc.groups); g++ {
 		tc.join(g)
