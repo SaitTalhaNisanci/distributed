@@ -59,7 +59,7 @@ type ShardKV struct {
   seen map[int64] bool 
   seenIdx int
   doneIdx int
-  current_config sharmaster.Config
+  current_config shardmaster.Config
   previous_config shardmaster.Config
   storage map[string]string
   muSeq map[string]*sync.Mutex
@@ -75,14 +75,15 @@ func (kv *ShardKV) Get(args *GetArgs, reply *GetReply) error {
   if kv.current_config.Num ==0 {
 		return nil
 	}
-  if _,ok := kb.muSeq[args.Key] ; !ok {
+  if _,ok := kv.muSeq[args.Key] ; !ok {
    			kv.muSeq[args.Key] = &sync.Mutex{}
    }
   kv.muSeq[args.Key].Lock()
-  defer kv.muSeq[args.Key].UnLock()
-  op := { GET, op.OpId,*args)
-  kv.proposeOp(op)
-  kv.evaluate(op)
+  defer kv.muSeq[args.Key].Unlock()
+	//OP number is already in args, need to change this.
+  op := Op{ GET, nrand(),*args}
+  kv.propose(op)
+  kv.evaluate()
 	return nil
 }
 
@@ -92,17 +93,18 @@ func (kv *ShardKV) PutAppend(args *PutAppendArgs, reply *PutAppendReply) error {
   if kv.current_config.Num ==0 {
 		return nil
 	}
-  if check_duplicates(args.OpOd) {
+  if kv.check_duplicates(args.OpId) {
      return nil
   }
-  if _,ok := kb.muSeq[args.Key] ; !ok {
+  if _,ok := kv.muSeq[args.Key] ; !ok {
    			kv.muSeq[args.Key] = &sync.Mutex{}
    }
   kv.muSeq[args.Key].Lock()
-  defer kv.muSeq[args.Key].UnLock()
-  op := { PUT, op.OpId,*args)
-  kv.proposeOp(op)
-  kv.evaluate(op)
+  defer kv.muSeq[args.Key].Unlock()
+	//This op number is already included in args, 
+  op := Op{ PUT, nrand(),*args}
+  kv.propose(op)
+  kv.evaluate()
 	return nil
 }
 
@@ -126,9 +128,9 @@ func (kv *ShardKV) tick() {
         config := kv.sm.Query(-1)
         if config.Num > kv.current_config.Num{
 				  //Reconfiguration	
-          op := {RE_CONFIG,nrand(),DummyArgs{}}
-          kv.proposeOp(op)
-          kv.evaluate(op)
+          op := Op{RE_CONFIG,nrand(),DummyArgs{}}
+          kv.propose(op)
+          kv.evaluate()
 				}
 			}
 
@@ -144,7 +146,7 @@ func (kv *ShardKV) send_shards(){
 				if kv.shards[shard_index] ==false{
 					continue
 				}
-				if kv.current_config.Shards[shard_index] != gid{
+				if kv.current_config.Shards[shard_index] != kv.gid{
 						//Current shard has been moved to another group.
 						r_gid := kv.current_config.Shards[shard_index]
             kv.send_shard(r_gid,shard_index)	
@@ -157,31 +159,30 @@ func (kv *ShardKV) send_shard(r_gid int64,shard_index int) {
      var storage_toSend []Pair
 		 for key,value := range kv.storage{
 			if key2shard(key) == shard_index{
-			  	storage_toSend = append(storage_toSend,Pair{key,value}	
+			  	storage_toSend = append(storage_toSend,Pair{key,value}	)
 				}	
 		 }
 		 //TODO:: We need to send something for duplicates. , a state maybe.
-		 for _,srv :=range self.current_config.Groups[r_gid] {
+		 for _,srv :=range kv.current_config.Groups[r_gid] {
         //RPC call
-
+        fmt.Println(srv)
 			}
      
 }
-func (kv *ShardKV) all_sent(){
+func (kv *ShardKV) all_sent() bool{
+	return true
 }
-func (kv *ShardKV) all_received(){
+func (kv *ShardKV) all_received() bool {
+	return true
 }
 func (kv *ShardKV) assign_shards(){
 		for shard_index,gid := range kv.current_config.Shards{
-				if gid = kv.gid {
+				if gid == kv.gid {
 					kv.shards[shard_index] = true
 				}else{
 					kv.shards[shard_index] =false
 				}
 			}
-}
-func nrand() int64 {
-	return rand.Int63()
 }
 func max(a, b int) (c int) {
 	if a > b {
@@ -194,28 +195,28 @@ func max(a, b int) (c int) {
 }
 // proposes the given op
 // also learns what ops have been chosen, and garbage collects
-func (sm *ShardKV) propose(op Op) {
+func (kv *ShardKV) propose(op Op) {
 	for {
 		// propose the smallest value
-		sm.mu.Lock()
-		if sm.seen[op.OpId] {
-			sm.mu.Unlock()
+		kv.mu.Lock()
+		if kv.seen[op.OpId] {
+			kv.mu.Unlock()
 			return
 		}
-		opNo := sm.seenIdx
-		sm.mu.Unlock()
+		opNo := kv.seenIdx
+		kv.mu.Unlock()
 
 		// attempt to propose the value
 		// wait for this instance to make a decision
-		sm.px.Start(opNo, op)
+		kv.px.Start(opNo, op)
 		to := 10 * time.Millisecond
-		status, decision := sm.px.Status(opNo)
+		status, decision := kv.px.Status(opNo)
 		for status == paxos.Pending {
 			time.Sleep(to)
 			if to < 10*time.Second {
 				to *= 2
 			}
-			status, decision = sm.px.Status(opNo)
+			status, decision = kv.px.Status(opNo)
 		}
 
 		// continue if this instance has been forgotten
@@ -226,14 +227,14 @@ func (sm *ShardKV) propose(op Op) {
 		curOp := decision.(Op)
 
 		// garbage collect
-		sm.px.Done(opNo)
+		kv.px.Done(opNo)
 
 		// only add op if it has not already been seen
-		sm.mu.Lock()
-		sm.ops[opNo] = curOp
-		sm.seen[curOp.OpId] = true // mark op seen
-		sm.seenIdx = max(sm.seenIdx, opNo+1)
-		sm.mu.Unlock()
+		kv.mu.Lock()
+		kv.ops[opNo] = curOp
+		kv.seen[curOp.OpId] = true // mark op seen
+		kv.seenIdx = max(kv.seenIdx, opNo+1)
+		kv.mu.Unlock()
 	}
 }
 func (kv *ShardKV) evaluate() Result{
@@ -276,7 +277,7 @@ func (kv *ShardKV) currently_has_shard(key string) bool{
 }
 func (kv *ShardKV) has_shard(key string) bool{
      shard_index := key2shard(key)
-     return kv.current_config.shards[shard_index] == kv.gid
+     return kv.current_config.Shards[shard_index] == kv.gid
 }
 //TODO:WE NEED TO CHECK DUPLICATES HERE WITH A CACHE
 func(kv *ShardKV) get(args *GetArgs) Result {
@@ -295,7 +296,7 @@ func(kv *ShardKV) get(args *GetArgs) Result {
    //Case 2: we have the shard in the most current config but still didnt receive it.
         reply.Err = Waiting
 		}else {
-        reply.Err = ErrWrongServer
+        reply.Err = ErrWrongGroup
 		} 
    return reply
 }
@@ -314,7 +315,7 @@ func(kv *ShardKV) put_append(args *PutAppendArgs) Result {
    //Case 2: we have the shard in the most current config but still didnt receive it.
         reply.Err = Waiting
 		}else {
-        reply.Err = ErrWrongServer
+        reply.Err = ErrWrongGroup
 		} 
    return reply
 }
