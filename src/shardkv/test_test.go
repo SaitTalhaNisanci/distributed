@@ -146,7 +146,6 @@ func TestBasic(t *testing.T) {
 		ck.Put(keys[i], vals[i])
 	}
 
-  fmt.Println("something")
 	// are keys still there after joins?
 	for g := 1; g < len(tc.groups); g++ {
 		tc.join(g)
@@ -327,6 +326,7 @@ func doConcurrent(t *testing.T, unreliable bool) {
 			for iters := 0; iters < 3; iters++ {
 				nv := strconv.Itoa(rand.Int())
 				ck.Append(key, nv)
+  fmt.Println("something")
 				last = last + nv
 				v := ck.Get(key)
 				if v != last {

@@ -49,6 +49,7 @@ type GetReply struct {
 }
 type SendShardArgs struct{
 	Storage []Pair
+  Applied []int64
   Shard_index int
   Config_num int
 }

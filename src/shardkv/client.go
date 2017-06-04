@@ -101,6 +101,7 @@ func (ck *Clerk) Get(key string) string {
 		if ok {
 			// try each server in the shard's replication group.
 			for _, srv := range servers {
+        fmt.Println(srv, "GET")
 				args := &GetArgs{}
 				args.Key = key
         args.OpId = OpId
@@ -140,6 +141,7 @@ func (ck *Clerk) PutAppend(key string, value string, op string) {
 		if ok {
 			// try each server in the shard's replication group.
 			for _, srv := range servers {
+        fmt.Println(srv)
 				args := &PutAppendArgs{}
 				args.Key = key
 				args.Value = value
