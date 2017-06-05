@@ -208,8 +208,9 @@ func (kv *KVPaxos) PutAppend(args *PutAppendArgs, reply *PutAppendReply) error {
 
 	// lock this sequence number
 	kv.muSeq[args.Key].Lock()
-  defer kv.muSeq[args.Key].Unlock()
-  // format op struct
+  	defer kv.muSeq[args.Key].Unlock()
+
+  	// format op struct
 	op := Op{}
 	switch args.Op {
 	case "Put":

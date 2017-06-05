@@ -13,13 +13,13 @@ const (
 	OK            = "OK"
 	ErrNoKey      = "ErrNoKey"
 	ErrWrongGroup = "ErrWrongGroup"
-  Waiting 			= "Waiting"
+	Waiting       = "Waiting"
 )
 
 type Err string
 type Pair struct {
-	Key string 
-	Value string 
+	Key   string
+	Value string
 }
 type PutAppendArgs struct {
 	Key   string
@@ -28,35 +28,39 @@ type PutAppendArgs struct {
 	// You'll have to add definitions here.
 	// Field names must start with capital letters,
 	// otherwise RPC will break.
-  OpId int64
-
+	OpId int64
 }
 
 type PutAppendReply struct {
 	Err Err
 }
+
 type DummyArgs struct {
 }
+
 type GetArgs struct {
 	Key string
 	// You'll have to add definitions here.
-  OpId int64
+	OpId int64
 }
 
 type GetReply struct {
 	Err   Err
 	Value string
 }
-type SendShardArgs struct{
-	Storage []Pair
-  Applied []int64
-  Shard_index int
-  Config_num int
+
+type SendShardArgs struct {
+	Storage     []Pair
+	Applied     []int64
+	Shard_index int
+	Config_num  int
 }
-type SendShardReply struct{
+
+type SendShardReply struct {
 	Err Err
 }
-type DeleteShardArgs struct{
-		Shard_index int
-	  Config_num int	
+
+type DeleteShardArgs struct {
+	Shard_index int
+	Config_num  int
 }

@@ -2,7 +2,7 @@ package shardkv
 
 import (
 	"crypto/rand"
-	"fmt"
+	//"fmt"
 	"math/big"
 	"net/rpc"
 	"sync"
@@ -62,7 +62,7 @@ func call(srv string, rpcname string,
 		return true
 	}
 
-	fmt.Println(err)
+	//fmt.Println(err)
 	return false
 }
 
@@ -90,7 +90,7 @@ func (ck *Clerk) Get(key string) string {
 	defer ck.mu.Unlock()
 
 	// You'll have to modify Get().
-  OpId:= nrand()
+	OpId := nrand()
 	for {
 		shard := key2shard(key)
 
@@ -101,10 +101,10 @@ func (ck *Clerk) Get(key string) string {
 		if ok {
 			// try each server in the shard's replication group.
 			for _, srv := range servers {
-        fmt.Println(srv, "GET")
+				//fmt.Println(srv, "GET")
 				args := &GetArgs{}
 				args.Key = key
-        args.OpId = OpId
+				args.OpId = OpId
 				var reply GetReply
 				ok := call(srv, "ShardKV.Get", args, &reply)
 				if ok && (reply.Err == OK || reply.Err == ErrNoKey) {
@@ -130,7 +130,7 @@ func (ck *Clerk) PutAppend(key string, value string, op string) {
 
 	// You'll have to modify PutAppend().
 
-  OpId:= nrand()
+	OpId := nrand()
 	for {
 		shard := key2shard(key)
 
@@ -141,12 +141,12 @@ func (ck *Clerk) PutAppend(key string, value string, op string) {
 		if ok {
 			// try each server in the shard's replication group.
 			for _, srv := range servers {
-        fmt.Println(srv)
+				//fmt.Println(srv)
 				args := &PutAppendArgs{}
 				args.Key = key
 				args.Value = value
 				args.Op = op
-        args.OpId = OpId
+				args.OpId = OpId
 				var reply PutAppendReply
 				ok := call(srv, "ShardKV.PutAppend", args, &reply)
 				if ok && reply.Err == OK {
