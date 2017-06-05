@@ -3,10 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="9eacf4ff-5f7b-4aac-86a4-9e45ac66e793" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/kvpaxos/server.go" afterPath="$PROJECT_DIR$/src/kvpaxos/server.go" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/shardkv/client.go" afterPath="$PROJECT_DIR$/src/shardkv/client.go" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/shardkv/common.go" afterPath="$PROJECT_DIR$/src/shardkv/common.go" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/shardkv/server.go" afterPath="$PROJECT_DIR$/src/shardkv/server.go" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/shardkv/test_test.go" afterPath="$PROJECT_DIR$/src/shardkv/test_test.go" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -22,8 +20,8 @@
       <file leaf-file-name="server.go" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/shardkv/server.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="156">
-              <caret line="387" column="28" lean-forward="false" selection-start-line="387" selection-start-column="28" selection-end-line="387" selection-end-column="28" />
+            <state relative-caret-position="455">
+              <caret line="93" column="32" lean-forward="false" selection-start-line="93" selection-start-column="32" selection-end-line="93" selection-end-column="32" />
               <folding />
             </state>
           </provider>
@@ -44,8 +42,8 @@
       <file leaf-file-name="common.go" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/shardkv/common.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="423">
-              <caret line="57" column="0" lean-forward="true" selection-start-line="57" selection-start-column="0" selection-end-line="57" selection-end-column="0" />
+            <state relative-caret-position="168">
+              <caret line="14" column="8" lean-forward="false" selection-start-line="14" selection-start-column="8" selection-end-line="14" selection-end-column="21" />
               <folding />
             </state>
           </provider>
@@ -55,7 +53,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>propose</find>
       <find>Status</find>
       <find>.(Op)</find>
       <find>print</find>
@@ -66,13 +63,15 @@
       <find>leave</find>
       <find>fmt.</find>
       <find>fmt</find>
-      <find>something</find>
-      <find>Clerk</find>
       <find>next_config_num</find>
       <find>next_config</find>
       <find>next_config_</find>
       <find>re_config</find>
       <find>evaluate</find>
+      <find>something</find>
+      <find>Clerk</find>
+      <find>propose</find>
+      <find>seen</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -94,6 +93,7 @@
         <option value="$PROJECT_DIR$/src/kvpaxos/server.go" />
         <option value="$PROJECT_DIR$/src/shardkv/common.go" />
         <option value="$PROJECT_DIR$/src/shardkv/client.go" />
+        <option value="$PROJECT_DIR$/src/shardkv/test_test.go" />
         <option value="$PROJECT_DIR$/src/shardkv/server.go" />
       </list>
     </option>
@@ -821,10 +821,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/shardkv/test_test.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3366">
+          <caret line="328" column="4" lean-forward="false" selection-start-line="328" selection-start-column="4" selection-end-line="328" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/shardkv/common.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="423">
-          <caret line="57" column="0" lean-forward="true" selection-start-line="57" selection-start-column="0" selection-end-line="57" selection-end-column="0" />
+        <state relative-caret-position="168">
+          <caret line="14" column="8" lean-forward="false" selection-start-line="14" selection-start-column="8" selection-end-line="14" selection-end-column="21" />
           <folding />
         </state>
       </provider>
@@ -841,8 +849,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/shardkv/server.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="156">
-          <caret line="387" column="28" lean-forward="false" selection-start-line="387" selection-start-column="28" selection-end-line="387" selection-end-column="28" />
+        <state relative-caret-position="455">
+          <caret line="93" column="32" lean-forward="false" selection-start-line="93" selection-start-column="32" selection-end-line="93" selection-end-column="32" />
           <folding />
         </state>
       </provider>

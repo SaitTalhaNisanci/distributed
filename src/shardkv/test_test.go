@@ -326,7 +326,7 @@ func doConcurrent(t *testing.T, unreliable bool) {
 			for iters := 0; iters < 3; iters++ {
 				nv := strconv.Itoa(rand.Int())
 				ck.Append(key, nv)
-  fmt.Println("something")
+  //fmt.Println("something")
 				last = last + nv
 				v := ck.Get(key)
 				if v != last {

@@ -70,7 +70,7 @@ type ShardKV struct {
 }
 
 func (kv *ShardKV) check_duplicates(OpId int64) bool {
-	return kv.seen[OpId] && kv.applied[OpId]
+	return kv.seen[OpId] || kv.applied[OpId]
 }
 
 func (kv *ShardKV) Get(args *GetArgs, reply *GetReply) error {
