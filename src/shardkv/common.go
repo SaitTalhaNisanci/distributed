@@ -60,7 +60,9 @@ type SendShardArgs struct {
 type SendShardReply struct {
 	Err Err
 }
-
+type ReconfigArgs struct {
+	Config_num int
+}
 type DeleteShardArgs struct {
 	Shard_index int
 	Config_num  int

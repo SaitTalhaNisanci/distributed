@@ -129,12 +129,13 @@ func (kv *ShardKV) tick() {
   kv.mu.Lock()
   defer kv.mu.Unlock()
   //kv.evaluate()
-  fmt.Println("TICK: ",kv.me," ",kv.next_config_num,"   --")
+  //fmt.Println("TICK: ",kv.me," ",kv.next_config_num,"   --")
   if kv.next_config_num == -1 {
 			//Initial case
      if kv.current_config.Num ==0 {
 			   config := kv.sm.Query(1)
          if config.Num == 1 {
+             
 		         kv.previous_config = kv.current_config
              kv.current_config = config
              kv.assign_shards()						
@@ -144,7 +145,8 @@ func (kv *ShardKV) tick() {
         if config.Num > kv.current_config.Num{
 				  //Reconfiguration	
           fmt.Println("config num: " ,config.Num)
-          op := Op{RE_CONFIG,nrand(),DummyArgs{}}
+          args := ReconfigArgs{kv.current_config.Num+1}
+          op := Op{RE_CONFIG,nrand(),args}
           kv.propose(op)
           kv.evaluate()
 				}
@@ -344,6 +346,7 @@ func (kv *ShardKV) evaluate() Result{
 	for ; kv.doneIdx < kv.seenIdx; kv.doneIdx++ {
 		// get the earliest op that has not been executed
 		op := kv.ops[kv.doneIdx]
+    fmt.Println("OPTYPE ", op.Type)
 		// garbage collect from ops
 		delete(kv.ops, kv.doneIdx)
 
@@ -356,7 +359,8 @@ func (kv *ShardKV) evaluate() Result{
 			var PutAppendArgs= op.Args.(PutAppendArgs)
       result = kv.put_append(&PutAppendArgs)
     case "Re_Config":
-      kv.re_config()
+      var ReconfigArgs = op.Args.(ReconfigArgs)
+      kv.re_config(&ReconfigArgs)
     case "ReceiveShard":
 			var SendShardArgs = op.Args.(SendShardArgs)
       result = kv.receive_shard(&SendShardArgs)
@@ -385,13 +389,14 @@ func (kv *ShardKV) delete_shard(args *DeleteShardArgs) {
 func (kv *ShardKV) re_config_done(){
    kv.next_config_num = -1 
 }
-func (kv *ShardKV) re_config(){
-    if kv.is_uptodate(kv.next_config_num){
+func (kv *ShardKV) re_config(args *ReconfigArgs){
+    if kv.is_uptodate(kv.next_config_num) || args.Config_num != (kv.current_config.Num+1){
 			return 
 		}
     fmt.Println("kv currect config num ",kv.current_config.Num)
 		next_config := kv.sm.Query(kv.current_config.Num+1)
     if next_config.Num !=kv.current_config.Num+1{
+      fmt.Println("WHAT")
 			return 
 		}
     kv.assign_shards()
@@ -506,6 +511,7 @@ func StartServer(gid int64, shardmasters []string,
   gob.Register(Pair{})
   gob.Register(PutAppendArgs{})
   gob.Register(SendShardArgs{})
+  gob.Register(ReconfigArgs{})
 	kv := new(ShardKV)
 	kv.me = me
 	kv.gid = gid
