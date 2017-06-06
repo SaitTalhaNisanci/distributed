@@ -74,7 +74,7 @@ func (kv *ShardKV) Get(args *GetArgs, reply *GetReply) error {
 	// Your code here.
   kv.mu.Lock()
   defer kv.mu.Unlock()
-  if !kv.is_initialized(){
+  if !kv.is_initialized() || kv.next_config_num !=-1{
 		return nil
 	}
   if _,ok := kv.muSeq[args.Key] ; !ok {
@@ -97,7 +97,7 @@ func (kv *ShardKV) PutAppend(args *PutAppendArgs, reply *PutAppendReply) error {
 // Your code here.
   kv.mu.Lock()
   defer kv.mu.Unlock()
-  if !kv.is_initialized(){
+  if !kv.is_initialized() || kv.next_config_num !=-1{
 		return nil
 	}
   /*
@@ -192,9 +192,9 @@ func (kv *ShardKV) receive_shard(args *SendShardArgs) Result {
 			for _,pair := range args.Storage {
 				kv.storage[pair.Key]= pair.Value
 			}	
-      //for _,id := range args.Applied {
-				//kv.applied[id] = true
-			//}
+     for _,id := range args.Applied {
+				kv.applied[id] = true
+			}
       kv.shards[args.Shard_index] = true
       kv.cache[combine(args.Config_num,args.Shard_index)] =true
       reply.Err = OK 
