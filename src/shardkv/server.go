@@ -195,8 +195,8 @@ func (kv *ShardKV) receive_shard(args *SendShardArgs) Result {
 		reply.Err = OK
 	}
 	return reply
-
 }
+
 func (kv *ShardKV) send_shard(r_gid int64, shard_index int) {
 	//fmt.Println("SENDINGGGGG")
 	var storage_toSend []Pair
