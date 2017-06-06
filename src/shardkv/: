@@ -128,7 +128,7 @@ func (kv *ShardKV) PutAppend(args *PutAppendArgs, reply *PutAppendReply) error {
 func (kv *ShardKV) tick() {
   kv.mu.Lock()
   defer kv.mu.Unlock()
-  //kv.evaluate()
+  kv.evaluate()
   fmt.Println("TICK: ",kv.me," ",kv.next_config_num,"   --")
   if kv.next_config_num == -1 {
 			//Initial case
@@ -190,9 +190,9 @@ func (kv *ShardKV) receive_shard(args *SendShardArgs) Result {
 			for _,pair := range args.Storage {
 				kv.storage[pair.Key]= pair.Value
 			}	
-      //for _,id := range args.Applied {
-				//kv.applied[id] = true
-			//}
+      for _,id := range args.Applied {
+				kv.applied[id] = true
+			}
       kv.shards[args.Shard_index] = true
       kv.cache[combine(args.Config_num,args.Shard_index)] =true
       reply.Err = OK 
