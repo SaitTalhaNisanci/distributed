@@ -395,9 +395,9 @@ func (kv *ShardKV) re_config(args *ReconfigArgs){
 		}
     fmt.Println("kv currect config num ",kv.current_config.Num)
 		next_config := kv.sm.Query(kv.current_config.Num+1)
-    if next_config.Num !=kv.current_config.Num+1{
+		for next_config.Num !=kv.current_config.Num+1{
+						next_config = kv.sm.Query(kv.current_config.Num+1)
       fmt.Println("WHAT")
-			return 
 		}
     kv.assign_shards()
     kv.previous_config = kv.current_config
