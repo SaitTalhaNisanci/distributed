@@ -1,0 +1,6957 @@
+TICK:  1   -1    --
+TICK:  0   -1    --
+TICK:  0   -1    --
+TICK:  2   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+Test: Basic Join/Leave ...
+TICK:  2   -1    --
+TICK:  1   -1    --
+TICK:  0   -1    --
+TICK:  2   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  0   -1    --
+PUT REPLY :  OK
+TICK:  2   -1    --
+PUT REPLY :  OK
+OK
+PUT REPLY :  OK
+PUT REPLY :  OK
+PUT REPLY :  OK
+PUT REPLY :  OK
+PUT REPLY :  OK
+PUT REPLY :  OK
+PUT REPLY :  OK
+PUT REPLY :  OK
+PUT REPLY :  OK
+PUT REPLY :  OK
+TICK:  1   -1    --
+TICK:  1   -1    --
+config num:  2
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+kv currect config num  1
+config num:  2
+TICK:  2   -1    --
+kv currect config num  1
+config num:  2
+TICK:  0   -1    --
+kv currect config num  1
+TICK:  0   -1    --
+TICK:  2   -1    --
+config num:  2
+next config number  2
+kv currect config num  1
+next config number  2
+kv currect config num  1
+config num:  2
+next config number  2
+kv currect config num  1
+config num:  2
+next config number  2
+kv currect config num  1
+config num:  2
+kv currect config num  1
+next config number  2
+next config number  2
+TICK:  2   -1    --
+config num:  2
+kv currect config num  1
+TICK:  1   -1    --
+TICK:  1   2    --
+sent received  1   true   false
+TICK:  2   -1    --
+next config number  2
+TICK:  1   2    --
+SENDINGGGGG
+config num:  2
+config num:  2
+TICK:  0   2    --
+sent received  0   true   true
+kv currect config num  1
+kv currect config num  1
+next config number  2
+next config number  2
+TICK:  2   2    --
+sent received  2   true   false
+SENDINGGGGG
+TICK:  0   2    --
+sent received  0   true   false
+TICK:  0   2    --
+SENDINGGGGG
+SENDINGGGGG
+SENDINGGGGG
+SENDINGGGGG
+SENDINGGGGG
+SENDINGGGGG
+SENDINGGGGG
+TICK:  1   2    --
+sent received  1   true   true
+sent received  1   true   true
+TICK:  2   2    --
+SENDINGGGGG
+TICK:  2   2    --
+sent received  2   true   true
+TICK:  1   2    --
+sent received  1   true   true
+TICK:  0   -1    --
+sent received  0   true   true
+TICK:  2   -1    --
+sent received  2   true   true
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  1   -1    --
+TICK:  0   -1    --
+TICK:  2   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  0   -1    --
+ErrWrongGroup
+OK
+PUT REPLY :  OK
+TICK:  1   -1    --
+OK
+TICK:  1   -1    --
+TICK:  2   -1    --
+PUT REPLY :  OK
+TICK:  1   -1    --
+OK
+TICK:  0   -1    --
+PUT REPLY :  OK
+TICK:  2   -1    --
+OK
+TICK:  0   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+PUT REPLY :  OK
+OK
+PUT REPLY :  OK
+OK
+PUT REPLY :  OK
+OK
+PUT REPLY :  OK
+OK
+PUT REPLY :  OK
+OK
+PUT REPLY :  OK
+OK
+PUT REPLY :  OK
+TICK:  1   -1    --
+config num:  3
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  1   -1    --
+TICK:  0   -1    --
+TICK:  2   -1    --
+config num:  3
+TICK:  0   -1    --
+TICK:  2   -1    --
+kv currect config num  2
+config num:  3
+TICK:  0   -1    --
+kv currect config num  2
+next config number  3
+kv currect config num  2
+config num:  3
+config num:  3
+kv currect config num  2
+kv currect config num  2
+config num:  3
+kv currect config num  2
+config num:  3
+next config number  3
+kv currect config num  2
+next config number  3
+kv currect config num  2
+kv currect config num  2
+next config number  3
+next config number  3
+next config number  3
+next config number  3
+TICK:  2   -1    --
+TICK:  0   -1    --
+config num:  3
+TICK:  1   3    --
+SENDINGGGGG
+config num:  3
+kv currect config num  2
+kv currect config num  2
+next config number  3
+next config number  3
+TICK:  0   3    --
+SENDINGGGGG
+TICK:  2   3    --
+SENDINGGGGG
+SENDINGGGGG
+TICK:  1   3    --
+SENDINGGGGG
+TICK:  0   3    --
+SENDINGGGGG
+TICK:  2   3    --
+SENDINGGGGG
+sent received  0   true   true
+TICK:  1   3    --
+sent received  1   true   true
+SENDINGGGGG
+sent received  1   true   true
+sent received  1   true   true
+sent received  0   true   true
+sent received  2   true   true
+TICK:  0   -1    --
+sent received  2   true   true
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  1   -1    --
+TICK:  1   -1    --
+TICK:  0   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  2   -1    --
+TICK:  2   -1    --
+ErrWrongGroup
+TICK:  1   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  1   -1    --
+OK
+TICK:  0   -1    --
+PUT REPLY :  OK
+TICK:  2   -1    --
+OK
+TICK:  2   -1    --
+PUT REPLY :  OK
+TICK:  0   -1    --
+TICK:  2   -1    --
+OK
+PUT REPLY :  OK
+OK
+PUT REPLY :  OK
+OK
+PUT REPLY :  OK
+OK
+PUT REPLY :  OK
+OK
+PUT REPLY :  OK
+OK
+TICK:  1   -1    --
+PUT REPLY :  OK
+OK
+PUT REPLY :  OK
+TICK:  0   -1    --
+OK
+PUT REPLY :  OK
+TICK:  1   -1    --
+config num:  4
+TICK:  0   -1    --
+TICK:  1   -1    --
+kv currect config num  3
+config num:  4
+TICK:  2   -1    --
+next config number  4
+kv currect config num  3
+config num:  4
+TICK:  2   -1    --
+TICK:  0   -1    --
+next config number  4
+kv currect config num  3
+TICK:  2   -1    --
+config num:  4
+config num:  4
+kv currect config num  3
+kv currect config num  3
+next config number  4
+next config number  4
+config num:  4
+kv currect config num  3
+next config number  4
+TICK:  1   -1    --
+config num:  4
+kv currect config num  3
+TICK:  0   -1    --
+next config number  4
+config num:  4
+kv currect config num  3
+next config number  4
+TICK:  1   -1    --
+TICK:  1   4    --
+SENDINGGGGG
+config num:  4
+kv currect config num  3
+TICK:  0   4    --
+SENDINGGGGG
+kv currect config num  3
+next config number  4
+next config number  4
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  0   4    --
+sent received  0   true   false
+SENDINGGGGG
+TICK:  2   4    --
+SENDINGGGGG
+SENDINGGGGG
+TICK:  2   4    --
+sent received  2   true   false
+SENDINGGGGG
+SENDINGGGGG
+SENDINGGGGG
+SENDINGGGGG
+sent received  1   true   true
+sent received  0   true   true
+sent received  2   true   true
+TICK:  1   4    --
+sent received  1   true   true
+TICK:  0   4    --
+sent received  0   true   true
+TICK:  1   4    --
+sent received  1   true   true
+TICK:  2   4    --
+sent received  2   true   true
+TICK:  0   4    --
+sent received  0   true   true
+TICK:  2   4    --
+sent received  2   true   true
+TICK:  1   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  2   -1    --
+TICK:  1   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+OK
+TICK:  2   -1    --
+PUT REPLY :  OK
+TICK:  0   -1    --
+OK
+PUT REPLY :  OK
+OK
+PUT REPLY :  OK
+OK
+PUT REPLY :  OK
+OK
+TICK:  1   -1    --
+PUT REPLY :  OK
+OK
+PUT REPLY :  OK
+TICK:  2   -1    --
+OK
+PUT REPLY :  OK
+TICK:  0   -1    --
+OK
+TICK:  2   -1    --
+PUT REPLY :  OK
+OK
+PUT REPLY :  OK
+OK
+PUT REPLY :  OK
+TICK:  0   -1    --
+TICK:  1   -1    --
+config num:  5
+config num:  5
+TICK:  1   -1    --
+kv currect config num  4
+kv currect config num  4
+TICK:  2   -1    --
+next config number  5
+kv currect config num  4
+config num:  5
+next config number  5
+kv currect config num  4
+config num:  5
+TICK:  0   -1    --
+next config number  5
+kv currect config num  4
+next config number  5
+config num:  5
+kv currect config num  4
+next config number  5
+TICK:  1   -1    --
+config num:  5
+TICK:  2   -1    --
+kv currect config num  4
+config num:  5
+next config number  5
+TICK:  0   -1    --
+kv currect config num  4
+config num:  5
+next config number  5
+TICK:  2   -1    --
+kv currect config num  4
+config num:  5
+next config number  5
+kv currect config num  4
+next config number  5
+TICK:  0   5    --
+sent received  0   true   true
+TICK:  1   5    --
+sent received  1   true   true
+TICK:  1   5    --
+sent received  1   true   false
+TICK:  2   5    --
+sent received  2   true   true
+TICK:  0   5    --
+SENDINGGGGG
+TICK:  1   5    --
+SENDINGGGGG
+SENDINGGGGG
+TICK:  2   5    --
+SENDINGGGGG
+TICK:  2   5    --
+sent received  2   true   false
+TICK:  0   5    --
+sent received  0   true   false
+SENDINGGGGG
+SENDINGGGGG
+TICK:  0   -1    --
+SENDINGGGGG
+TICK:  1   -1    --
+TICK:  1   5    --
+sent received  1   true   false
+TICK:  2   -1    --
+SENDINGGGGG
+SENDINGGGGG
+SENDINGGGGG
+SENDINGGGGG
+SENDINGGGGG
+TICK:  2   5    --
+sent received  2   true   false
+TICK:  0   5    --
+sent received  0   true   true
+SENDINGGGGG
+SENDINGGGGG
+sent received  0   true   true
+TICK:  0   -1    --
+sent received  2   true   true
+TICK:  1   -1    --
+TICK:  1   -1    --
+sent received  1   true   true
+TICK:  2   -1    --
+TICK:  2   -1    --
+OK
+PUT REPLY :  OK
+TICK:  0   -1    --
+TICK:  0   -1    --
+TICK:  0   -1    --
+OK
+TICK:  2   -1    --
+TICK:  1   -1    --
+PUT REPLY :  OK
+TICK:  1   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+ErrWrongGroup
+OK
+TICK:  2   -1    --
+PUT REPLY :  OK
+OK
+TICK:  0   -1    --
+PUT REPLY :  OK
+OK
+TICK:  0   -1    --
+TICK:  0   -1    --
+TICK:  2   -1    --
+PUT REPLY :  OK
+TICK:  2   -1    --
+TICK:  1   -1    --
+TICK:  1   -1    --
+TICK:  1   -1    --
+OK
+PUT REPLY :  OK
+OK
+PUT REPLY :  OK
+OK
+PUT REPLY :  OK
+OK
+PUT REPLY :  OK
+OK
+PUT REPLY :  OK
+  ... Passed
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+Test: Shards really move ...
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  0   -1    --
+TICK:  2   -1    --
+TICK:  1   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  2   -1    --
+TICK:  1   -1    --
+PUT REPLY :  OK
+PUT REPLY :  OK
+PUT REPLY :  OK
+PUT REPLY :  OK
+PUT REPLY :  OK
+PUT REPLY :  OK
+PUT REPLY :  OK
+PUT REPLY :  OK
+PUT REPLY :  OK
+PUT REPLY :  OK
+TICK:  0   -1    --
+TICK:  2   -1    --
+TICK:  1   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+config num:  2
+kv currect config num  1
+config num:  2
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+kv currect config num  1
+config num:  2
+config num:  2
+kv currect config num  1
+config num:  2
+kv currect config num  1
+next config number  2
+kv currect config num  1
+next config number  2
+next config number  2
+TICK:  0   -1    --
+config num:  2
+TICK:  1   -1    --
+kv currect config num  1
+TICK:  1   -1    --
+TICK:  1   -1    --
+config num:  2
+TICK:  2   -1    --
+TICK:  0   -1    --
+kv currect config num  1
+kv currect config num  1
+config num:  2
+TICK:  2   2    --
+SENDINGGGGG
+TICK:  2   2    --
+sent received  2   true   false
+kv currect config num  1
+kv currect config num  1
+TICK:  0   2    --
+sent received  0   true   false
+next config number  2
+next config number  2
+config num:  2
+kv currect config num  1
+SENDINGGGGG
+next config number  2
+SENDINGGGGG
+SENDINGGGGG
+SENDINGGGGG
+sent received  2   true   true
+TICK:  1   -1    --
+TICK:  2   2    --
+sent received  2   true   true
+TICK:  1   -1    --
+TICK:  0   2    --
+sent received  0   true   true
+TICK:  1   2    --
+sent received  1   true   true
+TICK:  0   2    --
+SENDINGGGGG
+TICK:  2   -1    --
+config num:  2
+kv currect config num  1
+TICK:  0   2    --
+sent received  0   true   true
+next config number  2
+sent received  0   true   true
+TICK:  2   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+config num:  2
+TICK:  1   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+config num:  2
+kv currect config num  1
+kv currect config num  1
+TICK:  2   2    --
+sent received  2   true   true
+TICK:  0   -1    --
+kv currect config num  2
+next config number  2
+kv currect config num  2
+TICK:  0   -1    --
+kv currect config num  1
+next config number  2
+kv currect config num  2
+TICK:  2   -1    --
+TICK:  2   -1    --
+TICK:  1   -1    --
+TICK:  0   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  0   -1    --
+TICK:  2   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  2   -1    --
+TICK:  1   -1    --
+TICK:  0   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  0   -1    --
+TICK:  2   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  2   -1    --
+TICK:  1   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  0   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  2   -1    --
+TICK:  1   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  0   -1    --
+TICK:  2   -1    --
+TICK:  1   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  2   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  1   -1    --
+TICK:  0   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  0   -1    --
+TICK:  2   -1    --
+TICK:  2   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  1   -1    --
+TICK:  0   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  0   -1    --
+TICK:  2   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  2   -1    --
+TICK:  1   -1    --
+TICK:  0   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  0   -1    --
+TICK:  2   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  2   -1    --
+TICK:  1   -1    --
+TICK:  0   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  0   -1    --
+TICK:  2   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  2   -1    --
+TICK:  1   -1    --
+TICK:  0   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  0   -1    --
+TICK:  2   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  2   -1    --
+TICK:  1   -1    --
+TICK:  0   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  0   -1    --
+TICK:  2   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  1   -1    --
+TICK:  0   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  0   -1    --
+TICK:  2   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  1   -1    --
+TICK:  0   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  0   -1    --
+TICK:  2   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  1   -1    --
+TICK:  0   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  1   -1    --
+TICK:  0   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  1   -1    --
+TICK:  0   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+kv currect config num  2
+OK
+OK
+ErrWrongGroup
+TICK:  1   -1    --
+TICK:  2   -1    --
+OK
+TICK:  0   -1    --
+TICK:  1   -1    --
+OK
+OK
+TICK:  2   -1    --
+OK
+OK
+OK
+TICK:  0   -1    --
+TICK:  1   -1    --
+OK
+OK
+TICK:  0   -1    --
+TICK:  2   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+OK
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+OK
+OK
+OK
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  0   -1    --
+TICK:  2   -1    --
+OK
+TICK:  2   -1    --
+TICK:  1   -1    --
+TICK:  1   -1    --
+TICK:  0   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  2   -1    --
+TICK:  1   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  2   -1    --
+TICK:  1   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  2   -1    --
+TICK:  1   -1    --
+TICK:  1   -1    --
+TICK:  0   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  2   -1    --
+TICK:  1   -1    --
+TICK:  1   -1    --
+TICK:  0   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  2   -1    --
+TICK:  1   -1    --
+TICK:  1   -1    --
+TICK:  0   -1    --
+TICK:  0   -1    --
+TICK:  2   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  2   -1    --
+TICK:  1   -1    --
+TICK:  1   -1    --
+TICK:  0   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  2   -1    --
+TICK:  1   -1    --
+TICK:  1   -1    --
+TICK:  0   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  0   -1    --
+TICK:  2   -1    --
+TICK:  1   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  1   -1    --
+TICK:  0   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  1   -1    --
+TICK:  0   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  1   -1    --
+TICK:  0   -1    --
+TICK:  2   -1    --
+TICK:  1   -1    --
+TICK:  0   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  1   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  0   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  2   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  1   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  0   -1    --
+TICK:  2   -1    --
+TICK:  1   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  0   -1    --
+TICK:  2   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  0   -1    --
+TICK:  2   -1    --
+TICK:  1   -1    --
+TICK:  1   -1    --
+TICK:  0   -1    --
+TICK:  2   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  0   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  1   -1    --
+TICK:  0   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  2   -1    --
+TICK:  2   -1    --
+TICK:  1   -1    --
+TICK:  1   -1    --
+TICK:  0   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  2   -1    --
+TICK:  1   -1    --
+TICK:  1   -1    --
+TICK:  0   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  2   -1    --
+TICK:  2   -1    --
+TICK:  1   -1    --
+TICK:  1   -1    --
+TICK:  0   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  2   -1    --
+TICK:  1   -1    --
+TICK:  0   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  2   -1    --
+TICK:  2   -1    --
+TICK:  1   -1    --
+TICK:  0   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  2   -1    --
+TICK:  2   -1    --
+TICK:  1   -1    --
+TICK:  0   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  2   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  0   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  2   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  0   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  2   -1    --
+TICK:  1   -1    --
+TICK:  0   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  2   -1    --
+TICK:  1   -1    --
+TICK:  0   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  1   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  2   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  1   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  2   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  1   -1    --
+TICK:  0   -1    --
+TICK:  2   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  1   -1    --
+TICK:  0   -1    --
+TICK:  2   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  2   -1    --
+  ... Passed
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+Test: Reconfiguration with some dead replicas ...
+TICK:  2   -1    --
+PUT REPLY :  OK
+OK
+TICK:  2   -1    --
+TICK:  1   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+PUT REPLY :  OK
+TICK:  0   -1    --
+PUT REPLY :  OK
+PUT REPLY :  OK
+PUT REPLY :  OK
+PUT REPLY :  OK
+PUT REPLY :  OK
+PUT REPLY :  OK
+PUT REPLY :  OK
+PUT REPLY :  OK
+PUT REPLY :  OK
+TICK:  2   -1    --
+config num:  2
+kv currect config num  1
+next config number  2
+TICK:  1   -1    --
+TICK:  1   -1    --
+config num:  2
+TICK:  2   -1    --
+kv currect config num  1
+TICK:  0   -1    --
+config num:  2
+TICK:  0   -1    --
+config num:  2
+kv currect config num  1
+config num:  2
+kv currect config num  1
+next config number  2
+kv currect config num  1
+next config number  2
+next config number  2
+config num:  2
+next config number  2
+kv currect config num  1
+next config number  2
+TICK:  2   2    --
+SENDINGGGGG
+SENDINGGGGG
+TICK:  1   2    --
+SENDINGGGGG
+TICK:  1   2    --
+sent received  1   true   false
+TICK:  0   2    --
+sent received  0   true   false
+TICK:  2   2    --
+sent received  2   true   true
+SENDINGGGGG
+TICK:  0   2    --
+sent received  0   true   true
+SENDINGGGGG
+SENDINGGGGG
+SENDINGGGGG
+SENDINGGGGG
+SENDINGGGGG
+sent received  2   true   true
+sent received  1   true   true
+TICK:  1   2    --
+sent received  1   true   true
+TICK:  0   2    --
+sent received  0   true   true
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  2   -1    --
+TICK:  1   -1    --
+TICK:  1   -1    --
+TICK:  0   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+ErrWrongGroup
+OK
+PUT REPLY :  OK
+TICK:  2   -1    --
+OK
+PUT REPLY :  OK
+OK
+PUT REPLY :  OK
+OK
+TICK:  2   -1    --
+PUT REPLY :  OK
+TICK:  1   -1    --
+TICK:  0   -1    --
+TICK:  0   -1    --
+OK
+TICK:  1   -1    --
+PUT REPLY :  OK
+OK
+PUT REPLY :  OK
+OK
+PUT REPLY :  OK
+OK
+PUT REPLY :  OK
+OK
+PUT REPLY :  OK
+OK
+PUT REPLY :  OK
+TICK:  2   -1    --
+config num:  3
+kv currect config num  2
+next config number  3
+TICK:  2   -1    --
+config num:  3
+TICK:  0   -1    --
+kv currect config num  2
+config num:  3
+next config number  3
+TICK:  0   -1    --
+TICK:  1   -1    --
+kv currect config num  2
+config num:  3
+TICK:  1   -1    --
+next config number  3
+kv currect config num  2
+config num:  3
+next config number  3
+kv currect config num  2
+next config number  3
+TICK:  2   3    --
+SENDINGGGGG
+SENDINGGGGG
+TICK:  2   3    --
+sent received  2   true   false
+sent received  2   true   true
+TICK:  1   -1    --
+TICK:  0   3    --
+sent received  0   true   false
+config num:  3
+TICK:  0   3    --
+SENDINGGGGG
+kv currect config num  2
+TICK:  1   3    --
+SENDINGGGGG
+next config number  3
+sent received  0   true   true
+sent received  1   true   true
+TICK:  2   3    --
+sent received  2   true   true
+TICK:  0   3    --
+sent received  0   true   true
+TICK:  2   -1    --
+TICK:  1   3    --
+SENDINGGGGG
+TICK:  0   -1    --
+TICK:  1   -1    --
+sent received  1   true   true
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  1   -1    --
+OK
+PUT REPLY :  OK
+ErrWrongGroup
+TICK:  2   -1    --
+OK
+PUT REPLY :  OK
+TICK:  2   -1    --
+OK
+TICK:  0   -1    --
+PUT REPLY :  OK
+OK
+PUT REPLY :  OK
+TICK:  0   -1    --
+OK
+PUT REPLY :  OK
+OK
+TICK:  1   -1    --
+PUT REPLY :  OK
+TICK:  1   -1    --
+OK
+PUT REPLY :  OK
+OK
+PUT REPLY :  OK
+OK
+PUT REPLY :  OK
+OK
+PUT REPLY :  OK
+TICK:  2   -1    --
+config num:  4
+kv currect config num  3
+TICK:  2   -1    --
+next config number  4
+TICK:  0   -1    --
+config num:  4
+config num:  4
+kv currect config num  3
+kv currect config num  3
+next config number  4
+next config number  4
+TICK:  0   -1    --
+config num:  4
+kv currect config num  3
+next config number  4
+TICK:  1   -1    --
+config num:  4
+TICK:  1   -1    --
+kv currect config num  3
+config num:  4
+next config number  4
+kv currect config num  3
+next config number  4
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  2   4    --
+SENDINGGGGG
+TICK:  0   4    --
+sent received  0   true   false
+SENDINGGGGG
+TICK:  0   4    --
+sent received  0   true   true
+SENDINGGGGG
+TICK:  1   -1    --
+TICK:  1   4    --
+SENDINGGGGG
+sent received  2   true   true
+sent received  1   true   true
+TICK:  2   4    --
+sent received  2   true   true
+TICK:  0   4    --
+sent received  0   true   true
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  0   -1    --
+TICK:  2   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+OK
+PUT REPLY :  OK
+TICK:  1   -1    --
+TICK:  0   -1    --
+OK
+PUT REPLY :  OK
+TICK:  2   -1    --
+TICK:  0   -1    --
+OK
+PUT REPLY :  OK
+OK
+PUT REPLY :  OK
+OK
+PUT REPLY :  OK
+OK
+PUT REPLY :  OK
+OK
+TICK:  0   -1    --
+TICK:  1   -1    --
+PUT REPLY :  OK
+OK
+PUT REPLY :  OK
+OK
+PUT REPLY :  OK
+OK
+PUT REPLY :  OK
+TICK:  2   -1    --
+TICK:  0   -1    --
+config num:  5
+config num:  5
+kv currect config num  4
+kv currect config num  4
+next config number  5
+next config number  5
+TICK:  0   -1    --
+TICK:  1   -1    --
+config num:  5
+kv currect config num  4
+config num:  5
+kv currect config num  4
+next config number  5
+next config number  5
+TICK:  2   5    --
+sent received  2   true   false
+TICK:  0   5    --
+sent received  0   true   false
+TICK:  1   5    --
+SENDINGGGGG
+TICK:  0   5    --
+SENDINGGGGG
+SENDINGGGGG
+SENDINGGGGG
+SENDINGGGGG
+SENDINGGGGG
+TICK:  0   5    --
+sent received  0   true   false
+TICK:  2   5    --
+sent received  2   true   false
+SENDINGGGGG
+SENDINGGGGG
+SENDINGGGGG
+SENDINGGGGG
+sent received  0   true   true
+sent received  1   true   true
+TICK:  0   5    --
+sent received  0   true   true
+TICK:  2   5    --
+sent received  2   true   true
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  0   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  0   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  0   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  0   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+OK
+PUT REPLY :  OK
+OK
+TICK:  0   -1    --
+TICK:  2   -1    --
+PUT REPLY :  OK
+OK
+PUT REPLY :  OK
+OK
+PUT REPLY :  OK
+OK
+PUT REPLY :  OK
+OK
+PUT REPLY :  OK
+OK
+PUT REPLY :  OK
+OK
+PUT REPLY :  OK
+OK
+PUT REPLY :  OK
+OK
+PUT REPLY :  OK
+  ... Passed
+Test: Concurrent Put/Get/Move ...
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  1   -1    --
+TICK:  0   -1    --
+PUT REPLY :  ErrWrongGroup
+TICK:  2   -1    --
+TICK:  2   -1    --
+TICK:  2   -1    --
+TICK:  1   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  0   -1    --
+config num:  3
+kv currect config num  1
+PUT REPLY :  ErrWrongGroup
+PUT REPLY :  ErrWrongGroup
+PUT REPLY :  ErrWrongGroup
+PUT REPLY :  ErrWrongGroup
+PUT REPLY :  OK
+PUT REPLY :  ErrWrongGroup
+PUT REPLY :  OK
+PUT REPLY :  OK
+PUT REPLY :  OK
+OK
+OK
+OK
+OK
+PUT REPLY :  OK
+PUT REPLY :  ErrWrongGroup
+PUT REPLY :  OK
+TICK:  0   -1    --
+PUT REPLY :  OK
+PUT REPLY :  ErrWrongGroup
+TICK:  2   -1    --
+OK
+PUT REPLY :  ErrWrongGroup
+TICK:  0   -1    --
+PUT REPLY :  OK
+TICK:  1   -1    --
+TICK:  2   -1    --
+OK
+config num:  8
+TICK:  1   -1    --
+kv currect config num  1
+next config number  2
+PUT REPLY :  OK
+TICK:  2   -1    --
+OK
+OK
+OK
+TICK:  0   -1    --
+PUT REPLY :  OK
+config num:  12
+OK
+kv currect config num  1
+PUT REPLY :  OK
+PUT REPLY :  ErrWrongGroup
+PUT REPLY :  OK
+PUT REPLY :  OK
+TICK:  1   -1    --
+config num:  13
+next config number  2
+kv currect config num  1
+next config number  2
+PUT REPLY :  ErrWrongGroup
+PUT REPLY :  OK
+PUT REPLY :  ErrWrongGroup
+OK
+PUT REPLY :  ErrWrongGroup
+OK
+PUT REPLY :  ErrWrongGroup
+PUT REPLY :  ErrWrongGroup
+TICK:  0   -1    --
+PUT REPLY :  OK
+TICK:  2   -1    --
+ErrWrongGroup
+PUT REPLY :  ErrWrongGroup
+config num:  15
+OK
+kv currect config num  1
+kv currect config num  1
+OK
+TICK:  0   -1    --
+TICK:  2   -1    --
+next config number  2
+PUT REPLY :  OK
+TICK:  1   2    --
+sent received  1   true   true
+TICK:  1   -1    --
+OK
+config num:  18
+TICK:  2   -1    --
+kv currect config num  1
+config num:  18
+kv currect config num  1
+config num:  18
+kv currect config num  1
+next config number  2
+PUT REPLY :  Waiting
+kv currect config num  1
+kv currect config num  1
+kv currect config num  1
+kv currect config num  1
+next config number  2
+PUT REPLY :  OK
+Waiting
+kv currect config num  1
+OK
+next config number  2
+next config number  2
+kv currect config num  2
+PUT REPLY :  Waiting
+TICK:  0   2    --
+sent received  0   true   true
+next config number  2
+Waiting
+PUT REPLY :  OK
+TICK:  1   2    --
+SENDINGGGGG
+kv currect config num  2
+next config number  3
+PUT REPLY :  Waiting
+OK
+Waiting
+PUT REPLY :  OK
+PUT REPLY :  Waiting
+OK
+PUT REPLY :  Waiting
+PUT REPLY :  OK
+SENDINGGGGG
+PUT REPLY :  Waiting
+PUT REPLY :  ErrWrongGroup
+OK
+PUT REPLY :  OK
+OK
+TICK:  0   2    --
+SENDINGGGGG
+TICK:  2   2    --
+sent received  2   true   false
+TICK:  0   2    --
+sent received  0   true   false
+SENDINGGGGG
+PUT REPLY :  Waiting
+TICK:  1   -1    --
+config num:  23
+SENDINGGGGG
+kv currect config num  2
+next config number  3
+kv currect config num  3
+OK
+next config number  4
+PUT REPLY :  Waiting
+kv currect config num  2
+next config number  3
+PUT REPLY :  Waiting
+PUT REPLY :  Waiting
+for key :  2
+PUT REPLY :  OK
+PUT REPLY :  ErrWrongGroup
+TICK:  2   2    --
+SENDINGGGGG
+PUT REPLY :  OK
+Waiting
+TICK:  1   2    --
+sent received  1   true   false
+SENDINGGGGG
+TICK:  2   3    --
+sent received  2   true   false
+TICK:  0   3    --
+sent received  0   true   false
+OK
+SENDINGGGGG
+OK
+SENDINGGGGG
+PUT REPLY :  Waiting
+SENDINGGGGG
+for key :  2
+PUT REPLY :  OK
+Waiting
+TICK:  2   2    --
+sent received  2   true   true
+OK
+PUT REPLY :  ErrWrongGroup
+SENDINGGGGG
+PUT REPLY :  OK
+TICK:  0   -1    --
+SENDINGGGGG
+config num:  26
+TICK:  1   4    --
+SENDINGGGGG
+kv currect config num  2
+sent received  1   true   true
+PUT REPLY :  Waiting
+next config number  3
+OK
+kv currect config num  2
+next config number  3
+PUT REPLY :  ErrWrongGroup
+TICK:  2   3    --
+sent received  2   true   false
+PUT REPLY :  OK
+TICK:  1   3    --
+SENDINGGGGG
+OK
+TICK:  0   3    --
+sent received  0   true   false
+kv currect config num  2
+next config number  3
+sent received  0   true   true
+sent received  2   true   true
+sent received  1   true   true
+PUT REPLY :  OK
+OK
+for key :  3
+PUT REPLY :  OK
+for key :  2
+PUT REPLY :  OK
+PUT REPLY :  OK
+kv currect config num  3
+ErrWrongGroup
+OK
+--- FAIL: TestConcurrent (1.64 seconds)
+	test_test.go:334: Get(4) expected 78723970924514957739504114456002782493449410703867851244 got 7872397092451495773950411445600278249
+	test_test.go:334: Get(2) expected 384762921065152563881840828136961126834407543400472958458 got 4407543400472958458
+	test_test.go:349: something is wrong
+Test: Concurrent Put/Get/Move (unreliable) ...
+next config number  4
+for key :  2
+for key :  2
+for key :  2
+TICK:  0   -1    --
+OK
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+for key :  5
+PUT REPLY :  OK
+TICK:  1   -1    --
+TICK:  2   -1    --
+TICK:  0   -1    --
+TICK:  1   -1    --
+TICK:  2   -1    --
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-3: connection reset by peer
+unexpected EOF
+TICK:  0   -1    --
+PUT REPLY :  ErrWrongGroup
+TICK:  1   -1    --
+PUT REPLY :  ErrWrongGroup
+TICK:  2   -1    --
+TICK:  1   -1    --
+TICK:  0   -1    --
+unexpected EOF
+unexpected EOF
+TICK:  2   -1    --
+config num:  3
+PUT REPLY :  OK
+TICK:  0   -1    --
+unexpected EOF
+unexpected EOF
+TICK:  2   -1    --
+unexpected EOF
+TICK:  1   -1    --
+config num:  3
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-8: connection reset by peer
+kv currect config num  1
+kv currect config num  1
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-5: connection reset by peer
+unexpected EOF
+PUT REPLY :  ErrWrongGroup
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-3: connection reset by peer
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-4: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-3: connection reset by peer
+unexpected EOF
+PUT REPLY :  ErrWrongGroup
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-4: connection reset by peer
+kv currect config num  1
+unexpected EOF
+PUT REPLY :  ErrWrongGroup
+next config number  2
+PUT REPLY :  Waiting
+unexpected EOF
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-4: connection reset by peer
+next config number  2
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-8: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-7: connection reset by peer
+PUT REPLY :  Waiting
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-3: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-3: connection reset by peer
+PUT REPLY :  ErrWrongGroup
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-7: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-8: connection reset by peer
+PUT REPLY :  Waiting
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+unexpected EOF
+PUT REPLY :  ErrWrongGroup
+PUT REPLY :  OK
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-0: connection reset by peer
+unexpected EOF
+unexpected EOF
+unexpected EOF
+OK
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-0: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+PUT REPLY :  OK
+config num:  3
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+OK
+TICK:  1   -1    --
+PUT REPLY :  OK
+kv currect config num  1
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-0: connection reset by peer
+config num:  3
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-3: connection reset by peer
+unexpected EOF
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+unexpected EOF
+PUT REPLY :  Waiting
+unexpected EOF
+OK
+TICK:  2   -1    --
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-0: connection reset by peer
+TICK:  0   -1    --
+TICK:  2   2    --
+sent received  2   true   false
+unexpected EOF
+unexpected EOF
+PUT REPLY :  ErrWrongGroup
+kv currect config num  1
+next config number  2
+unexpected EOF
+unexpected EOF
+unexpected EOF
+PUT REPLY :  ErrWrongGroup
+unexpected EOF
+PUT REPLY :  ErrWrongGroup
+kv currect config num  1
+config num:  4
+unexpected EOF
+PUT REPLY :  ErrWrongGroup
+TICK:  1   -1    --
+kv currect config num  1
+next config number  2
+OK
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+OK
+next config number  2
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+PUT REPLY :  ErrWrongGroup
+unexpected EOF
+PUT REPLY :  OK
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+unexpected EOF
+OK
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-0: connection reset by peer
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+TICK:  0   2    --
+sent received  0   true   true
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-4: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+PUT REPLY :  OK
+kv currect config num  1
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+unexpected EOF
+config num:  2
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+for key :  9
+PUT REPLY :  OK
+TICK:  2   -1    --
+TICK:  0   2    --
+SENDINGGGGG
+for key :  9
+PUT REPLY :  OK
+unexpected EOF
+kv currect config num  1
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-4: connection reset by peer
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-5: connection reset by peer
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+kv currect config num  1
+for key :  10
+PUT REPLY :  OK
+unexpected EOF
+unexpected EOF
+PUT REPLY :  ErrWrongGroup
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-8: connection reset by peer
+unexpected EOF
+PUT REPLY :  OK
+TICK:  2   2    --
+sent received  2   true   false
+kv currect config num  1
+TICK:  1   -1    --
+PUT REPLY :  ErrWrongGroup
+config num:  8
+next config number  2
+PUT REPLY :  Waiting
+unexpected EOF
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-4: connection reset by peer
+kv currect config num  2
+config num:  8
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-7: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-4: connection reset by peer
+unexpected EOF
+TICK:  1   -1    --
+unexpected EOF
+next config number  2
+unexpected EOF
+config num:  8
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-5: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-3: connection reset by peer
+kv currect config num  1
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-5: connection reset by peer
+unexpected EOF
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-7: connection reset by peer
+PUT REPLY :  Waiting
+for key :  10
+SENDINGGGGG
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-5: connection reset by peer
+TICK:  2   2    --
+SENDINGGGGG
+next config number  2
+unexpected EOF
+unexpected EOF
+unexpected EOF
+kv currect config num  1
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+next config number  3
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-3: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-3: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-5: connection reset by peer
+next config number  2
+kv currect config num  2
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-5: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-4: connection reset by peer
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-5: connection reset by peer
+unexpected EOF
+write unix /var/tmp/824-1000/skv-14496-concurrent-trues-4: broken pipe
+PUT REPLY :  Waiting
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-3: connection reset by peer
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-7: connection reset by peer
+next config number  3
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-8: connection reset by peer
+unexpected EOF
+unexpected EOF
+unexpected EOF
+PUT REPLY :  Waiting
+kv currect config num  2
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-4: connection reset by peer
+unexpected EOF
+PUT REPLY :  Waiting
+next config number  3
+PUT REPLY :  Waiting
+TICK:  0   3    --
+sent received  0   true   false
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-5: connection reset by peer
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-4: connection reset by peer
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-4: connection reset by peer
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-3: connection reset by peer
+unexpected EOF
+unexpected EOF
+PUT REPLY :  Waiting
+unexpected EOF
+unexpected EOF
+unexpected EOF
+PUT REPLY :  Waiting
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-4: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-3: connection reset by peer
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+TICK:  0   2    --
+sent received  0   true   false
+PUT REPLY :  Waiting
+unexpected EOF
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-3: connection reset by peer
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-4: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-4: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-3: connection reset by peer
+unexpected EOF
+unexpected EOF
+unexpected EOF
+SENDINGGGGG
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-4: connection reset by peer
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-0: connection reset by peer
+PUT REPLY :  OK
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-4: connection reset by peer
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-0: connection reset by peer
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-3: connection reset by peer
+unexpected EOF
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-4: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-5: connection reset by peer
+unexpected EOF
+OK
+TICK:  2   2    --
+sent received  2   true   false
+unexpected EOF
+unexpected EOF
+OK
+PUT REPLY :  Waiting
+for key :  9
+for key :  10
+SENDINGGGGG
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-5: connection reset by peer
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-4: connection reset by peer
+SENDINGGGGG
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-4: connection reset by peer
+unexpected EOF
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-8: connection reset by peer
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-5: connection reset by peer
+unexpected EOF
+PUT REPLY :  Waiting
+PUT REPLY :  Waiting
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-5: connection reset by peer
+TICK:  1   2    --
+SENDINGGGGG
+PUT REPLY :  Waiting
+TICK:  1   2    --
+sent received  1   true   false
+PUT REPLY :  OK
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-4: connection reset by peer
+PUT REPLY :  Waiting
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-4: connection reset by peer
+TICK:  1   3    --
+sent received  1   true   false
+PUT REPLY :  Waiting
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-3: connection reset by peer
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-4: connection reset by peer
+PUT REPLY :  Waiting
+unexpected EOF
+TICK:  2   3    --
+sent received  2   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-3: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-5: connection reset by peer
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-5: connection reset by peer
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-5: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-3: connection reset by peer
+TICK:  0   3    --
+sent received  0   true   false
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-3: connection reset by peer
+unexpected EOF
+OK
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-3: connection reset by peer
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-5: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-4: connection reset by peer
+unexpected EOF
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-5: connection reset by peer
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-5: connection reset by peer
+PUT REPLY :  Waiting
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+PUT REPLY :  Waiting
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-6: connection reset by peer
+unexpected EOF
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-6: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-7: connection reset by peer
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-5: connection reset by peer
+unexpected EOF
+unexpected EOF
+unexpected EOF
+PUT REPLY :  Waiting
+SENDINGGGGG
+unexpected EOF
+unexpected EOF
+SENDINGGGGG
+TICK:  2   2    --
+sent received  2   true   false
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-6: connection reset by peer
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-3: connection reset by peer
+PUT REPLY :  Waiting
+OK
+TICK:  0   2    --
+sent received  0   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-4: connection reset by peer
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-5: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-5: connection reset by peer
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-4: connection reset by peer
+unexpected EOF
+PUT REPLY :  OK
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-4: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-0: connection reset by peer
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-0: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-5: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-4: connection reset by peer
+unexpected EOF
+TICK:  1   2    --
+sent received  1   true   false
+SENDINGGGGG
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-5: connection reset by peer
+PUT REPLY :  Waiting
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-5: connection reset by peer
+TICK:  1   3    --
+sent received  1   true   false
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-5: connection reset by peer
+unexpected EOF
+unexpected EOF
+PUT REPLY :  OK
+TICK:  2   3    --
+sent received  2   true   false
+unexpected EOF
+PUT REPLY :  OK
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-4: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-5: connection reset by peer
+unexpected EOF
+unexpected EOF
+OK
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-8: connection reset by peer
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-4: connection reset by peer
+PUT REPLY :  Waiting
+TICK:  0   3    --
+sent received  0   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-5: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-4: connection reset by peer
+unexpected EOF
+unexpected EOF
+OK
+PUT REPLY :  Waiting
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-3: connection reset by peer
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-3: connection reset by peer
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-5: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-3: connection reset by peer
+PUT REPLY :  Waiting
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-3: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-3: connection reset by peer
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-4: connection reset by peer
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-3: connection reset by peer
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+unexpected EOF
+SENDINGGGGG
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-3: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-5: connection reset by peer
+unexpected EOF
+sent received  0   true   true
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+for key :  6
+unexpected EOF
+PUT REPLY :  OK
+unexpected EOF
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-5: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-3: connection reset by peer
+for key :  6
+for key :  6
+PUT REPLY :  OK
+OK
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-5: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+unexpected EOF
+for key :  6
+for key :  6
+OK
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-3: connection reset by peer
+unexpected EOF
+unexpected EOF
+PUT REPLY :  ErrWrongGroup
+TICK:  2   2    --
+sent received  2   true   true
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-4: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-3: connection reset by peer
+unexpected EOF
+unexpected EOF
+for key :  1
+PUT REPLY :  OK
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-3: connection reset by peer
+for key :  6
+PUT REPLY :  OK
+for key :  6
+OK
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-4: connection reset by peer
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+PUT REPLY :  OK
+PUT REPLY :  OK
+PUT REPLY :  Waiting
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-5: connection reset by peer
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-0: connection reset by peer
+unexpected EOF
+PUT REPLY :  Waiting
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-6: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-5: connection reset by peer
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-6: connection reset by peer
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-6: connection reset by peer
+for key :  6
+for key :  6
+PUT REPLY :  Waiting
+connection is shut down
+connection is shut down
+for key :  1
+sent received  1   true   true
+unexpected EOF
+TICK:  1   3    --
+sent received  1   true   false
+OK
+TICK:  0   -1    --
+unexpected EOF
+config num:  14
+unexpected EOF
+TICK:  1   -1    --
+unexpected EOF
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-4: connection reset by peer
+OK
+TICK:  2   3    --
+sent received  2   true   false
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+config num:  15
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-5: connection reset by peer
+unexpected EOF
+unexpected EOF
+TICK:  0   3    --
+sent received  0   true   false
+PUT REPLY :  OK
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+PUT REPLY :  OK
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+unexpected EOF
+kv currect config num  2
+PUT REPLY :  OK
+unexpected EOF
+unexpected EOF
+next config number  3
+unexpected EOF
+unexpected EOF
+unexpected EOF
+kv currect config num  2
+OK
+unexpected EOF
+for key :  1
+sent received  2   true   true
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-7: connection reset by peer
+unexpected EOF
+PUT REPLY :  OK
+kv currect config num  2
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+PUT REPLY :  Waiting
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-6: connection reset by peer
+next config number  3
+unexpected EOF
+PUT REPLY :  Waiting
+OK
+OK
+unexpected EOF
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+unexpected EOF
+write unix /var/tmp/824-1000/skv-14496-concurrent-trues-4: broken pipe
+OK
+PUT REPLY :  OK
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-5: connection reset by peer
+unexpected EOF
+PUT REPLY :  OK
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-5: connection reset by peer
+unexpected EOF
+unexpected EOF
+OK
+unexpected EOF
+unexpected EOF
+OK
+unexpected EOF
+OK
+OK
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-4: connection reset by peer
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+unexpected EOF
+kv currect config num  2
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-4: connection reset by peer
+PUT REPLY :  OK
+next config number  3
+PUT REPLY :  OK
+TICK:  2   3    --
+SENDINGGGGG
+PUT REPLY :  OK
+PUT REPLY :  OK
+TICK:  0   -1    --
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-5: connection reset by peer
+unexpected EOF
+PUT REPLY :  OK
+OK
+config num:  24
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-5: connection reset by peer
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-6: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-8: connection reset by peer
+unexpected EOF
+OK
+kv currect config num  2
+unexpected EOF
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-5: connection reset by peer
+unexpected EOF
+OK
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-3: connection reset by peer
+unexpected EOF
+TICK:  1   -1    --
+TICK:  1   3    --
+sent received  1   true   false
+for key :  6
+PUT REPLY :  OK
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-6: connection reset by peer
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-6: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-7: connection reset by peer
+unexpected EOF
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-4: connection reset by peer
+unexpected EOF
+unexpected EOF
+next config number  3
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+unexpected EOF
+OK
+TICK:  2   3    --
+sent received  2   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-3: connection reset by peer
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-5: connection reset by peer
+PUT REPLY :  ErrWrongGroup
+config num:  26
+for key :  6
+sent received  2   true   true
+unexpected EOF
+unexpected EOF
+for key :  0
+PUT REPLY :  OK
+kv currect config num  2
+unexpected EOF
+TICK:  0   3    --
+sent received  0   true   false
+next config number  3
+for key :  0
+for key :  6
+OK
+unexpected EOF
+unexpected EOF
+TICK:  1   3    --
+SENDINGGGGG
+PUT REPLY :  ErrWrongGroup
+unexpected EOF
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-4: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-8: connection reset by peer
+unexpected EOF
+PUT REPLY :  OK
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-4: connection reset by peer
+OK
+TICK:  2   -1    --
+TICK:  0   -1    --
+unexpected EOF
+config num:  29
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-4: connection reset by peer
+sent received  1   true   true
+unexpected EOF
+kv currect config num  3
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-8: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-7: connection reset by peer
+kv currect config num  3
+PUT REPLY :  Waiting
+next config number  4
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-8: connection reset by peer
+next config number  4
+PUT REPLY :  Waiting
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+PUT REPLY :  Waiting
+ErrWrongGroup
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-5: connection reset by peer
+PUT REPLY :  ErrWrongGroup
+TICK:  1   3    --
+sent received  1   true   false
+TICK:  0   3    --
+SENDINGGGGG
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-8: connection reset by peer
+unexpected EOF
+unexpected EOF
+TICK:  2   3    --
+sent received  2   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-8: connection reset by peer
+unexpected EOF
+unexpected EOF
+unexpected EOF
+TICK:  2   -1    --
+PUT REPLY :  Waiting
+TICK:  0   3    --
+sent received  0   true   false
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-0: connection reset by peer
+PUT REPLY :  Waiting
+config num:  29
+unexpected EOF
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-6: connection reset by peer
+unexpected EOF
+SENDINGGGGG
+kv currect config num  3
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-8: connection reset by peer
+ErrWrongGroup
+TICK:  1   3    --
+SENDINGGGGG
+PUT REPLY :  Waiting
+kv currect config num  4
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-4: connection reset by peer
+next config number  4
+kv currect config num  4
+unexpected EOF
+unexpected EOF
+kv currect config num  4
+next config number  5
+PUT REPLY :  ErrWrongGroup
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-8: connection reset by peer
+next config number  5
+unexpected EOF
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-7: connection reset by peer
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-7: connection reset by peer
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-8: connection reset by peer
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-6: connection reset by peer
+next config number  5
+PUT REPLY :  ErrWrongGroup
+TICK:  2   -1    --
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-6: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-8: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+unexpected EOF
+unexpected EOF
+sent received  0   true   true
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+unexpected EOF
+unexpected EOF
+unexpected EOF
+config num:  29
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+TICK:  0   5    --
+sent received  0   true   true
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+unexpected EOF
+unexpected EOF
+TICK:  1   5    --
+sent received  1   true   true
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-5: connection reset by peer
+unexpected EOF
+ErrWrongGroup
+sent received  1   true   true
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-0: connection reset by peer
+unexpected EOF
+unexpected EOF
+kv currect config num  2
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-8: connection reset by peer
+unexpected EOF
+unexpected EOF
+unexpected EOF
+PUT REPLY :  OK
+next config number  3
+for key :  0
+kv currect config num  3
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-8: connection reset by peer
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+unexpected EOF
+OK
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+next config number  4
+kv currect config num  3
+next config number  4
+ErrWrongGroup
+TICK:  1   3    --
+sent received  1   true   true
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-8: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-7: connection reset by peer
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-8: connection reset by peer
+unexpected EOF
+TICK:  2   3    --
+sent received  2   true   true
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-6: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-7: connection reset by peer
+unexpected EOF
+unexpected EOF
+PUT REPLY :  OK
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-7: connection reset by peer
+OK
+TICK:  0   -1    --
+config num:  31
+unexpected EOF
+kv currect config num  3
+next config number  4
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-4: connection reset by peer
+PUT REPLY :  ErrWrongGroup
+TICK:  2   5    --
+sent received  2   true   true
+unexpected EOF
+unexpected EOF
+unexpected EOF
+ErrWrongGroup
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  1   -1    --
+TICK:  1   -1    --
+TICK:  0   -1    --
+config num:  31
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-5: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-5: connection reset by peer
+unexpected EOF
+config num:  31
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+kv currect config num  5
+config num:  31
+unexpected EOF
+kv currect config num  3
+unexpected EOF
+kv currect config num  5
+next config number  6
+kv currect config num  3
+kv currect config num  5
+TICK:  2   4    --
+sent received  2   true   false
+next config number  4
+next config number  6
+unexpected EOF
+PUT REPLY :  ErrWrongGroup
+TICK:  1   -1    --
+ErrWrongGroup
+config num:  31
+unexpected EOF
+TICK:  2   -1    --
+unexpected EOF
+unexpected EOF
+config num:  31
+unexpected EOF
+kv currect config num  3
+kv currect config num  3
+next config number  4
+next config number  4
+TICK:  0   4    --
+sent received  0   true   true
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-3: connection reset by peer
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-3: connection reset by peer
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+PUT REPLY :  ErrWrongGroup
+TICK:  2   -1    --
+PUT REPLY :  ErrWrongGroup
+config num:  31
+unexpected EOF
+ErrWrongGroup
+TICK:  0   4    --
+sent received  0   true   false
+kv currect config num  5
+next config number  6
+TICK:  1   6    --
+sent received  1   true   true
+unexpected EOF
+unexpected EOF
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   4    --
+sent received  1   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-5: connection reset by peer
+PUT REPLY :  ErrWrongGroup
+TICK:  0   -1    --
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+config num:  31
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-4: connection reset by peer
+ErrWrongGroup
+kv currect config num  6
+next config number  7
+TICK:  1   4    --
+sent received  1   true   true
+unexpected EOF
+TICK:  2   4    --
+sent received  2   true   true
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-6: connection reset by peer
+TICK:  0   -1    --
+PUT REPLY :  ErrWrongGroup
+config num:  31
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+kv currect config num  4
+unexpected EOF
+unexpected EOF
+unexpected EOF
+ErrWrongGroup
+TICK:  0   4    --
+sent received  0   true   false
+next config number  5
+TICK:  2   6    --
+sent received  2   true   true
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-3: connection reset by peer
+unexpected EOF
+kv currect config num  6
+next config number  7
+TICK:  1   -1    --
+config num:  31
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   4    --
+sent received  1   true   false
+unexpected EOF
+kv currect config num  6
+next config number  7
+kv currect config num  7
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-5: connection reset by peer
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-5: connection reset by peer
+kv currect config num  7
+next config number  8
+PUT REPLY :  ErrWrongGroup
+TICK:  0   8    --
+sent received  0   true   true
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-5: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-5: connection reset by peer
+TICK:  1   -1    --
+config num:  31
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-6: connection reset by peer
+TICK:  2   -1    --
+kv currect config num  4
+config num:  31
+unexpected EOF
+unexpected EOF
+kv currect config num  4
+next config number  5
+next config number  5
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-0: connection reset by peer
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-0: connection reset by peer
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+ErrWrongGroup
+unexpected EOF
+PUT REPLY :  ErrWrongGroup
+TICK:  0   4    --
+sent received  0   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-4: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-5: connection reset by peer
+unexpected EOF
+unexpected EOF
+connection is shut down
+TICK:  0   5    --
+SENDINGGGGG
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+PUT REPLY :  ErrWrongGroup
+unexpected EOF
+unexpected EOF
+unexpected EOF
+TICK:  2   -1    --
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-0: connection reset by peer
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-0: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+config num:  31
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-0: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+connection is shut down
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-4: connection reset by peer
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+kv currect config num  7
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   4    --
+sent received  1   true   false
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-7: connection reset by peer
+sent received  0   true   true
+next config number  8
+kv currect config num  8
+unexpected EOF
+unexpected EOF
+TICK:  1   -1    --
+unexpected EOF
+next config number  9
+ErrWrongGroup
+config num:  31
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-5: connection reset by peer
+kv currect config num  7
+kv currect config num  8
+next config number  8
+next config number  9
+PUT REPLY :  ErrWrongGroup
+TICK:  0   9    --
+SENDINGGGGG
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+write unix /var/tmp/824-1000/skv-14496-concurrent-trues-0: broken pipe
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-4: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-5: connection reset by peer
+unexpected EOF
+TICK:  1   5    --
+SENDINGGGGG
+unexpected EOF
+unexpected EOF
+unexpected EOF
+sent received  0   true   true
+TICK:  2   5    --
+SENDINGGGGG
+unexpected EOF
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-0: connection reset by peer
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-0: connection reset by peer
+unexpected EOF
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-0: connection reset by peer
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-8: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-6: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-6: connection reset by peer
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+write unix /var/tmp/824-1000/skv-14496-concurrent-trues-8: broken pipe
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+sent received  1   true   true
+PUT REPLY :  ErrWrongGroup
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+unexpected EOF
+ErrWrongGroup
+TICK:  0   4    --
+sent received  0   true   false
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-0: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+unexpected EOF
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-7: connection reset by peer
+unexpected EOF
+sent received  2   true   true
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-7: connection reset by peer
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  0   -1    --
+TICK:  2   9    --
+SENDINGGGGG
+config num:  31
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-0: connection reset by peer
+unexpected EOF
+unexpected EOF
+kv currect config num  5
+next config number  6
+PUT REPLY :  ErrWrongGroup
+TICK:  1   -1    --
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+unexpected EOF
+unexpected EOF
+unexpected EOF
+PUT REPLY :  ErrWrongGroup
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-4: connection reset by peer
+ErrWrongGroup
+sent received  2   true   true
+config num:  31
+unexpected EOF
+kv currect config num  8
+next config number  9
+TICK:  0   -1    --
+config num:  31
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-4: connection reset by peer
+kv currect config num  9
+next config number  10
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-4: connection reset by peer
+unexpected EOF
+unexpected EOF
+unexpected EOF
+PUT REPLY :  ErrWrongGroup
+unexpected EOF
+TICK:  0   4    --
+sent received  0   true   false
+ErrWrongGroup
+TICK:  1   -1    --
+config num:  31
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-8: connection reset by peer
+kv currect config num  5
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   4    --
+sent received  1   true   false
+next config number  6
+TICK:  2   -1    --
+config num:  31
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-6: connection reset by peer
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-6: connection reset by peer
+unexpected EOF
+unexpected EOF
+kv currect config num  5
+next config number  6
+TICK:  0   6    --
+sent received  0   true   true
+unexpected EOF
+PUT REPLY :  ErrWrongGroup
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-8: connection reset by peer
+ErrWrongGroup
+TICK:  2   -1    --
+config num:  31
+unexpected EOF
+kv currect config num  9
+TICK:  1   9    --
+SENDINGGGGG
+unexpected EOF
+next config number  10
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-5: connection reset by peer
+unexpected EOF
+sent received  1   true   true
+unexpected EOF
+TICK:  0   10    --
+sent received  0   true   false
+unexpected EOF
+unexpected EOF
+PUT REPLY :  ErrWrongGroup
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+ErrWrongGroup
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  1   6    --
+sent received  1   true   true
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-4: connection reset by peer
+TICK:  2   6    --
+sent received  2   true   true
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-6: connection reset by peer
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-6: connection reset by peer
+unexpected EOF
+PUT REPLY :  ErrWrongGroup
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+unexpected EOF
+unexpected EOF
+TICK:  0   -1    --
+ErrWrongGroup
+config num:  31
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-7: connection reset by peer
+kv currect config num  6
+next config number  7
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  0   -1    --
+TICK:  1   -1    --
+config num:  31
+config num:  31
+unexpected EOF
+kv currect config num  10
+kv currect config num  9
+next config number  11
+TICK:  0   4    --
+sent received  0   true   false
+next config number  10
+unexpected EOF
+PUT REPLY :  ErrWrongGroup
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  1   -1    --
+config num:  31
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-8: connection reset by peer
+unexpected EOF
+kv currect config num  6
+next config number  7
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+ErrWrongGroup
+TICK:  2   -1    --
+config num:  31
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-7: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-7: connection reset by peer
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-7: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-4: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-5: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-5: connection reset by peer
+kv currect config num  6
+PUT REPLY :  ErrWrongGroup
+next config number  7
+TICK:  0   7    --
+sent received  0   true   true
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-8: connection reset by peer
+TICK:  2   10    --
+sent received  2   true   false
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+unexpected EOF
+unexpected EOF
+unexpected EOF
+TICK:  0   11    --
+sent received  0   true   true
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-0: connection reset by peer
+TICK:  0   4    --
+sent received  0   true   false
+ErrWrongGroup
+TICK:  1   10    --
+sent received  1   true   false
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-5: connection reset by peer
+PUT REPLY :  ErrWrongGroup
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  1   7    --
+sent received  1   true   true
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-8: connection reset by peer
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+ErrWrongGroup
+unexpected EOF
+unexpected EOF
+PUT REPLY :  ErrWrongGroup
+TICK:  2   7    --
+sent received  2   true   true
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-6: connection reset by peer
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  0   -1    --
+config num:  31
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-8: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-7: connection reset by peer
+kv currect config num  7
+next config number  8
+unexpected EOF
+unexpected EOF
+ErrWrongGroup
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  0   -1    --
+TICK:  1   10    --
+sent received  1   true   false
+config num:  31
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-4: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-5: connection reset by peer
+unexpected EOF
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   4    --
+sent received  1   true   false
+kv currect config num  11
+next config number  12
+PUT REPLY :  ErrWrongGroup
+TICK:  1   -1    --
+unexpected EOF
+unexpected EOF
+config num:  31
+ErrWrongGroup
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-6: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-8: connection reset by peer
+kv currect config num  7
+next config number  8
+TICK:  2   -1    --
+TICK:  2   10    --
+sent received  2   true   false
+config num:  31
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-5: connection reset by peer
+kv currect config num  7
+PUT REPLY :  ErrWrongGroup
+next config number  8
+TICK:  0   8    --
+SENDINGGGGG
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+unexpected EOF
+TICK:  1   10    --
+sent received  1   true   false
+ErrWrongGroup
+TICK:  0   4    --
+sent received  0   true   false
+unexpected EOF
+unexpected EOF
+sent received  0   true   true
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-8: connection reset by peer
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  0   12    --
+sent received  0   true   true
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-5: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-5: connection reset by peer
+unexpected EOF
+kv currect config num  10
+unexpected EOF
+PUT REPLY :  ErrWrongGroup
+next config number  11
+PUT REPLY :  ErrWrongGroup
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+ErrWrongGroup
+TICK:  1   8    --
+SENDINGGGGG
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+unexpected EOF
+unexpected EOF
+write unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: broken pipe
+connection is shut down
+TICK:  2   10    --
+sent received  2   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-0: connection reset by peer
+unexpected EOF
+TICK:  2   8    --
+SENDINGGGGG
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+unexpected EOF
+unexpected EOF
+PUT REPLY :  ErrWrongGroup
+sent received  1   true   true
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+TICK:  1   -1    --
+unexpected EOF
+ErrWrongGroup
+TICK:  0   4    --
+sent received  0   true   false
+config num:  31
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-6: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-5: connection reset by peer
+kv currect config num  11
+sent received  2   true   true
+connection is shut down
+next config number  12
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  0   -1    --
+config num:  31
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-7: connection reset by peer
+TICK:  0   -1    --
+unexpected EOF
+kv currect config num  8
+config num:  31
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-5: connection reset by peer
+unexpected EOF
+next config number  9
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-5: connection reset by peer
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+kv currect config num  12
+next config number  13
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-5: connection reset by peer
+unexpected EOF
+PUT REPLY :  ErrWrongGroup
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+unexpected EOF
+unexpected EOF
+unexpected EOF
+ErrWrongGroup
+TICK:  2   10    --
+sent received  2   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-3: connection reset by peer
+unexpected EOF
+unexpected EOF
+unexpected EOF
+PUT REPLY :  ErrWrongGroup
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-4: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+unexpected EOF
+TICK:  1   -1    --
+PUT REPLY :  ErrWrongGroup
+ErrWrongGroup
+TICK:  0   4    --
+sent received  0   true   false
+config num:  31
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-8: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-8: connection reset by peer
+unexpected EOF
+TICK:  1   12    --
+sent received  1   true   true
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-3: connection reset by peer
+kv currect config num  8
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  2   -1    --
+next config number  9
+config num:  31
+unexpected EOF
+kv currect config num  8
+next config number  9
+TICK:  0   9    --
+sent received  0   true   true
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-4: connection reset by peer
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-5: connection reset by peer
+PUT REPLY :  ErrWrongGroup
+TICK:  0   -1    --
+config num:  31
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-0: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-5: connection reset by peer
+kv currect config num  13
+ErrWrongGroup
+next config number  14
+TICK:  2   10    --
+sent received  2   true   false
+unexpected EOF
+unexpected EOF
+unexpected EOF
+PUT REPLY :  Waiting
+unexpected EOF
+kv currect config num  12
+next config number  13
+PUT REPLY :  ErrWrongGroup
+unexpected EOF
+ErrWrongGroup
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  1   13    --
+SENDINGGGGG
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-7: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-8: connection reset by peer
+TICK:  1   9    --
+sent received  1   true   true
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-8: connection reset by peer
+unexpected EOF
+unexpected EOF
+unexpected EOF
+TICK:  2   9    --
+sent received  2   true   true
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-6: connection reset by peer
+unexpected EOF
+TICK:  0   -1    --
+unexpected EOF
+unexpected EOF
+config num:  31
+unexpected EOF
+unexpected EOF
+write unix /var/tmp/824-1000/skv-14496-concurrent-trues-7: broken pipe
+kv currect config num  9
+kv currect config num  9
+next config number  10
+unexpected EOF
+unexpected EOF
+PUT REPLY :  OK
+unexpected EOF
+sent received  1   true   true
+unexpected EOF
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-3: connection reset by peer
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-6: connection reset by peer
+OK
+TICK:  0   14    --
+sent received  0   true   false
+unexpected EOF
+ErrWrongGroup
+kv currect config num  9
+TICK:  2   10    --
+sent received  2   true   false
+next config number  10
+OK
+unexpected EOF
+unexpected EOF
+PUT REPLY :  OK
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-8: connection reset by peer
+OK
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-7: connection reset by peer
+OK
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-6: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-8: connection reset by peer
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-8: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-8: connection reset by peer
+TICK:  0   4    --
+sent received  0   true   false
+unexpected EOF
+PUT REPLY :  OK
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-7: connection reset by peer
+unexpected EOF
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+unexpected EOF
+unexpected EOF
+unexpected EOF
+OK
+ErrWrongGroup
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-0: connection reset by peer
+TICK:  1   10    --
+sent received  1   true   true
+ErrWrongGroup
+TICK:  2   4    --
+sent received  2   true   false
+unexpected EOF
+ErrWrongGroup
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  2   -1    --
+config num:  34
+unexpected EOF
+TICK:  0   10    --
+sent received  0   true   true
+kv currect config num  9
+kv currect config num  10
+unexpected EOF
+unexpected EOF
+next config number  11
+unexpected EOF
+TICK:  1   -1    --
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+unexpected EOF
+TICK:  0   14    --
+sent received  0   true   false
+ErrWrongGroup
+config num:  34
+unexpected EOF
+unexpected EOF
+kv currect config num  13
+TICK:  2   10    --
+sent received  2   true   false
+next config number  14
+TICK:  0   4    --
+sent received  0   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+unexpected EOF
+unexpected EOF
+unexpected EOF
+ErrWrongGroup
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  1   -1    --
+config num:  34
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-8: connection reset by peer
+unexpected EOF
+kv currect config num  10
+next config number  11
+kv currect config num  11
+next config number  12
+TICK:  2   -1    --
+TICK:  0   -1    --
+config num:  34
+unexpected EOF
+TICK:  0   14    --
+sent received  0   true   false
+kv currect config num  9
+unexpected EOF
+unexpected EOF
+ErrWrongGroup
+TICK:  2   10    --
+sent received  2   true   false
+config num:  34
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+TICK:  1   14    --
+sent received  1   true   false
+next config number  10
+kv currect config num  11
+ErrWrongGroup
+next config number  12
+ErrWrongGroup
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  1   12    --
+sent received  1   true   false
+unexpected EOF
+ErrWrongGroup
+TICK:  0   14    --
+sent received  0   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+TICK:  2   10    --
+sent received  2   true   true
+unexpected EOF
+TICK:  0   12    --
+sent received  0   true   false
+unexpected EOF
+unexpected EOF
+ErrWrongGroup
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  1   12    --
+sent received  1   true   false
+unexpected EOF
+TICK:  0   14    --
+sent received  0   true   false
+ErrWrongGroup
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+TICK:  2   -1    --
+TICK:  0   12    --
+sent received  0   true   false
+config num:  34
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-7: connection reset by peer
+kv currect config num  10
+next config number  11
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+TICK:  0   4    --
+sent received  0   true   false
+ErrWrongGroup
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  1   12    --
+sent received  1   true   false
+unexpected EOF
+unexpected EOF
+unexpected EOF
+TICK:  0   14    --
+sent received  0   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+TICK:  2   10    --
+sent received  2   true   false
+ErrWrongGroup
+TICK:  1   14    --
+sent received  1   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   4    --
+sent received  1   true   false
+ErrWrongGroup
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  0   14    --
+sent received  0   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+TICK:  0   12    --
+sent received  0   true   false
+unexpected EOF
+ErrWrongGroup
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   4    --
+sent received  1   true   false
+unexpected EOF
+write unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: broken pipe
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+TICK:  1   12    --
+sent received  1   true   false
+unexpected EOF
+ErrWrongGroup
+ErrWrongGroup
+TICK:  0   14    --
+sent received  0   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  2   11    --
+sent received  2   true   false
+unexpected EOF
+unexpected EOF
+ErrWrongGroup
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   4    --
+sent received  1   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+TICK:  1   12    --
+sent received  1   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+ErrWrongGroup
+TICK:  0   14    --
+sent received  0   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  2   11    --
+sent received  2   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+ErrWrongGroup
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   4    --
+sent received  1   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+TICK:  1   12    --
+sent received  1   true   false
+ErrWrongGroup
+TICK:  0   14    --
+sent received  0   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  2   11    --
+sent received  2   true   false
+write unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: broken pipe
+ErrWrongGroup
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   4    --
+sent received  1   true   false
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-0: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+write unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: broken pipe
+connection is shut down
+connection is shut down
+TICK:  1   12    --
+sent received  1   true   false
+ErrWrongGroup
+unexpected EOF
+unexpected EOF
+unexpected EOF
+ErrWrongGroup
+TICK:  0   14    --
+sent received  0   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  2   11    --
+sent received  2   true   false
+unexpected EOF
+unexpected EOF
+ErrWrongGroup
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+unexpected EOF
+ErrWrongGroup
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  1   12    --
+sent received  1   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+unexpected EOF
+ErrWrongGroup
+unexpected EOF
+TICK:  0   14    --
+sent received  0   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  2   11    --
+sent received  2   true   false
+unexpected EOF
+unexpected EOF
+ErrWrongGroup
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  1   12    --
+sent received  1   true   false
+unexpected EOF
+ErrWrongGroup
+TICK:  0   14    --
+sent received  0   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  2   11    --
+sent received  2   true   false
+unexpected EOF
+unexpected EOF
+ErrWrongGroup
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  1   12    --
+sent received  1   true   false
+ErrWrongGroup
+TICK:  0   14    --
+sent received  0   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  2   11    --
+sent received  2   true   false
+unexpected EOF
+ErrWrongGroup
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  1   12    --
+sent received  1   true   false
+unexpected EOF
+unexpected EOF
+TICK:  0   14    --
+sent received  0   true   false
+ErrWrongGroup
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  2   11    --
+sent received  2   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+ErrWrongGroup
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  1   12    --
+sent received  1   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+unexpected EOF
+TICK:  0   14    --
+sent received  0   true   false
+unexpected EOF
+unexpected EOF
+ErrWrongGroup
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-0: connection reset by peer
+unexpected EOF
+ErrWrongGroup
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  0   4    --
+sent received  0   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-0: connection reset by peer
+unexpected EOF
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+ErrWrongGroup
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   4    --
+sent received  1   true   false
+ErrWrongGroup
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  0   14    --
+sent received  0   true   false
+ErrWrongGroup
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-0: connection reset by peer
+unexpected EOF
+unexpected EOF
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+ErrWrongGroup
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   4    --
+sent received  1   true   false
+unexpected EOF
+ErrWrongGroup
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  0   14    --
+sent received  0   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+unexpected EOF
+unexpected EOF
+ErrWrongGroup
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   4    --
+sent received  1   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+unexpected EOF
+ErrWrongGroup
+unexpected EOF
+TICK:  1   12    --
+sent received  1   true   false
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+ErrWrongGroup
+TICK:  0   14    --
+sent received  0   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+unexpected EOF
+TICK:  0   12    --
+sent received  0   true   false
+ErrWrongGroup
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   4    --
+sent received  1   true   false
+ErrWrongGroup
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  0   14    --
+sent received  0   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+TICK:  0   12    --
+sent received  0   true   false
+unexpected EOF
+unexpected EOF
+ErrWrongGroup
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   4    --
+sent received  1   true   false
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+ErrWrongGroup
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+ErrWrongGroup
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  0   14    --
+sent received  0   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+TICK:  0   12    --
+sent received  0   true   false
+ErrWrongGroup
+ErrWrongGroup
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   4    --
+sent received  1   true   false
+write unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: broken pipe
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+unexpected EOF
+ErrWrongGroup
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  0   14    --
+sent received  0   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+unexpected EOF
+TICK:  0   12    --
+sent received  0   true   false
+ErrWrongGroup
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   4    --
+sent received  1   true   false
+ErrWrongGroup
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  0   14    --
+sent received  0   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  2   11    --
+sent received  2   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-0: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+ErrWrongGroup
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+unexpected EOF
+ErrWrongGroup
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  1   12    --
+sent received  1   true   false
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-0: connection reset by peer
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+ErrWrongGroup
+ErrWrongGroup
+TICK:  0   14    --
+sent received  0   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  2   11    --
+sent received  2   true   false
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+ErrWrongGroup
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  1   12    --
+sent received  1   true   false
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+unexpected EOF
+ErrWrongGroup
+TICK:  0   14    --
+sent received  0   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+ErrWrongGroup
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  0   4    --
+sent received  0   true   false
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+ErrWrongGroup
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  0   14    --
+sent received  0   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+ErrWrongGroup
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  0   4    --
+sent received  0   true   false
+unexpected EOF
+unexpected EOF
+ErrWrongGroup
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  0   14    --
+sent received  0   true   false
+unexpected EOF
+ErrWrongGroup
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  0   4    --
+sent received  0   true   false
+unexpected EOF
+ErrWrongGroup
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  0   14    --
+sent received  0   true   false
+unexpected EOF
+ErrWrongGroup
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  0   4    --
+sent received  0   true   false
+unexpected EOF
+connection is shut down
+ErrWrongGroup
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  0   14    --
+sent received  0   true   false
+unexpected EOF
+unexpected EOF
+ErrWrongGroup
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  0   4    --
+sent received  0   true   false
+ErrWrongGroup
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  0   14    --
+sent received  0   true   false
+unexpected EOF
+ErrWrongGroup
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  0   4    --
+sent received  0   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  2   4    --
+sent received  2   true   false
+ErrWrongGroup
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  0   14    --
+sent received  0   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+unexpected EOF
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+ErrWrongGroup
+connection is shut down
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-0: connection reset by peer
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+TICK:  2   10    --
+sent received  2   true   false
+unexpected EOF
+unexpected EOF
+ErrWrongGroup
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-0: connection reset by peer
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+unexpected EOF
+TICK:  0   4    --
+sent received  0   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-0: connection reset by peer
+unexpected EOF
+unexpected EOF
+unexpected EOF
+ErrWrongGroup
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   12    --
+sent received  1   true   false
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+ErrWrongGroup
+TICK:  0   14    --
+sent received  0   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+TICK:  2   10    --
+sent received  2   true   false
+ErrWrongGroup
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   12    --
+sent received  1   true   false
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+unexpected EOF
+ErrWrongGroup
+TICK:  0   14    --
+sent received  0   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+TICK:  2   10    --
+sent received  2   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+ErrWrongGroup
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  0   14    --
+sent received  0   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+unexpected EOF
+ErrWrongGroup
+unexpected EOF
+ErrWrongGroup
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  0   4    --
+sent received  0   true   false
+unexpected EOF
+ErrWrongGroup
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  0   14    --
+sent received  0   true   false
+write unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: broken pipe
+unexpected EOF
+connection is shut down
+ErrWrongGroup
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+TICK:  2   10    --
+sent received  2   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+ErrWrongGroup
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  0   14    --
+sent received  0   true   false
+unexpected EOF
+ErrWrongGroup
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  0   4    --
+sent received  0   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+unexpected EOF
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  2   4    --
+sent received  2   true   false
+ErrWrongGroup
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  0   14    --
+sent received  0   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+unexpected EOF
+connection is shut down
+connection is shut down
+ErrWrongGroup
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  0   4    --
+sent received  0   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-0: connection reset by peer
+TICK:  2   4    --
+sent received  2   true   false
+ErrWrongGroup
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  0   14    --
+sent received  0   true   false
+unexpected EOF
+ErrWrongGroup
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  0   4    --
+sent received  0   true   false
+unexpected EOF
+unexpected EOF
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   4    --
+sent received  1   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+ErrWrongGroup
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  0   14    --
+sent received  0   true   false
+unexpected EOF
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+ErrWrongGroup
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   4    --
+sent received  1   true   false
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+unexpected EOF
+ErrWrongGroup
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  0   14    --
+sent received  0   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+unexpected EOF
+unexpected EOF
+ErrWrongGroup
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   4    --
+sent received  1   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+ErrWrongGroup
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  0   14    --
+sent received  0   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+ErrWrongGroup
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   4    --
+sent received  1   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+unexpected EOF
+unexpected EOF
+ErrWrongGroup
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  0   14    --
+sent received  0   true   false
+unexpected EOF
+ErrWrongGroup
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   4    --
+sent received  1   true   false
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+ErrWrongGroup
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  0   14    --
+sent received  0   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+ErrWrongGroup
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   4    --
+sent received  1   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+ErrWrongGroup
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  0   14    --
+sent received  0   true   false
+unexpected EOF
+ErrWrongGroup
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   4    --
+sent received  1   true   false
+unexpected EOF
+unexpected EOF
+ErrWrongGroup
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  0   14    --
+sent received  0   true   false
+unexpected EOF
+ErrWrongGroup
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   4    --
+sent received  1   true   false
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+ErrWrongGroup
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  0   14    --
+sent received  0   true   false
+unexpected EOF
+ErrWrongGroup
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   4    --
+sent received  1   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+TICK:  1   12    --
+sent received  1   true   false
+ErrWrongGroup
+TICK:  0   14    --
+sent received  0   true   false
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+ErrWrongGroup
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  1   12    --
+sent received  1   true   false
+unexpected EOF
+unexpected EOF
+unexpected EOF
+ErrWrongGroup
+TICK:  0   14    --
+sent received  0   true   false
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+ErrWrongGroup
+TICK:  1   14    --
+sent received  1   true   false
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  1   12    --
+sent received  1   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+unexpected EOF
+ErrWrongGroup
+TICK:  0   14    --
+sent received  0   true   false
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  1   14    --
+sent received  1   true   false
+unexpected EOF
+ErrWrongGroup
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  1   12    --
+sent received  1   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+ErrWrongGroup
+TICK:  0   14    --
+sent received  0   true   false
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+unexpected EOF
+ErrWrongGroup
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  1   12    --
+sent received  1   true   false
+unexpected EOF
+ErrWrongGroup
+TICK:  0   14    --
+sent received  0   true   false
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+ErrWrongGroup
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  1   12    --
+sent received  1   true   false
+unexpected EOF
+ErrWrongGroup
+TICK:  0   14    --
+sent received  0   true   false
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+ErrWrongGroup
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  1   12    --
+sent received  1   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+ErrWrongGroup
+TICK:  0   14    --
+sent received  0   true   false
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+unexpected EOF
+write unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: broken pipe
+ErrWrongGroup
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  1   12    --
+sent received  1   true   false
+unexpected EOF
+TICK:  0   14    --
+sent received  0   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-0: connection reset by peer
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+TICK:  2   11    --
+sent received  2   true   false
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-0: connection reset by peer
+write unix /var/tmp/824-1000/skv-14496-concurrent-trues-0: broken pipe
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  2   10    --
+sent received  2   true   false
+unexpected EOF
+unexpected EOF
+ErrWrongGroup
+TICK:  1   14    --
+sent received  1   true   false
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  1   12    --
+sent received  1   true   false
+unexpected EOF
+ErrWrongGroup
+TICK:  0   14    --
+sent received  0   true   false
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  2   10    --
+sent received  2   true   false
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+unexpected EOF
+ErrWrongGroup
+TICK:  1   14    --
+sent received  1   true   false
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  1   12    --
+sent received  1   true   false
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+ErrWrongGroup
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-0: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+unexpected EOF
+unexpected EOF
+unexpected EOF
+ErrWrongGroup
+unexpected EOF
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-0: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-0: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-0: connection reset by peer
+TICK:  0   14    --
+sent received  0   true   false
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-0: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+unexpected EOF
+ErrWrongGroup
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+TICK:  0   4    --
+sent received  0   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+unexpected EOF
+ErrWrongGroup
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  0   14    --
+sent received  0   true   false
+unexpected EOF
+ErrWrongGroup
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+TICK:  0   4    --
+sent received  0   true   false
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-0: connection reset by peer
+unexpected EOF
+ErrWrongGroup
+ErrWrongGroup
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  0   14    --
+sent received  0   true   false
+ErrWrongGroup
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+TICK:  0   4    --
+sent received  0   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+unexpected EOF
+unexpected EOF
+ErrWrongGroup
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  0   14    --
+sent received  0   true   false
+unexpected EOF
+ErrWrongGroup
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+TICK:  0   4    --
+sent received  0   true   false
+unexpected EOF
+unexpected EOF
+ErrWrongGroup
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-0: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-0: connection reset by peer
+unexpected EOF
+ErrWrongGroup
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  0   14    --
+sent received  0   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+connection is shut down
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+unexpected EOF
+ErrWrongGroup
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+TICK:  0   4    --
+sent received  0   true   false
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+ErrWrongGroup
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  0   14    --
+sent received  0   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+ErrWrongGroup
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  1   14    --
+sent received  1   true   false
+TICK:  0   4    --
+sent received  0   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+ErrWrongGroup
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  0   14    --
+sent received  0   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+ErrWrongGroup
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  1   14    --
+sent received  1   true   false
+TICK:  0   4    --
+sent received  0   true   false
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  1   12    --
+sent received  1   true   false
+ErrWrongGroup
+TICK:  0   14    --
+sent received  0   true   false
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+ErrWrongGroup
+TICK:  1   14    --
+sent received  1   true   false
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  1   12    --
+sent received  1   true   false
+unexpected EOF
+ErrWrongGroup
+TICK:  0   14    --
+sent received  0   true   false
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+unexpected EOF
+TICK:  1   14    --
+sent received  1   true   false
+unexpected EOF
+ErrWrongGroup
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  1   12    --
+sent received  1   true   false
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+ErrWrongGroup
+TICK:  0   14    --
+sent received  0   true   false
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  1   14    --
+sent received  1   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+unexpected EOF
+ErrWrongGroup
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  1   12    --
+sent received  1   true   false
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+TICK:  0   14    --
+sent received  0   true   false
+ErrWrongGroup
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  1   14    --
+sent received  1   true   false
+unexpected EOF
+connection is shut down
+ErrWrongGroup
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  1   12    --
+sent received  1   true   false
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+unexpected EOF
+unexpected EOF
+TICK:  0   14    --
+sent received  0   true   false
+ErrWrongGroup
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  1   14    --
+sent received  1   true   false
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+TICK:  0   4    --
+sent received  0   true   false
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-0: connection reset by peer
+ErrWrongGroup
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  0   14    --
+sent received  0   true   false
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+unexpected EOF
+TICK:  2   11    --
+sent received  2   true   false
+unexpected EOF
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+write unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: broken pipe
+unexpected EOF
+unexpected EOF
+unexpected EOF
+ErrWrongGroup
+TICK:  1   14    --
+sent received  1   true   false
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  1   12    --
+sent received  1   true   false
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+ErrWrongGroup
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-0: connection reset by peer
+unexpected EOF
+ErrWrongGroup
+TICK:  0   14    --
+sent received  0   true   false
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  1   14    --
+sent received  1   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+write unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: broken pipe
+ErrWrongGroup
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  0   14    --
+sent received  0   true   false
+ErrWrongGroup
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+TICK:  0   4    --
+sent received  0   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+unexpected EOF
+unexpected EOF
+unexpected EOF
+ErrWrongGroup
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  0   14    --
+sent received  0   true   false
+unexpected EOF
+TICK:  2   11    --
+sent received  2   true   false
+unexpected EOF
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  2   10    --
+sent received  2   true   false
+ErrWrongGroup
+unexpected EOF
+ErrWrongGroup
+TICK:  1   14    --
+sent received  1   true   false
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   4    --
+sent received  1   true   false
+unexpected EOF
+TICK:  1   12    --
+sent received  1   true   false
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-0: connection reset by peer
+ErrWrongGroup
+unexpected EOF
+connection is shut down
+connection is shut down
+ErrWrongGroup
+TICK:  0   14    --
+sent received  0   true   false
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  2   10    --
+sent received  2   true   false
+ErrWrongGroup
+TICK:  1   14    --
+sent received  1   true   false
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  1   12    --
+sent received  1   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+ErrWrongGroup
+TICK:  0   14    --
+sent received  0   true   false
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+ErrWrongGroup
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  1   12    --
+sent received  1   true   false
+connection is shut down
+ErrWrongGroup
+TICK:  0   14    --
+sent received  0   true   false
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-0: connection reset by peer
+unexpected EOF
+unexpected EOF
+TICK:  0   4    --
+sent received  0   true   false
+ErrWrongGroup
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-0: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-0: connection reset by peer
+TICK:  1   4    --
+sent received  1   true   false
+unexpected EOF
+TICK:  1   12    --
+sent received  1   true   false
+unexpected EOF
+unexpected EOF
+unexpected EOF
+ErrWrongGroup
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  0   14    --
+sent received  0   true   false
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+ErrWrongGroup
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  1   12    --
+sent received  1   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+unexpected EOF
+ErrWrongGroup
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  0   14    --
+sent received  0   true   false
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+ErrWrongGroup
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  2   4    --
+sent received  2   true   false
+unexpected EOF
+unexpected EOF
+ErrWrongGroup
+TICK:  0   14    --
+sent received  0   true   false
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+ErrWrongGroup
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  2   4    --
+sent received  2   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+unexpected EOF
+ErrWrongGroup
+TICK:  0   14    --
+sent received  0   true   false
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+ErrWrongGroup
+write unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: broken pipe
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  2   4    --
+sent received  2   true   false
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+ErrWrongGroup
+TICK:  0   14    --
+sent received  0   true   false
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+unexpected EOF
+unexpected EOF
+unexpected EOF
+ErrWrongGroup
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  1   12    --
+sent received  1   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+TICK:  2   4    --
+sent received  2   true   false
+ErrWrongGroup
+TICK:  0   14    --
+sent received  0   true   false
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+ErrWrongGroup
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  2   4    --
+sent received  2   true   false
+unexpected EOF
+ErrWrongGroup
+TICK:  0   14    --
+sent received  0   true   false
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+ErrWrongGroup
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  2   4    --
+sent received  2   true   false
+unexpected EOF
+unexpected EOF
+TICK:  0   14    --
+sent received  0   true   false
+ErrWrongGroup
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+connection is shut down
+connection is shut down
+unexpected EOF
+unexpected EOF
+ErrWrongGroup
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  0   14    --
+sent received  0   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+ErrWrongGroup
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+unexpected EOF
+unexpected EOF
+ErrWrongGroup
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  0   14    --
+sent received  0   true   false
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+unexpected EOF
+unexpected EOF
+unexpected EOF
+ErrWrongGroup
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-0: connection reset by peer
+unexpected EOF
+ErrWrongGroup
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  1   4    --
+sent received  1   true   false
+unexpected EOF
+unexpected EOF
+ErrWrongGroup
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  0   14    --
+sent received  0   true   false
+TICK:  2   11    --
+sent received  2   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+ErrWrongGroup
+ErrWrongGroup
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  1   4    --
+sent received  1   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+ErrWrongGroup
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  0   14    --
+sent received  0   true   false
+TICK:  2   11    --
+sent received  2   true   false
+connection is shut down
+ErrWrongGroup
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  1   4    --
+sent received  1   true   false
+unexpected EOF
+unexpected EOF
+ErrWrongGroup
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  0   14    --
+sent received  0   true   false
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  2   10    --
+sent received  2   true   false
+unexpected EOF
+unexpected EOF
+ErrWrongGroup
+TICK:  1   14    --
+sent received  1   true   false
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  1   4    --
+sent received  1   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+TICK:  1   12    --
+sent received  1   true   false
+ErrWrongGroup
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  0   14    --
+sent received  0   true   false
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  2   10    --
+sent received  2   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+ErrWrongGroup
+TICK:  1   14    --
+sent received  1   true   false
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  1   4    --
+sent received  1   true   false
+unexpected EOF
+ErrWrongGroup
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  0   14    --
+sent received  0   true   false
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  2   10    --
+sent received  2   true   false
+unexpected EOF
+ErrWrongGroup
+TICK:  1   14    --
+sent received  1   true   false
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  1   4    --
+sent received  1   true   false
+unexpected EOF
+ErrWrongGroup
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  0   14    --
+sent received  0   true   false
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+unexpected EOF
+unexpected EOF
+unexpected EOF
+ErrWrongGroup
+ErrWrongGroup
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  1   12    --
+sent received  1   true   false
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+unexpected EOF
+ErrWrongGroup
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  0   14    --
+sent received  0   true   false
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+ErrWrongGroup
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  1   12    --
+sent received  1   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+ErrWrongGroup
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  0   14    --
+sent received  0   true   false
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+ErrWrongGroup
+connection is shut down
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-0: connection reset by peer
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+TICK:  0   4    --
+sent received  0   true   false
+unexpected EOF
+ErrWrongGroup
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  0   14    --
+sent received  0   true   false
+unexpected EOF
+ErrWrongGroup
+TICK:  2   11    --
+sent received  2   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+unexpected EOF
+unexpected EOF
+connection is shut down
+unexpected EOF
+unexpected EOF
+ErrWrongGroup
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  2   10    --
+sent received  2   true   false
+unexpected EOF
+unexpected EOF
+ErrWrongGroup
+TICK:  1   14    --
+sent received  1   true   false
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  1   4    --
+sent received  1   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+TICK:  1   12    --
+sent received  1   true   false
+ErrWrongGroup
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  0   14    --
+sent received  0   true   false
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  2   10    --
+sent received  2   true   false
+unexpected EOF
+ErrWrongGroup
+TICK:  1   14    --
+sent received  1   true   false
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  2   4    --
+sent received  2   true   false
+unexpected EOF
+TICK:  0   14    --
+sent received  0   true   false
+ErrWrongGroup
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  1   14    --
+sent received  1   true   false
+unexpected EOF
+unexpected EOF
+ErrWrongGroup
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  2   4    --
+sent received  2   true   false
+unexpected EOF
+TICK:  0   14    --
+sent received  0   true   false
+connection is shut down
+ErrWrongGroup
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  1   14    --
+sent received  1   true   false
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+ErrWrongGroup
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  0   14    --
+sent received  0   true   false
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+unexpected EOF
+unexpected EOF
+ErrWrongGroup
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  1   14    --
+sent received  1   true   false
+ErrWrongGroup
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  0   14    --
+sent received  0   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+unexpected EOF
+unexpected EOF
+ErrWrongGroup
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  1   14    --
+sent received  1   true   false
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+ErrWrongGroup
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  0   14    --
+sent received  0   true   false
+ErrWrongGroup
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  1   14    --
+sent received  1   true   false
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+unexpected EOF
+ErrWrongGroup
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  0   14    --
+sent received  0   true   false
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+ErrWrongGroup
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  1   14    --
+sent received  1   true   false
+ErrWrongGroup
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  0   14    --
+sent received  0   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+ErrWrongGroup
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  1   14    --
+sent received  1   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+unexpected EOF
+TICK:  1   4    --
+sent received  1   true   false
+ErrWrongGroup
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  0   14    --
+sent received  0   true   false
+ErrWrongGroup
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  1   14    --
+sent received  1   true   false
+ErrWrongGroup
+TICK:  0   4    --
+sent received  0   true   false
+unexpected EOF
+write unix /var/tmp/824-1000/skv-14496-concurrent-trues-0: broken pipe
+unexpected EOF
+ErrWrongGroup
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  0   14    --
+sent received  0   true   false
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+unexpected EOF
+unexpected EOF
+ErrWrongGroup
+TICK:  1   14    --
+sent received  1   true   false
+TICK:  0   4    --
+sent received  0   true   false
+ErrWrongGroup
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  0   14    --
+sent received  0   true   false
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+unexpected EOF
+unexpected EOF
+TICK:  1   14    --
+sent received  1   true   false
+ErrWrongGroup
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  1   4    --
+sent received  1   true   false
+ErrWrongGroup
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  0   14    --
+sent received  0   true   false
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  1   14    --
+sent received  1   true   false
+unexpected EOF
+ErrWrongGroup
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  2   4    --
+sent received  2   true   false
+ErrWrongGroup
+TICK:  0   14    --
+sent received  0   true   false
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  1   14    --
+sent received  1   true   false
+unexpected EOF
+ErrWrongGroup
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  1   12    --
+sent received  1   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+TICK:  2   4    --
+sent received  2   true   false
+ErrWrongGroup
+TICK:  0   14    --
+sent received  0   true   false
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  1   14    --
+sent received  1   true   false
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+unexpected EOF
+unexpected EOF
+ErrWrongGroup
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+ErrWrongGroup
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  0   14    --
+sent received  0   true   false
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+ErrWrongGroup
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  1   14    --
+sent received  1   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+unexpected EOF
+ErrWrongGroup
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  0   14    --
+sent received  0   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+connection is shut down
+ErrWrongGroup
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  1   14    --
+sent received  1   true   false
+unexpected EOF
+ErrWrongGroup
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  0   14    --
+sent received  0   true   false
+unexpected EOF
+write unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: broken pipe
+ErrWrongGroup
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  2   10    --
+TICK:  0   12    --
+sent received  0   true   false
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+unexpected EOF
+unexpected EOF
+unexpected EOF
+TICK:  0   4    --
+sent received  0   true   false
+ErrWrongGroup
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  0   14    --
+sent received  0   true   false
+TICK:  2   11    --
+sent received  2   true   false
+unexpected EOF
+unexpected EOF
+ErrWrongGroup
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+unexpected EOF
+ErrWrongGroup
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  0   14    --
+sent received  0   true   false
+TICK:  2   11    --
+sent received  2   true   false
+unexpected EOF
+ErrWrongGroup
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+ErrWrongGroup
+ErrWrongGroup
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  0   14    --
+sent received  0   true   false
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  2   10    --
+sent received  2   true   false
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+ErrWrongGroup
+ErrWrongGroup
+TICK:  1   14    --
+sent received  1   true   false
+TICK:  0   4    --
+sent received  0   true   false
+unexpected EOF
+unexpected EOF
+unexpected EOF
+ErrWrongGroup
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  0   14    --
+sent received  0   true   false
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  2   10    --
+sent received  2   true   false
+unexpected EOF
+ErrWrongGroup
+TICK:  1   14    --
+sent received  1   true   false
+TICK:  0   4    --
+sent received  0   true   false
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-0: connection reset by peer
+unexpected EOF
+TICK:  1   12    --
+sent received  1   true   false
+unexpected EOF
+TICK:  2   4    --
+sent received  2   true   false
+ErrWrongGroup
+ErrWrongGroup
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  0   14    --
+sent received  0   true   false
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+ErrWrongGroup
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  0   14    --
+sent received  0   true   false
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+unexpected EOF
+ErrWrongGroup
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+unexpected EOF
+unexpected EOF
+ErrWrongGroup
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  0   14    --
+sent received  0   true   false
+unexpected EOF
+TICK:  2   11    --
+sent received  2   true   false
+ErrWrongGroup
+unexpected EOF
+ErrWrongGroup
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+unexpected EOF
+unexpected EOF
+unexpected EOF
+ErrWrongGroup
+TICK:  0   4    --
+sent received  0   true   false
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-0: connection reset by peer
+unexpected EOF
+unexpected EOF
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  0   14    --
+sent received  0   true   false
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+ErrWrongGroup
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-0: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-0: connection reset by peer
+ErrWrongGroup
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  2   4    --
+sent received  2   true   false
+unexpected EOF
+unexpected EOF
+connection is shut down
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+TICK:  1   4    --
+sent received  1   true   false
+unexpected EOF
+ErrWrongGroup
+TICK:  0   14    --
+sent received  0   true   false
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  1   14    --
+sent received  1   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+ErrWrongGroup
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  2   4    --
+sent received  2   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+unexpected EOF
+TICK:  1   4    --
+sent received  1   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+ErrWrongGroup
+TICK:  0   14    --
+sent received  0   true   false
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  1   14    --
+sent received  1   true   false
+unexpected EOF
+unexpected EOF
+ErrWrongGroup
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   4    --
+sent received  1   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+ErrWrongGroup
+TICK:  0   14    --
+sent received  0   true   false
+ErrWrongGroup
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  1   14    --
+sent received  1   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+unexpected EOF
+ErrWrongGroup
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   4    --
+sent received  1   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+unexpected EOF
+unexpected EOF
+unexpected EOF
+TICK:  0   14    --
+sent received  0   true   false
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-0: connection reset by peer
+ErrWrongGroup
+ErrWrongGroup
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  1   14    --
+sent received  1   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+unexpected EOF
+ErrWrongGroup
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  0   14    --
+sent received  0   true   false
+TICK:  2   11    --
+sent received  2   true   false
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+unexpected EOF
+ErrWrongGroup
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  1   14    --
+sent received  1   true   false
+unexpected EOF
+unexpected EOF
+ErrWrongGroup
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  0   14    --
+sent received  0   true   false
+TICK:  2   11    --
+sent received  2   true   false
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+ErrWrongGroup
+TICK:  1   14    --
+sent received  1   true   false
+unexpected EOF
+ErrWrongGroup
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  0   14    --
+sent received  0   true   false
+TICK:  2   11    --
+sent received  2   true   false
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+unexpected EOF
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+ErrWrongGroup
+unexpected EOF
+unexpected EOF
+ErrWrongGroup
+TICK:  1   14    --
+sent received  1   true   false
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-0: connection reset by peer
+unexpected EOF
+unexpected EOF
+ErrWrongGroup
+TICK:  0   4    --
+sent received  0   true   false
+connection is shut down
+unexpected EOF
+unexpected EOF
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-0: connection reset by peer
+TICK:  1   12    --
+sent received  1   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-0: connection reset by peer
+unexpected EOF
+unexpected EOF
+TICK:  1   4    --
+sent received  1   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+unexpected EOF
+unexpected EOF
+TICK:  0   14    --
+sent received  0   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-0: connection reset by peer
+unexpected EOF
+unexpected EOF
+unexpected EOF
+TICK:  2   11    --
+sent received  2   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-0: connection reset by peer
+unexpected EOF
+unexpected EOF
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+unexpected EOF
+ErrWrongGroup
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+unexpected EOF
+ErrWrongGroup
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  0   14    --
+sent received  0   true   false
+TICK:  2   11    --
+sent received  2   true   false
+unexpected EOF
+unexpected EOF
+ErrWrongGroup
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+ErrWrongGroup
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  0   14    --
+sent received  0   true   false
+TICK:  2   11    --
+sent received  2   true   false
+ErrWrongGroup
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+ErrWrongGroup
+ErrWrongGroup
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  0   14    --
+sent received  0   true   false
+TICK:  2   11    --
+sent received  2   true   false
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+connection is shut down
+ErrWrongGroup
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+unexpected EOF
+ErrWrongGroup
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  0   14    --
+sent received  0   true   false
+TICK:  2   11    --
+sent received  2   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+ErrWrongGroup
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-0: connection reset by peer
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+ErrWrongGroup
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-2: connection reset by peer
+ErrWrongGroup
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  0   14    --
+sent received  0   true   false
+TICK:  2   11    --
+sent received  2   true   false
+unexpected EOF
+ErrWrongGroup
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+connection is shut down
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+ErrWrongGroup
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  0   14    --
+sent received  0   true   false
+TICK:  2   11    --
+sent received  2   true   false
+unexpected EOF
+unexpected EOF
+unexpected EOF
+ErrWrongGroup
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-0: connection reset by peer
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+unexpected EOF
+ErrWrongGroup
+ErrWrongGroup
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  0   14    --
+sent received  0   true   false
+TICK:  2   11    --
+sent received  2   true   false
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  2   4    --
+sent received  2   true   false
+unexpected EOF
+unexpected EOF
+unexpected EOF
+ErrWrongGroup
+TICK:  1   14    --
+sent received  1   true   false
+connection is shut down
+connection is shut down
+connection is shut down
+ErrWrongGroup
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  0   14    --
+sent received  0   true   false
+TICK:  2   11    --
+sent received  2   true   false
+unexpected EOF
+read unix /var/tmp/824-1000/skv-14496-concurrent-trues-1: connection reset by peer
+connection is shut down
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  2   4    --
+sent received  2   true   false
+ErrWrongGroup
+TICK:  1   14    --
+sent received  1   true   false
+unexpected EOF
+ErrWrongGroup
+TICK:  0   4    --
+sent received  0   true   false
+TICK:  1   12    --
+sent received  1   true   false
+TICK:  1   4    --
+sent received  1   true   false
+TICK:  0   14    --
+sent received  0   true   false
+TICK:  2   11    --
+sent received  2   true   false
+unexpected EOF
+unexpected EOF
+ErrWrongGroup
+TICK:  2   10    --
+sent received  2   true   false
+TICK:  0   12    --
+sent received  0   true   false
+TICK:  2   4    --
+sent received  2   true   false
+TICK:  1   14    --
+sent received  1   true   false
+exit status 2
+FAIL	shardkv	71.401s

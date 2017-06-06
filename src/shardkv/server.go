@@ -213,9 +213,9 @@ func (kv *ShardKV) send_shard(r_gid int64,shard_index int) {
 			  applied = append(applied,id)	
 			}
 		 //TODO:: We need to send something for duplicates. , a state maybe.
-     opId := nrand()
 		 for _,srv :=range kv.current_config.Groups[r_gid] {
         //RPC call
+        opId := nrand()
         args := &SendShardArgs{}
         args.Storage = storage_toSend
         args.Config_num = kv.next_config_num
@@ -223,20 +223,16 @@ func (kv *ShardKV) send_shard(r_gid int64,shard_index int) {
         args.Applied = applied
         args.OpId = opId
         var reply SendShardReply
-        ok := call(srv,"ShardKV.Receive_shard",args,&reply)
-        fmt.Println("receive shard reply " ,reply.Err)
-        if ok && reply.Err == OK {
-						//deleteshard
-            deleteArgs := DeleteShardArgs{shard_index,kv.next_config_num}
-            op := Op{"DeleteShard",nrand(),deleteArgs}
-            kv.propose(op)
-            kv.evaluate()
-            return  
-				}
-        if reply.Err == Waiting{
-					opId=nrand()
-				}
-			}
+        ok:=call(srv,"ShardKV.Receive_shard",args,&reply)
+			  for !ok && reply.Err !="GG"{
+           reply.Err = "GG" 
+           ok=call(srv,"ShardKV.Receive_shard",args,&reply)
+				}	
+      }
+        deleteArgs := DeleteShardArgs{shard_index,kv.next_config_num}
+        op := Op{"DeleteShard",nrand(),deleteArgs}
+        kv.propose(op)
+        kv.evaluate()
      
 }
 
