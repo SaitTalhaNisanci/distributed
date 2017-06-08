@@ -1,0 +1,17 @@
+# CSE 452 Spring 2017, Lab 4 Part b
+
+## Authors
+
+Talha Nisanci (UWNetID: Talha)
+
+Jessica Negara (UWNetID: jnegara)
+
+## Question Responses:
+
+We spent 4 days working on this project. We spent the first 2 days writing the project. We spent the last 2 days writing the last line of the project.
+
+Talha did most of the high-level design. Programming and debugging was done together.
+
+## High Level Description
+
+There is a tick function that periodically gets called. If there is no transition in process, it checks the global configuration number and proposes a reconfiguration if it is behind. Upon reading a reconfiguration in the paxos log, it updates the state of the server to reflect the new current configuration, to show that there is a transition in progress, and reassigns the shards according to the new configuration. If there is a transition in process, it sends all of the shards it owns to the groups that own it in the next configuration via an RPC. Upon receiving this RPC, a server proposes a receive_shard operation to paxos. When evaluating the receive_shard operation, all of the keys and values will be added to the key-value storage on that server. Gets/PutAppends are not serviced during configuration transition periods, we determine when a reconfig period is over by proposing an end_reconfig operation to paxos. Finally, after transition we delete shards from the server we no longer own, again through the paxos log. Every other RPC works much in the same way as it did in the previous labs.

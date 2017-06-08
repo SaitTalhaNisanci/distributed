@@ -97,7 +97,7 @@ func (ck *Clerk) Get(key string) string {
 
 		servers, ok := ck.config.Groups[gid]
 
-	  OpId := nrand()
+		OpId := nrand()
 		if ok {
 			// try each server in the shard's replication group.
 			for _, srv := range servers {
